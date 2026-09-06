@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stationeers IC10 MIPS Instruction Reference</title>
+    <style>
+        :root {
+            --bg-base: #0d1117;
+            --bg-surface: #161b22;
+            --bg-card: #21262d;
+            --border-subtle: #30363d;
+            --text-main: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --text-dim: #8b949e;
+            --accent-cyan: #58a6ff;
+            --accent-orange: #f0883e;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --code-bg: rgba(110, 118, 129, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-top: 100px;
+            scroll-behavior: smooth;
+        }
+
+        header.top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(22, 27, 34, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 12px 24px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .bar-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-badge {
+            background: var(--accent-purple);
+            color: #0d1117;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .nav-home-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--accent-cyan);
+            padding: 4px 12px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .nav-home-btn:hover {
+            background: var(--accent-cyan);
+            color: #0d1117;
+        }
+
+        nav.nav-links {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        nav.nav-links::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        nav.nav-links::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 2px;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 16px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-heading);
+            border-color: var(--accent-cyan);
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(188, 140, 255, 0.08), rgba(88, 166, 255, 0.05));
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+
+        .hero-banner h1 {
+            color: var(--text-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+        }
+
+        section {
+            margin-bottom: 48px;
+            scroll-margin-top: 120px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 8px;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            color: var(--text-heading);
+            font-size: 1.2rem;
+        }
+
+        .section-header .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--border-subtle);
+            color: var(--text-dim);
+        }
+
+        .table-wrap {
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--bg-surface);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #1c2128;
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        th, td {
+            padding: 10px 14px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(110, 118, 129, 0.06);
+        }
+
+        code {
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: var(--code-bg);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            font-size: 0.88em;
+        }
+
+        .arg-highlight {
+            color: var(--accent-orange);
+            font-family: monospace;
+        }
+
+        .code-block {
+            background: #0b0e14;
+            border: 1px solid #21262d;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            font-family: monospace;
+            font-size: 0.88rem;
+            color: #e6edf3;
+            line-height: 1.45;
+            margin-top: 10px;
+        }
+
+        .note-box {
+            background: rgba(88, 166, 255, 0.05);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="top-bar">
+        <div class="bar-top">
+            <div class="brand-title">
+                <span>Stationeers IC10 MIPS Reference Manual</span>
+                <span class="brand-badge">Official Syntax</span>
+            </div>
+            <a href="index.html" class="nav-home-btn">&larr; Back to Index</a>
+        </div>
+        <nav class="nav-links">
+            <a href="#args" class="nav-btn">Arguments</a>
+            <a href="#macros" class="nav-btn">Macros & Constants</a>
+            <a href="#device-io" class="nav-btn">Device I/O</a>
+            <a href="#flow" class="nav-btn">Flow Control (Jumps & Branches)</a>
+            <a href="#select" class="nav-btn">Select (Test)</a>
+            <a href="#math" class="nav-btn">Math Operations</a>
+            <a href="#bitwise" class="nav-btn">Bitwise</a>
+            <a href="#stack" class="nav-btn">Stack & Commands</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="hero-banner">
+            <h1>IC10 MIPS Architecture & Opcode Specification</h1>
+            <p>
+                Complete instruction set reference for the programmable IC10 microprocessor chip in Stationeers. 
+                Hardware limits: 128 lines of code (0–127), 16 general-purpose registers (<code>r0</code>–<code>r15</code>), 
+                and 6 peripheral device channels (<code>d0</code>–<code>d5</code>, plus <code>db</code>).
+            </p>
+        </div>
+
+        <!-- Argument Type Definitions -->
+        <section id="args">
+            <div class="section-header">
+                <h2>Argument Type Definitions & Aliases</h2>
+                <span class="tag">Registers & Types</span>
+            </div>
+            <div class="note-box">
+                <strong>Register & Device Identifiers:</strong><br>
+                &bull; <code>r?</code>: <code>r0</code>–<code>r15</code> (General purpose), <code>ra</code> (Return address), <code>sp</code> (Stack pointer)<br>
+                &bull; <code>d?</code>: <code>d0</code>–<code>d5</code> (Connected devices), <code>db</code> (Device housing itself)<br>
+                &bull; <code>str</code>: String literal | <code>num</code>: Numeric literal or constant | <code>id</code>: Device reference ID
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Instruction</th><th>Arguments</th><th>Description</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>alias</code></td><td><span class="arg-highlight">aliasName</span>(str) <span class="arg-highlight">target</span>(r?|d?)</td><td>Create named alias for register or device</td></tr>
+                        <tr><td><code>define</code></td><td><span class="arg-highlight">constantName</span>(str) <span class="arg-highlight">value</span>(num)</td><td>Create constant replaced throughout program</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Macros & Constants -->
+        <section id="macros">
+            <div class="section-header">
+                <h2>Macros, Literals & Reserved Constants</h2>
+                <span class="tag">Preprocessor</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Macro</th><th>Syntax</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td>Hexadecimal</td><td><code>$...</code></td><td>Hex number, optionally separated with underscores (e.g. <code>$F0</code>)</td></tr>
+                        <tr><td>Binary</td><td><code>%...</code></td><td>Binary number, optionally separated with underscores (e.g. <code>%1111_0000</code>)</td></tr>
+                        <tr><td>String Hash</td><td><code>HASH("...")</code></td><td>Computes a CRC32 hash of a string (e.g. <code>HASH("StructureWallLight")</code>)</td></tr>
+                        <tr><td>String Pack</td><td><code>STR("...")</code></td><td>Packs a string into up to 53 bits (6 characters) for drawing text</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Constant</th><th>Value</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>nan</code></td><td>NaN</td><td>Not a number (quiet NaN; signal NaN halts execution)</td></tr>
+                        <tr><td><code>pinf</code> / <code>ninf</code></td><td>+∞ / -∞</td><td>Positive / Negative infinity</td></tr>
+                        <tr><td><code>pi</code> / <code>tau</code></td><td>π (≈3.14159) / 2π (≈6.28318)</td><td>Ratio of circle circumference to diameter / radius</td></tr>
+                        <tr><td><code>deg2rad</code> / <code>rad2deg</code></td><td>π/180 / 180/π</td><td>Degrees &harr; Radians conversion factors</td></tr>
+                        <tr><td><code>epsilon</code></td><td>~4.94×10⁻³²⁴</td><td>Smallest positive subnormal number greater than 0</td></tr>
+                        <tr><td><code>rgas</code></td><td>8.31446</td><td>Universal gas constant (J/(mol·K))</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Device IO -->
+        <section id="device-io">
+            <div class="section-header">
+                <h2>Device I/O & Batch Operations</h2>
+                <span class="tag">Network & Pins</span>
+            </div>
+            <div class="note-box">
+                <strong>Batch Mode Enums:</strong> <code>0</code> = Average (nan if empty), <code>1</code> = Sum (0 if empty), <code>2</code> = Minimum (pinf if empty), <code>3</code> = Maximum (ninf if empty).<br>
+                <strong>Reagent Modes:</strong> <code>0</code> = Contents, <code>1</code> = Required, <code>2</code> = Recipe.
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Instruction</th><th>Arguments</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>l</code></td><td><span class="arg-highlight">result</span>(r?) <span class="arg-highlight">device</span>(d?|r?|num) <span class="arg-highlight">logicType</span>(str)</td><td>Load device variable</td></tr>
+                        <tr><td><code>s</code></td><td><span class="arg-highlight">device</span>(d?|r?|num) <span class="arg-highlight">logicType</span>(str) <span class="arg-highlight">sourceRegister</span>(r?)</td><td>Store register to device variable</td></tr>
+                        <tr><td><code>lb</code></td><td><span class="arg-highlight">result</span>(r?) <span class="arg-highlight">deviceHash</span> <span class="arg-highlight">logicType</span> <span class="arg-highlight">batchMode</span></td><td>Load variable from network devices by type</td></tr>
+                        <tr><td><code>sb</code></td><td><span class="arg-highlight">deviceHash</span> <span class="arg-highlight">logicType</span> <span class="arg-highlight">sourceRegister</span></td><td>Store register to variable on all network devices by type</td></tr>
+                        <tr><td><code>lbn</code></td><td><span class="arg-highlight">result</span>(r?) <span class="arg-highlight">deviceHash</span> <span class="arg-highlight">nameHash</span> <span class="arg-highlight">logicType</span> <span class="arg-highlight">batchMode</span></td><td>Load variable from network devices by type and name</td></tr>
+                        <tr><td><code>sbn</code></td><td><span class="arg-highlight">deviceHash</span> <span class="arg-highlight">nameHash</span> <span class="arg-highlight">logicType</span> <span class="arg-highlight">sourceRegister</span></td><td>Store register to variable on network devices by type and name</td></tr>
+                        <tr><td><code>ls</code> / <code>ss</code></td><td><span class="arg-highlight">device</span> <span class="arg-highlight">slotIndex</span> <span class="arg-highlight">logicType</span> ...</td><td>Load / store slot variables on a device</td></tr>
+                        <tr><td><code>lbs</code> / <code>sbs</code></td><td><span class="arg-highlight">deviceHash</span> <span class="arg-highlight">slotIndex</span> <span class="arg-highlight">logicType</span> ...</td><td>Load / store batch slot variables by device type</td></tr>
+                        <tr><td><code>lbns</code></td><td><span class="arg-highlight">deviceHash</span> <span class="arg-highlight">nameHash</span> <span class="arg-highlight">slotIndex</span> <span class="arg-highlight">logicType</span> <span class="arg-highlight">batchMode</span></td><td>Load batch slot variable by device type and name</td></tr>
+                        <tr><td><code>lr</code> / <code>rmap</code></td><td><span class="arg-highlight">device</span> <span class="arg-highlight">reagentMode</span> <span class="arg-highlight">reagentHash</span></td><td>Query reagents & recipe prefab hashes</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Flow Control -->
+        <section id="flow">
+            <div class="section-header">
+                <h2>Flow Control (Jumps, Branches & Subroutines)</h2>
+                <span class="tag">Branching</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr><th>Absolute</th><th>Relative</th><th>Return Address</th><th>Arguments</th><th>Condition</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><code>j</code></td><td><code>jr</code></td><td><code>jal</code></td><td><span class="arg-highlight">target</span></td><td>Unconditional jump</td></tr>
+                        <tr><td><code>beq</code> / <code>beqz</code></td><td><code>breq</code> / <code>breqz</code></td><td><code>beqal</code> / <code>beqzal</code></td><td>a, b, target</td><td>Branch if a == b (or a == 0)</td></tr>
+                        <tr><td><code>bne</code> / <code>bnez</code></td><td><code>brne</code> / <code>brnez</code></td><td><code>bneal</code> / <code>bnezal</code></td><td>a, b, target</td><td>Branch if a ≠ b (or a ≠ 0)</td></tr>
+                        <tr><td><code>bgt</code> / <code>bgtz</code></td><td><code>brgt</code> / <code>brgtz</code></td><td><code>bgtal</code> / <code>bgtzal</code></td><td>a, b, target</td><td>Branch if a > b (or a > 0)</td></tr>
+                        <tr><td><code>bge</code> / <code>bgez</code></td><td><code>brge</code> / <code>brgez</code></td><td><code>bgeal</code> / <code>bgezal</code></td><td>a, b, target</td><td>Branch if a ≥ b (or a ≥ 0)</td></tr>
+                        <tr><td><code>blt</code> / <code>bltz</code></td><td><code>brlt</code> / <code>brltz</code></td><td><code>bltal</code> / <code>bltzal</code></td><td>a, b, target</td><td>Branch if a < b (or a < 0)</td></tr>
+                        <tr><td><code>ble</code> / <code>blez</code></td><td><code>brle</code> / <code>brlez</code></td><td><code>bleal</code> / <code>blezal</code></td><td>a, b, target</td><td>Branch if a ≤ b (or a ≤ 0)</td></tr>
+                        <tr><td><code>bap</code> / <code>bapz</code></td><td><code>brap</code> / <code>brapz</code></td><td><code>bapal</code> / <code>bapzal</code></td><td>a, b, tolerance, target</td><td>Branch if a ≈ b (within tolerance)</td></tr>
+                        <tr><td><code>bna</code> / <code>bnaz</code></td><td><code>brna</code> / <code>brnaz</code></td><td><code>bnaal</code> / <code>bnazal</code></td><td>a, b, tolerance, target</td><td>Branch if a !≈ b (not approx equal)</td></tr>
+                        <tr><td><code>bnan</code></td><td><code>brnan</code></td><td><code>bnanal</code></td><td>value, target</td><td>Branch if value is NaN</td></tr>
+                        <tr><td><code>bdse</code> / <code>bdns</code></td><td><code>brdse</code> / <code>brdns</code></td><td><code>bdseal</code> / <code>bdnsal</code></td><td>device(d?), target</td><td>Branch if device is set / not set</td></tr>
+                        <tr><td><code>bdnvl</code> / <code>bdnvs</code></td><td>-</td><td>-</td><td>device, logicType, target</td><td>Branch if device not valid for load / store</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Select (Test) Instructions -->
+        <section id="select">
+            <div class="section-header">
+                <h2>Select & Conditional Test Instructions</h2>
+                <span class="tag">Stores 1 (True) or 0 (False)</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Instruction</th><th>Arguments</th><th>Condition Evaluated</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>select</code></td><td><span class="arg-highlight">result</span> <span class="arg-highlight">cond</span> <span class="arg-highlight">valTrue</span> <span class="arg-highlight">valFalse</span></td><td>Ternary: result = (cond ≠ 0) ? valTrue : valFalse</td></tr>
+                        <tr><td><code>seq</code> / <code>seqz</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a == b (or a == 0)</td></tr>
+                        <tr><td><code>sne</code> / <code>snez</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a ≠ b (or a ≠ 0)</td></tr>
+                        <tr><td><code>sgt</code> / <code>sgtz</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a > b (or a > 0)</td></tr>
+                        <tr><td><code>sge</code> / <code>sgez</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a ≥ b (or a ≥ 0)</td></tr>
+                        <tr><td><code>slt</code> / <code>sltz</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a < b (or a < 0)</td></tr>
+                        <tr><td><code>sle</code> / <code>slez</code></td><td><span class="arg-highlight">result</span> a b / <span class="arg-highlight">result</span> a</td><td>True if a ≤ b (or a ≤ 0)</td></tr>
+                        <tr><td><code>sap</code> / <code>sapz</code></td><td><span class="arg-highlight">result</span> a b tolerance</td><td>True if a ≈ b (or a ≈ 0) within tolerance</td></tr>
+                        <tr><td><code>sna</code> / <code>snaz</code></td><td><span class="arg-highlight">result</span> a b tolerance</td><td>True if a !≈ b (or a !≈ 0)</td></tr>
+                        <tr><td><code>snan</code> / <code>snanz</code></td><td><span class="arg-highlight">result</span> value</td><td>True if value is NaN / is not NaN</td></tr>
+                        <tr><td><code>sdse</code> / <code>sdns</code></td><td><span class="arg-highlight">result</span> device(d?)</td><td>True if device is set / not set</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Mathematical Operations -->
+        <section id="math">
+            <div class="section-header">
+                <h2>Mathematical Operations</h2>
+                <span class="tag">Trigonometry in Radians</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Instruction</th><th>Arguments</th><th>Operation</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>add</code> / <code>sub</code></td><td><span class="arg-highlight">result</span> a b</td><td>a + b / a - b</td></tr>
+                        <tr><td><code>mul</code> / <code>div</code></td><td><span class="arg-highlight">result</span> a b</td><td>a × b / a ÷ b</td></tr>
+                        <tr><td><code>mod</code></td><td><span class="arg-highlight">result</span> a b</td><td>a modulo b (floored division, NOT remainder)</td></tr>
+                        <tr><td><code>min</code> / <code>max</code></td><td><span class="arg-highlight">result</span> a b</td><td>Minimum / Maximum of a and b</td></tr>
+                        <tr><td><code>lerp</code></td><td><span class="arg-highlight">result</span> a b ratio</td><td>Linear interpolation between a and b (ratio clamped 0–1)</td></tr>
+                        <tr><td><code>abs</code> / <code>sqrt</code></td><td><span class="arg-highlight">result</span> a</td><td>Absolute value |a| / Square root √a</td></tr>
+                        <tr><td><code>round</code> / <code>trunc</code></td><td><span class="arg-highlight">result</span> a</td><td>Round to nearest integer / Truncate fractional part</td></tr>
+                        <tr><td><code>ceil</code> / <code>floor</code></td><td><span class="arg-highlight">result</span> a</td><td>Smallest integer ≥ a / Largest integer ≤ a</td></tr>
+                        <tr><td><code>pow</code> / <code>exp</code> / <code>log</code></td><td><span class="arg-highlight">result</span> base exp / <span class="arg-highlight">result</span> a</td><td>base^exp / e^a / Natural log ln(a)</td></tr>
+                        <tr><td><code>sin</code> / <code>cos</code> / <code>tan</code></td><td><span class="arg-highlight">result</span> radians</td><td>Sine / Cosine / Tangent (expects radians)</td></tr>
+                        <tr><td><code>asin</code> / <code>acos</code> / <code>atan</code> / <code>atan2</code></td><td><span class="arg-highlight">result</span> val</td><td>Inverse trigonometric functions (returns radians)</td></tr>
+                        <tr><td><code>rand</code></td><td><span class="arg-highlight">result</span></td><td>Random floating-point value 0 ≤ x < 1</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Bitwise Operations -->
+        <section id="bitwise">
+            <div class="section-header">
+                <h2>Bitwise & Bitfield Instructions</h2>
+                <span class="tag">Binary Logic</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Instruction</th><th>Arguments</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>not</code></td><td><span class="arg-highlight">result</span> val</td><td>Bitwise NOT (~val)</td></tr>
+                        <tr><td><code>and</code> / <code>or</code> / <code>xor</code> / <code>nor</code></td><td><span class="arg-highlight">result</span> a b</td><td>Bitwise boolean operations between a and b</td></tr>
+                        <tr><td><code>sll</code> / <code>srl</code></td><td><span class="arg-highlight">result</span> val shift</td><td>Shift left / right logical (zero fill)</td></tr>
+                        <tr><td><code>sla</code> / <code>sra</code></td><td><span class="arg-highlight">result</span> val shift</td><td>Shift left / right arithmetic (preserves sign bit)</td></tr>
+                        <tr><td><code>ext</code></td><td><span class="arg-highlight">dest</span> <span class="arg-highlight">source</span> <span class="arg-highlight">sourceOffset</span> <span class="arg-highlight">length</span></td><td>Zero <code>dest</code> and copy <code>length</code> bits from <code>source</code> starting at <code>sourceOffset</code></td></tr>
+                        <tr><td><code>ins</code></td><td><span class="arg-highlight">dest</span> <span class="arg-highlight">destOffset</span> <span class="arg-highlight">length</span> <span class="arg-highlight">source</span></td><td>Copy <code>length</code> bits from <code>source</code> into <code>dest</code> starting at <code>destOffset</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Stack & Device Commands -->
+        <section id="stack">
+            <div class="section-header">
+                <h2>Stack Operations & Device Command Protocol</h2>
+                <span class="tag">Memory & Peripheral Control</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead><tr><th>Instruction</th><th>Arguments</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr><td><code>push</code> / <code>pop</code></td><td><span class="arg-highlight">value</span> / <span class="arg-highlight">result</span></td><td>Push value to / pop value from local IC stack</td></tr>
+                        <tr><td><code>peek</code></td><td><span class="arg-highlight">result</span></td><td>Read top value of stack without popping</td></tr>
+                        <tr><td><code>poke</code></td><td><span class="arg-highlight">address</span> <span class="arg-highlight">value</span></td><td>Write value directly to stack memory at address</td></tr>
+                        <tr><td><code>get</code> / <code>put</code></td><td><span class="arg-highlight">result</span> <span class="arg-highlight">device</span> <span class="arg-highlight">address</span> ...</td><td>Read from / write to peripheral device stack at address</td></tr>
+                        <tr><td><code>clr</code> / <code>clrd</code></td><td><span class="arg-highlight">device</span> / <span class="arg-highlight">deviceId</span></td><td>Clear device stack memory (by pin or device ID)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: var(--text-heading); font-size: 1.05rem; margin-top: 20px; margin-bottom: 8px;">Sending Commands to Devices Example (Autolathe / Printer)</h3>
+            <p style="color: var(--text-dim); font-size: 0.88rem;">
+                Control specialized machines by bit-packing recipes and writing to address <code>0</code> of their stack:
+            </p>
+            <pre class="code-block"><code># Aliases for clarity
+alias Printer d0
+alias Command r0
+alias ItemQuantity r1
+alias ItemHash r2
+
+# Build recipe payload
+move ItemQuantity 1
+move ItemHash HASH("ItemKitPipe")
+
+move Command PrinterInstruction.ExecuteRecipe
+ins Command 8 8 ItemQuantity
+ins Command 16 32 ItemHash
+
+# Dispatch to machine stack
+clr Printer
+put Printer 0 Command</code></pre>
+        </section>
+    </div>
+
+</body>
+</html>

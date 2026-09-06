@@ -35,7 +35,7 @@
         }
 
         .container {
-            max-width: 1100px;
+            max-width: 1150px;
             margin: 0 auto;
         }
 
@@ -70,8 +70,8 @@
 
         .hub-lead {
             color: var(--text-dim);
-            font-size: 1.1rem;
-            max-width: 760px;
+            font-size: 1.05rem;
+            max-width: 800px;
             margin: 0 auto;
         }
 
@@ -83,7 +83,7 @@
             padding: 24px;
             margin-bottom: 40px;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
             gap: 20px;
         }
 
@@ -105,14 +105,14 @@
         /* Card Directory */
         .directory-title {
             color: var(--text-heading);
-            font-size: 1.4rem;
+            font-size: 1.35rem;
             margin-bottom: 20px;
             font-weight: 700;
         }
 
         .card-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
             gap: 24px;
             margin-bottom: 50px;
         }
@@ -198,7 +198,6 @@
             border-color: var(--accent-cyan);
         }
 
-        /* Footer */
         footer {
             text-align: center;
             padding-top: 30px;
@@ -211,60 +210,61 @@
 <body>
 
     <div class="container">
-        <!-- Main Hub Header -->
+        <!-- Header -->
         <header class="hub-header">
-            <span class="hub-tag">GitHub Pages Documentation Index</span>
+            <span class="hub-tag">GitHub Pages Central Index</span>
             <h1>Stationeers IC10 Engineering Hub</h1>
             <p class="hub-lead">
-                Centralized access to IC10 MIPS architecture conventions, interactive network labelers, 
-                and automation tools designed for Stationeers base management.
+                Centralized documentation and interactive field utilities for Stationeers: dynamic device labelers, 
+                Gases Update phase-change telemetry, compact pipeline/cable conventions, and official MIPS instruction sets.
             </p>
         </header>
 
-        <!-- Technical Specification Standards -->
+        <!-- System Architecture Standards -->
         <div class="system-rules">
             <div class="rule-item">
-                <h3>⚡ Tick Synchronized</h3>
-                <p>All routines adhere to 0.5s game ticks using <code>yield</code> to guarantee execution timing and prevent CPU halts.</p>
+                <h3>⚡ 0.5s Gametick Loop</h3>
+                <p>Every automation cycle uses <code>yield</code> or <code>sleep X</code> to guarantee execution timing and avoid CPU-overload halts.</p>
             </div>
             <div class="rule-item">
                 <h3>🏷️ Batch Hash Architecture</h3>
-                <p>Dual identification combining <code>deviceHash</code> and <code>nameHash</code> for pin-independent batching via <code>sbn/lbn</code>.</p>
+                <p>Simultaneous pin-independent control using <code>sbn/lbn</code> targeting matching <code>deviceHash</code> and <code>nameHash</code>.</p>
             </div>
             <div class="rule-item">
-                <h3>📏 Hardware Boundaries</h3>
-                <p>Strict enforcement of 128 code lines (0–127), 16 registers (r0–r15), and 6 hardware pin channels (d0–d5).</p>
+                <h3>🧪 Gases & Phase Changes</h3>
+                <p>Full support for all 42 phase elements from <em>The Gases Update</em>: cryogenic liquids, ices, and high-temp molten salts.</p>
             </div>
             <div class="rule-item">
-                <h3>🌡️ SI Unit Rigor</h3>
-                <p>Consistent atmospheric math utilizing Kelvin (K = °C + 273.15) and standard pressure in kilopascals (kPa).</p>
+                <h3>📏 Strict IC10 Boundaries</h3>
+                <p>Standardized on 128 lines of code (0–127), 16 registers (<code>r0</code>–<code>r15</code>), SI units in <strong>Kelvin</strong> and <strong>kPa</strong>.</p>
             </div>
         </div>
 
-        <!-- Navigation Directory -->
+        <!-- Directory Cards -->
         <h2 class="directory-title">Documentation & Interactive Tools</h2>
         <div class="card-grid">
 
-            <!-- Card 1: Interactive Device Naming Hub -->
+            <!-- Card 1: Engineering & Naming Hub -->
             <div class="hub-card">
                 <div>
                     <span class="card-icon">⚡</span>
-                    <h3 class="card-title">Device Naming Hub</h3>
+                    <h3 class="card-title">Engineering & Naming Hub</h3>
                     <p class="card-desc">
-                        Dynamic label generator and batch targeting calculator. Updates network naming schemes 
-                        in real-time based on your custom room selection.
+                        Interactive field utility with live room name calculation, network batch targeting hashes, 
+                        and infrastructure color conventions.
                     </p>
                     <ul class="card-features">
-                        <li>Sticky navigation with instant room name updates</li>
-                        <li>Quick-copy clipboard tags for game Labelers</li>
-                        <li>Custom ★ "Most Used" favorites system (persisted)</li>
-                        <li>Full coverage: Vanilla + Modular Consoles Reloaded</li>
+                        <li>Sticky navigation with dynamic room selector</li>
+                        <li>42 phase elements: Gases, Liquids, Ices & Salts</li>
+                        <li>Paint+ Spray Gun copy tags: <code>R G B | Glow | Roughness</code></li>
+                        <li>Compact Cable (HV/APC/Data) & Pipe hazard classes</li>
+                        <li>Custom ★ "Most Used" favorites with local storage</li>
                     </ul>
                 </div>
-                <a href="stationeers_engineering_hub.html" class="card-link">Open Naming Hub &rarr;</a>
+                <a href="stationeers_engineering_hub.html" class="card-link">Open Engineering Hub &rarr;</a>
             </div>
 
-            <!-- Card 2: Modular Consoles Reloaded Reference -->
+            <!-- Card 2: Modular Consoles Reference -->
             <div class="hub-card">
                 <div>
                     <span class="card-icon">🕹️</span>
@@ -273,31 +273,32 @@
                         Dedicated naming index and batch lookup reference table for the <em>Modular Consoles Reloaded</em> workshop modification.
                     </p>
                     <ul class="card-features">
-                        <li>Complete catalog: Big Levers, Dials, Slides, LEDs</li>
+                        <li>Full mod roster: Big Levers, Dials, Slides & LED panels</li>
+                        <li>Unified <code>[Room] System [Device] [Index]</code> syntax</li>
                         <li>Discrete Individual vs. Batch naming syntax</li>
-                        <li>Dark-mode GitHub ready layout</li>
-                        <li>Preconfigured MIPS hash binding examples</li>
+                        <li>Quick MIPS batch control binding targets</li>
                     </ul>
                 </div>
                 <a href="modular_consoles_naming.html" class="card-link">Open Modular Reference &rarr;</a>
             </div>
 
-            <!-- Card 3: IC10 MIPS Instruction Reference -->
+            <!-- Card 3: IC10 MIPS Reference Manual (Web View) -->
             <div class="hub-card">
                 <div>
                     <span class="card-icon">🧠</span>
                     <h3 class="card-title">IC10 Architecture & Syntax</h3>
                     <p class="card-desc">
-                        Comprehensive manual containing mathematical operations, bitwise manipulation, stack I/O instructions, and flow control tables.
+                        Complete web documentation converted directly from <code>IC10Reference.md</code>. 
+                        Includes all opcodes, flow control variants, and bitwise packing.
                     </p>
                     <ul class="card-features">
-                        <li>Complete opcode definitions: <code>l</code>, <code>sbn</code>, <code>select</code>, <code>bap</code></li>
-                        <li>Batch modes, Reagent hashes, and Slot variables</li>
-                        <li>Logic stack instruction protocols (<code>put/get</code>)</li>
-                        <li>Standard constants: <code>rgas</code>, <code>deg2rad</code>, epsilon</li>
+                        <li>I/O opcodes: <code>l</code>, <code>s</code>, <code>lbn</code>, <code>sbn</code>, <code>lbns</code></li>
+                        <li>Flow control: absolute, relative, and <code>*al</code> subroutines</li>
+                        <li>Bit manipulation: <code>ins</code>, <code>ext</code>, arithmetic/logical shifts</li>
+                        <li>Peripheral stack protocol & automated recipe execution</li>
                     </ul>
                 </div>
-                <a href="https://github.com" class="card-link" id="repoLink">View Markdown Reference &rarr;</a>
+                <a href="ic10_reference.html" class="card-link">Open IC10 Reference &rarr;</a>
             </div>
 
         </div>
