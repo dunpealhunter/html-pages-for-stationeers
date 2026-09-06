@@ -182,6 +182,11 @@
             border-color: rgba(63, 185, 80, 0.4);
         }
 
+        .nav-btn.accent-scripts {
+            color: var(--accent-cyan);
+            border-color: rgba(88, 166, 255, 0.4);
+        }
+
         /* Main Container */
         .container {
             max-width: 1300px;
@@ -365,20 +370,133 @@
             color: var(--accent-orange);
         }
 
-        /* Color swatch chips */
+        /* Color swatch chips & controls */
         .color-chip {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
             font-weight: 600;
         }
 
         .swatch {
-            width: 18px;
-            height: 18px;
+            width: 22px;
+            height: 22px;
             border-radius: 4px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.25);
             display: inline-block;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.4);
+            flex-shrink: 0;
+        }
+
+        .filter-bar {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 14px;
+            flex-wrap: wrap;
+        }
+
+        .btn-filter {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 6px 14px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-filter:hover, .btn-filter.active {
+            background: var(--accent-cyan);
+            color: #0d1117;
+            border-color: var(--accent-cyan);
+        }
+
+        .copy-pill {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: monospace;
+            font-size: 0.82rem;
+            transition: all 0.15s;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-pill:hover {
+            border-color: var(--accent-cyan);
+            color: var(--accent-cyan);
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        /* Code block styling */
+        .script-blueprint {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 30px;
+        }
+
+        .blueprint-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+            padding-bottom: 12px;
+            margin-bottom: 16px;
+        }
+
+        .blueprint-title {
+            color: var(--accent-cyan);
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .code-wrap {
+            position: relative;
+            background-color: #0b0e14;
+            border: 1px solid #21262d;
+            border-radius: 6px;
+            padding: 16px;
+            overflow-x: auto;
+            margin: 16px 0;
+            font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+            font-size: 0.88rem;
+            line-height: 1.45;
+            color: #e6edf3;
+        }
+
+        .btn-copy-code {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            font-size: 0.78rem;
+            padding: 4px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-copy-code:hover {
+            color: var(--accent-cyan);
+            border-color: var(--accent-cyan);
+        }
+
+        .blueprint-expl {
+            background: rgba(88, 166, 255, 0.05);
+            border-left: 4px solid var(--accent-cyan);
+            padding: 12px 16px;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.9rem;
+            color: var(--text-main);
         }
 
         /* Rules Cards Grid */
@@ -463,7 +581,8 @@
         </div>
         <nav class="nav-links">
             <a href="#section-standards" class="nav-btn accent-standards">📐 IC10 Standards & Units</a>
-            <a href="#section-colorcode" class="nav-btn accent-colors">🎨 Paint+ Color Standards</a>
+            <a href="#section-paintplus" class="nav-btn accent-colors">🎨 Paint+ Elements & Spray Gun</a>
+            <a href="#section-blueprints" class="nav-btn accent-scripts">📜 IC10 Script Library</a>
             <a href="#section-favorites" class="nav-btn star">★ Most Used (<span id="favCount">0</span>)</a>
             <a href="#section-atmo" class="nav-btn">💨 Atmospherics</a>
             <a href="#section-power" class="nav-btn">⚡ Power & Battery</a>
@@ -478,12 +597,12 @@
     <div class="container">
         <!-- Hero Guideline -->
         <div class="hero-banner">
-            <h1>Unified IC10 Systems Reference & Device Naming Hub</h1>
+            <h1>Unified IC10 Systems Reference & Engineering Hub</h1>
             <p>
-                Comprehensive reference integrating official IC10 MIPS execution standards, <strong>Paint+</strong> color conventions for piping and room environments, dynamic device network labelers, and direct batch-targeting hashes.
+                Complete technical manual integrating IC10 MIPS architecture rules, comprehensive <strong>Paint+</strong> color definitions for every gas, liquid, and solid with direct Spray Gun copy values, dynamic network labelers, and production-tested automation scripts.
             </p>
             <div class="convention-formula">
-                Format: <strong>[Room] [System] [Device] [Index]</strong> &nbsp;|&nbsp; Batch Target: <strong>[Room] [System] [Device]</strong>
+                Naming: <strong>[Room] [System] [Device] [Index]</strong> &nbsp;|&nbsp; Batch Hash: <strong>[Room] [System] [Device]</strong>
             </div>
         </div>
 
@@ -491,12 +610,12 @@
         <section id="section-standards">
             <div class="section-header">
                 <h2>📐 IC10 Technical Architecture & Hardware Limits</h2>
-                <span class="tag">MIPS Rules & Best Practices</span>
+                <span class="tag">MIPS Standards & Mechanics</span>
             </div>
             <div class="rules-grid">
                 <div class="rule-card">
                     <h3>⚡ 0.5s Gametick Loop</h3>
-                    <p>Always include <code>yield</code> or <code>sleep X</code> in your main execution loop to prevent CPU halts and maintain tick synchronization.</p>
+                    <p>Always include <code>yield</code> or <code>sleep X</code> in the main execution loop to prevent CPU halts and maintain tick synchronization.</p>
                 </div>
                 <div class="rule-card">
                     <h3>📏 Hardware Boundaries</h3>
@@ -513,85 +632,259 @@
             </div>
         </section>
 
-        <!-- Section: Paint+ Color Standards -->
-        <section id="section-colorcode">
+        <!-- Section: Paint+ All Elements & Spray Gun -->
+        <section id="section-paintplus">
             <div class="section-header">
-                <h2>🎨 Paint+ & Environmental Color Conventions</h2>
-                <span class="tag">Piping, Rooms & Dynamic Telemetry</span>
+                <h2>🎨 Paint+ Element Colors & Spray Gun Presets</h2>
+                <span class="tag">Gases, Liquids & Solids</span>
             </div>
+            <p style="color: var(--text-dim); margin-bottom: 14px; font-size: 0.9rem;">
+                Configured specifically for the <strong>Paint+ Spray Gun</strong> (RGB sliders 0–255, Glow 0.00–1.00, Roughness 0.00–1.00). Click any RGB or Finish tag to copy the exact parameter values directly to your clipboard.
+            </p>
+            
+            <div class="filter-bar">
+                <button class="btn-filter active" onclick="filterPaint('all', this)">All Elements (30)</button>
+                <button class="btn-filter" onclick="filterPaint('Gas', this)">Gases (7)</button>
+                <button class="btn-filter" onclick="filterPaint('Liquid', this)">Liquids (7)</button>
+                <button class="btn-filter" onclick="filterPaint('Solid', this)">Solids & Alloys (16)</button>
+            </div>
+
             <div class="table-wrap">
-                <table>
+                <table id="paintTable">
                     <thead>
                         <tr>
-                            <th style="width: 25%;">Subsystem / Domain</th>
-                            <th style="width: 25%;">Paint+ Swatch</th>
-                            <th style="width: 15%;">Logic Color ID</th>
-                            <th style="width: 35%;">Functional Application & Environment</th>
+                            <th style="width: 22%;">Element / Phase</th>
+                            <th style="width: 20%;">Paint+ Swatch</th>
+                            <th style="width: 20%;">RGB Values (0–255)</th>
+                            <th style="width: 18%;">Glow & Roughness</th>
+                            <th style="width: 20%;">Engineering Application</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><strong>Oxygen (O₂)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #008080;"></span> Teal / Ice Blue</span></td>
-                            <td><code>Color = 10</code></td>
-                            <td>Breathable atmosphere supply; life support manifolds.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Nitrogen (N₂)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #708090;"></span> Slate / Dark Grey</span></td>
-                            <td><code>Color = 7</code></td>
-                            <td>Inert buffer carrier gas; pressure equalization lines.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Carbon Dioxide (CO₂)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #800000;"></span> Maroon / Charcoal</span></td>
-                            <td><code>Color = 9</code></td>
-                            <td>Greenhouse botanical feed; waste gas return loops.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Volatiles / Fuel (H₂ / Mix)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #ffbf00;"></span> Amber / Safety Orange</span></td>
-                            <td><code>Color = 5</code></td>
-                            <td>Combustion fuel lines, furnace mixing, explosive hazard.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Pollutant (Toxic / X)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #32cd32;"></span> Lime / Olive</span></td>
-                            <td><code>Color = 8</code></td>
-                            <td>Filtration exhaust, toxic scrubbing lines, hazardous waste.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Nitrous Oxide (N₂O)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #8a2be2;"></span> Violet / Purple</span></td>
-                            <td><code>Color = 6</code></td>
-                            <td>High-temp propellant and advanced oxidizer lines.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Water (Liquid H₂O / Steam)</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #000080;"></span> Navy (Liquid) / Cyan (Steam)</span></td>
-                            <td><code>Color = 0</code></td>
-                            <td>Hydration piping, hydroponic loops, cooling radiators.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Safe Telemetry Status</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #2ea44f;"></span> Green</span></td>
-                            <td><code>Color = 2</code></td>
-                            <td>Nominal pressure (80–120 kPa) and temperature (15–30 °C).</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Warning Telemetry Status</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #d29922;"></span> Yellow / Amber</span></td>
-                            <td><code>Color = 5</code></td>
-                            <td>Moderate pressure/thermal excursion outside nominal comfort.</td>
-                        </tr>
-                        <tr>
-                            <td><strong>Danger Telemetry Status</strong></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #cf222e;"></span> Red</span></td>
-                            <td><code>Color = 4</code></td>
-                            <td>Vacuum, overpressure, fire hazard, or toxic pollutant present.</td>
-                        </tr>
+                    <tbody id="paintTableBody">
+                        <!-- Populated by JS -->
                     </tbody>
                 </table>
+            </div>
+        </section>
+
+        <!-- Section: Verified IC10 Automation Blueprints -->
+        <section id="section-blueprints">
+            <div class="section-header">
+                <h2>📜 Verified IC10 Script Library & Blueprints</h2>
+                <span class="tag">Complete MIPS Automation</span>
+            </div>
+
+            <!-- Blueprint 1: Habitat Atmospheric & Dual Telemetry -->
+            <div class="script-blueprint">
+                <div class="blueprint-header">
+                    <span class="blueprint-title">1. Habitat Atmosphere & Dual Modular Gauge Telemetry</span>
+                    <span class="tag">Life Support</span>
+                </div>
+                <h4 style="color: var(--text-heading); margin-bottom: 8px;">1. Pentoewijzing (Pin Configuration)</h4>
+                <div class="table-wrap" style="margin-bottom: 14px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Apparaat</th>
+                                <th>Verwachte Naam / Functie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>d0</code></td><td>Gas Sensor</td><td><code>[Room] Atmo Sensor Gas 01</code> (Meet druk in kPa en temperatuur in K)</td></tr>
+                            <tr><td><code>d1</code></td><td>Modular Gauge 1</td><td><code>[Room] System Gauge Logic 01</code> (Realtime weergave luchtdruk)</td></tr>
+                            <tr><td><code>d2</code></td><td>Modular Gauge 2</td><td><code>[Room] System Gauge Logic 02</code> (Realtime weergave temperatuur)</td></tr>
+                            <tr><td><code>d3</code> - <code>d5</code></td><td>Niet toegewezen</td><td>Vrij voor lokale actuatoren of noodafsluiters</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="color: var(--text-heading); margin-bottom: 8px;">2. De Code</h4>
+                <div class="code-wrap">
+                    <button class="btn-copy-code" onclick="copyBlueprintCode('code1')">Copy Code</button>
+                    <pre><code id="code1"># ========================================================
+# Stationeers IC10: Habitat Atmosphere & Telemetry Link
+# ========================================================
+
+# Aliases voor hardware pennen
+alias Sensor d0
+alias DisplayPres d1
+alias DisplayTemp d2
+
+# Aliases voor registers
+alias Pres r0
+alias Temp r1
+alias Pollutant r2
+alias StatusColor r3
+alias IsDanger r4
+alias IsWarning r5
+
+# Constanten voor comfort- en gevaargrenzen
+define MinPres 80.0       # Ondergrens veilige druk in kPa
+define MaxPres 120.0      # Bovengrens veilige druk in kPa
+define MinTemp 288.15     # Ondergrens temperatuur (15 C in Kelvin)
+define MaxTemp 303.15     # Bovengrens temperatuur (30 C in Kelvin)
+
+# Paint+ en IC10 Color identifiers
+define ColorSafe 2        # Groen (Nominaal)
+define ColorWarning 5     # Geel / Amber (Waarschuwing)
+define ColorDanger 4      # Rood (Kritiek)
+
+# Batch hashes voor zaalverlichting
+define LightType HASH("StructureWallLight")
+define LightName HASH("Hallway Light Wall")
+
+main:
+    # Synchroniseer met de 0.5s gametick cyclus
+    yield
+
+    # 1. Lees omgevingsdata uit via de gassensor
+    l Pres Sensor Pressure
+    l Temp Sensor Temperature
+    l Pollutant Sensor PollutantRatio
+
+    # 2. Update de modulaire displaypanelen
+    s DisplayPres Setting Pres
+    s DisplayTemp Setting Temp
+
+    # 3. Controleer op gevaar: vacuüm (< 40 kPa) of toxisch gas (> 1%)
+    slt IsDanger Pres 40.0
+    bgt Pollutant 0.01 setDanger
+    bnez IsDanger setDanger
+
+    # 4. Controleer op waarschuwing: temperatuur of druk buiten bereik
+    slt IsWarning Pres MinPres
+    bgt Pres MaxPres setWarning
+    slt r6 Temp MinTemp
+    or IsWarning IsWarning r6
+    bgt Temp MaxTemp setWarning
+    bnez IsWarning setWarning
+
+    # 5. Geen afwijkingen gedetecteerd: status is veilig
+    move StatusColor ColorSafe
+    j applyStatus
+
+setDanger:
+    move StatusColor ColorDanger
+    j applyStatus
+
+setWarning:
+    move StatusColor ColorWarning
+
+applyStatus:
+    # 6. Schrijf de berekende kleur weg naar de zaalverlichting via batch-instructie
+    sbn LightType LightName Color StatusColor
+
+    # Herhaal routine
+    j main</code></pre>
+                </div>
+
+                <h4 style="color: var(--text-heading); margin-bottom: 6px;">3. Korte Uitleg & Afstelling</h4>
+                <div class="blueprint-expl">
+                    Dit script leest elke tick van 0.5s de druk, temperatuur en het percentage vervuiling uit via sensor <code>d0</code> en toont dit op meters <code>d1</code> en <code>d2</code>. Bij vacuüm, overdruk of giftige gassen kleurt alle gekoppelde verlichting via <code>sbn</code> direct rood of geel. De drempelwaardes pas je naar wens aan via <code>MinPres</code> (80 kPa), <code>MaxPres</code> (120 kPa), <code>MinTemp</code> (288.15 K) en <code>MaxTemp</code> (303.15 K).
+                </div>
+            </div>
+
+            <!-- Blueprint 2: Pipe Element Telemetry & Flow Control -->
+            <div class="script-blueprint">
+                <div class="blueprint-header">
+                    <span class="blueprint-title">2. Pipe Element Analyzer & Paint+ Status Link</span>
+                    <span class="tag">Atmospherics & Piping</span>
+                </div>
+                <h4 style="color: var(--text-heading); margin-bottom: 8px;">1. Pentoewijzing (Pin Configuration)</h4>
+                <div class="table-wrap" style="margin-bottom: 14px;">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Apparaat</th>
+                                <th>Verwachte Naam / Functie</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><code>d0</code></td><td>Pipe Analyzer</td><td><code>[Room] Atmo Analyzer Pipe 01</code> (Analysator op het leidingtraject)</td></tr>
+                            <tr><td><code>d1</code></td><td>LED Display</td><td><code>[Room] System Display LED 01</code> (Realtime gastemperatuur in Kelvin)</td></tr>
+                            <tr><td><code>d2</code></td><td>Volume Pump / Valve</td><td><code>[Room] Atmo Pump Volume 01</code> (Optioneel: overdrukbeveiliging)</td></tr>
+                            <tr><td><code>d3</code> - <code>d5</code></td><td>Niet toegewezen</td><td>Vrij voor verdere leidingsegmenten</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h4 style="color: var(--text-heading); margin-bottom: 8px;">2. De Code</h4>
+                <div class="code-wrap">
+                    <button class="btn-copy-code" onclick="copyBlueprintCode('code2')">Copy Code</button>
+                    <pre><code id="code2"># ========================================================
+# Stationeers IC10: Pipe Element Identifier & Status Link
+# ========================================================
+
+# Aliases voor hardware pennen
+alias Analyzer d0
+alias Display d1
+
+# Aliases voor registers
+alias Temp r0
+alias TotalMoles r1
+alias Oxygen r2
+alias Volatiles r3
+alias Pollutant r4
+alias TargetColor r5
+
+# Logische kleurcodes conform Stationeers standaard
+define ColorTeal 10     # Zuurstof / Koud
+define ColorOrange 5    # Volatiles / Brandstof
+define ColorGreen 2     # Veilig / Neutraal
+define ColorRed 4       # Gevaar / Toxisch
+
+# Batch targeting voor leiding-statuslampen
+define LightType HASH("StructureWallLight")
+define LightName HASH("Pipe Status Light")
+
+main:
+    # 0.5s tick synchronisatie en CPU-ontlasting
+    yield
+
+    # 1. Lees leidingcondities uit
+    l Temp Analyzer Temperature
+    l TotalMoles Analyzer TotalMoles
+    l Oxygen Analyzer RatioOxygen
+    l Volatiles Analyzer RatioVolatiles
+    l Pollutant Analyzer RatioPollutant
+
+    # 2. Toon leidingtemperatuur direct op het display (in Kelvin)
+    s Display Setting Temp
+
+    # 3. Bepaal dominante inhoud voor netwerk-alarmering
+    bgt Volatiles 0.10 setVolatiles
+    bgt Pollutant 0.05 setPollutant
+    bgt Oxygen 0.50 setOxygen
+
+    # Standaard neutrale veilige status
+    move TargetColor ColorGreen
+    j updateLights
+
+setVolatiles:
+    move TargetColor ColorOrange
+    j updateLights
+
+setPollutant:
+    move TargetColor ColorRed
+    j updateLights
+
+setOxygen:
+    move TargetColor ColorTeal
+
+updateLights:
+    # 4. Update wandindicatielampen in batchmodus via type en naam
+    sbn LightType LightName Color TargetColor
+
+    # Herhaal cyclus
+    j main</code></pre>
+                </div>
+
+                <h4 style="color: var(--text-heading); margin-bottom: 6px;">3. Korte Uitleg & Afstelling</h4>
+                <div class="blueprint-expl">
+                    Dit script monitort de moleculaire compositie van een leiding via de Pipe Analyzer op <code>d0</code> en toont de temperatuur op <code>d1</code>. Bij aanwezigheid van brandbare Volatiles (>10%), toxische stoffen (>5%) of pure zuurstof schakelen de leidingindicatoren direct om naar hun herkenbare Paint+ signaalkleur. Pas de drempelpercentages aan in de <code>bgt</code>-instructies voor fijnmazigere procesregeling.
+                </div>
             </div>
         </section>
 
@@ -767,6 +1060,98 @@
     <div id="toast">Copied to clipboard!</div>
 
     <script>
+        // Full Paint+ Elements dataset
+        const paintElements = [
+            // Gases
+            { type: "Gas", name: "Oxygen (O₂)", rgb: "0, 180, 216", r: 0, g: 180, b: 216, glow: "0.05", rough: "0.30", hex: "#00b4d8", desc: "Breathable life support supply" },
+            { type: "Gas", name: "Nitrogen (N₂)", rgb: "112, 128, 144", r: 112, g: 128, b: 144, glow: "0.00", rough: "0.50", hex: "#708090", desc: "Inert buffer gas; balance" },
+            { type: "Gas", name: "Carbon Dioxide (CO₂)", rgb: "128, 0, 32", r: 128, g: 0, b: 32, glow: "0.00", rough: "0.60", hex: "#800020", desc: "Greenhouse botanical feed" },
+            { type: "Gas", name: "Volatiles (H₂)", rgb: "255, 140, 0", r: 255, g: 140, b: 0, glow: "0.20", rough: "0.25", hex: "#ff8c00", desc: "Combustion fuel; explosive" },
+            { type: "Gas", name: "Pollutant (Toxic / X)", rgb: "124, 252, 0", r: 124, g: 252, b: 0, glow: "0.15", rough: "0.40", hex: "#7cfc00", desc: "Scrubber waste & reject" },
+            { type: "Gas", name: "Nitrous Oxide (N₂O)", rgb: "147, 51, 234", r: 147, g: 51, b: 234, glow: "0.10", rough: "0.30", hex: "#9333ea", desc: "Propellant & oxidizer" },
+            { type: "Gas", name: "Steam (H₂O Vapor)", rgb: "186, 230, 253", r: 186, g: 230, b: 253, glow: "0.05", rough: "0.20", hex: "#bae6fd", desc: "Exhaust & condenser feed" },
+
+            // Liquids
+            { type: "Liquid", name: "Water (Liquid H₂O)", rgb: "14, 80, 210", r: 14, g: 80, b: 210, glow: "0.00", rough: "0.10", hex: "#0e50d2", desc: "Hydration & coolant lines" },
+            { type: "Liquid", name: "Liquid Oxygen (LOX)", rgb: "0, 110, 180", r: 0, g: 110, b: 180, glow: "0.05", rough: "0.10", hex: "#006eb4", desc: "Cryogenic rocket oxidizer" },
+            { type: "Liquid", name: "Liquid Nitrogen (LN₂)", rgb: "70, 85, 105", r: 70, g: 85, b: 105, glow: "0.00", rough: "0.15", hex: "#465569", desc: "Cryo cooling loop circuit" },
+            { type: "Liquid", name: "Liquid CO₂ (LCO₂)", rgb: "80, 0, 20", r: 80, g: 0, b: 20, glow: "0.00", rough: "0.15", hex: "#500014", desc: "High density storage" },
+            { type: "Liquid", name: "Liquid Volatiles (LH₂)", rgb: "220, 90, 0", r: 220, g: 90, b: 0, glow: "0.15", rough: "0.10", hex: "#dc5a00", desc: "Cryo rocket propellant" },
+            { type: "Liquid", name: "Liquid Pollutant (LX)", rgb: "50, 160, 0", r: 50, g: 160, b: 0, glow: "0.10", rough: "0.15", hex: "#32a000", desc: "Corrosive liquid disposal" },
+            { type: "Liquid", name: "Liquid N₂O (LN₂O)", rgb: "90, 20, 160", r: 90, g: 20, b: 160, glow: "0.05", rough: "0.10", hex: "#5a14a0", desc: "Cryogenic dense oxidizer" },
+
+            // Solids & Alloys
+            { type: "Solid", name: "Iron (Fe)", rgb: "168, 118, 92", r: 168, g: 118, b: 92, glow: "0.00", rough: "0.70", hex: "#a8765c", desc: "Primary frame & machinery smelting" },
+            { type: "Solid", name: "Copper (Cu)", rgb: "217, 108, 63", r: 217, g: 108, b: 63, glow: "0.00", rough: "0.35", hex: "#d96c3f", desc: "Electrical cables & electronics" },
+            { type: "Solid", name: "Gold (Au)", rgb: "255, 215, 0", r: 255, g: 215, b: 0, glow: "0.05", rough: "0.15", hex: "#ffd700", desc: "IC10 logic chips & microcircuits" },
+            { type: "Solid", name: "Lead (Pb)", rgb: "75, 85, 99", r: 75, g: 85, b: 99, glow: "0.00", rough: "0.80", hex: "#4b5563", desc: "Radiation shielding & batteries" },
+            { type: "Solid", name: "Silicon (Si)", rgb: "156, 163, 175", r: 156, g: 163, b: 175, glow: "0.00", rough: "0.20", hex: "#9ca3af", desc: "Solar panels & glass sheets" },
+            { type: "Solid", name: "Silver (Ag)", rgb: "240, 244, 248", r: 240, g: 244, b: 248, glow: "0.05", rough: "0.10", hex: "#f0f4f8", desc: "Advanced sensors & precision kits" },
+            { type: "Solid", name: "Nickel (Ni)", rgb: "180, 165, 140", r: 180, g: 165, b: 140, glow: "0.00", rough: "0.45", hex: "#b4a58c", desc: "Invar / Constantan precursor" },
+            { type: "Solid", name: "Cobalt (Co)", rgb: "30, 90, 200", r: 30, g: 90, b: 200, glow: "0.05", rough: "0.30", hex: "#1e5ac8", desc: "Stellite & Waspaloy aerospace alloy" },
+            { type: "Solid", name: "Uranium (U)", rgb: "50, 205, 50", r: 50, g: 205, b: 50, glow: "0.40", rough: "0.50", hex: "#32cd32", desc: "Fission fuel rods & RTGs" },
+            { type: "Solid", name: "Coal (Carbon / C)", rgb: "25, 25, 25", r: 25, g: 25, b: 25, glow: "0.00", rough: "0.95", hex: "#191919", desc: "Steel smelting reagent & fuel" },
+            { type: "Solid", name: "Steel Alloy", rgb: "200, 205, 215", r: 200, g: 205, b: 215, glow: "0.00", rough: "0.25", hex: "#c8cdd7", desc: "Structural airlocks & heavy hulls" },
+            { type: "Solid", name: "Electrum Alloy", rgb: "220, 220, 120", r: 220, g: 220, b: 120, glow: "0.05", rough: "0.20", hex: "#dcdc78", desc: "Logic motherboards & analyzers" },
+            { type: "Solid", name: "Invar Alloy", rgb: "130, 140, 150", r: 130, g: 140, b: 150, glow: "0.00", rough: "0.40", hex: "#828c96", desc: "Thermal expansion resistant pipes" },
+            { type: "Solid", name: "Constantan Alloy", rgb: "200, 130, 80", r: 200, g: 130, b: 80, glow: "0.00", rough: "0.35", hex: "#c88250", desc: "Heating elements & heavy wiring" },
+            { type: "Solid", name: "Solder Alloy", rgb: "190, 195, 200", r: 190, g: 195, b: 200, glow: "0.00", rough: "0.55", hex: "#bec3c8", desc: "Component circuit fabrication" },
+            { type: "Solid", name: "Stellite Superalloy", rgb: "110, 180, 180", r: 110, g: 180, b: 180, glow: "0.10", rough: "0.15", hex: "#6eb4b4", desc: "Turbine blades & rocket engines" }
+        ];
+
+        let activePaintFilter = "all";
+
+        function renderPaintTable() {
+            const tbody = document.getElementById("paintTableBody");
+            const filtered = activePaintFilter === "all" 
+                ? paintElements 
+                : paintElements.filter(e => e.type === activePaintFilter);
+
+            tbody.innerHTML = filtered.map(item => {
+                const fullPaintString = `R:${item.r} G:${item.g} B:${item.b} | Glow:${item.glow} | Roughness:${item.rough}`;
+                return `
+                    <tr>
+                        <td>
+                            <span class="badge-system">${item.type}</span>
+                            <strong>${item.name}</strong>
+                        </td>
+                        <td>
+                            <span class="color-chip">
+                                <span class="swatch" style="background-color: ${item.hex};"></span>
+                                <code>${item.hex}</code>
+                            </span>
+                        </td>
+                        <td>
+                            <span class="copy-pill" onclick="copyText('${item.rgb}')" title="Click to copy RGB: ${item.rgb}">
+                                📋 ${item.rgb}
+                            </span>
+                        </td>
+                        <td>
+                            <span class="copy-pill" onclick="copyText('${fullPaintString}')" title="Click to copy full Paint+ settings">
+                                ✨ G:${item.glow} &bull; R:${item.rough}
+                            </span>
+                        </td>
+                        <td style="color: var(--text-dim); font-size: 0.85rem;">
+                            ${item.desc}
+                        </td>
+                    </tr>
+                `;
+            }).join("");
+        }
+
+        function filterPaint(type, btn) {
+            activePaintFilter = type;
+            document.querySelectorAll(".btn-filter").forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            renderPaintTable();
+        }
+
+        function copyBlueprintCode(elemId) {
+            const code = document.getElementById(elemId).textContent;
+            copyText(code);
+        }
+
+        // Devices dataset for Network Naming
         const deviceDatabase = [
             // Atmospherics
             { id: "vent-active", cat: "atmo", name: "Active Vent", sys: "Atmo", dev: "Vent Active", defIndex: "01", fav: true },
@@ -948,6 +1333,8 @@
             renderAll();
         });
 
+        // Initialize views
+        renderPaintTable();
         renderAll();
     </script>
 </body>
