@@ -652,11 +652,10 @@
                 <table id="paintTable">
                     <thead>
                         <tr>
-                            <th style="width: 22%;">Element / Phase</th>
-                            <th style="width: 20%;">Paint+ Swatch</th>
-                            <th style="width: 20%;">RGB Values (0–255)</th>
-                            <th style="width: 18%;">Glow & Roughness</th>
-                            <th style="width: 20%;">Engineering Application</th>
+                            <th style="width: 20%;">Element / Phase</th>
+                            <th style="width: 15%;">Paint+ Swatch</th>
+                            <th style="width: 42%;">Paint+ Settings (Click to Copy)</th>
+                            <th style="width: 23%;">Engineering Application</th>
                         </tr>
                     </thead>
                     <tbody id="paintTableBody">
@@ -1119,13 +1118,8 @@
                             </span>
                         </td>
                         <td>
-                            <span class="copy-pill" onclick="copyText('${item.rgb}')" title="Click to copy RGB: ${item.rgb}">
-                                📋 ${item.rgb}
-                            </span>
-                        </td>
-                        <td>
-                            <span class="copy-pill" onclick="copyText('${fullPaintString}')" title="Click to copy full Paint+ settings">
-                                ✨ G:${item.glow} &bull; R:${item.rough}
+                            <span class="copy-pill" onclick="copyText('${fullPaintString}')" title="Click to copy format: ${fullPaintString}">
+                                📋 <code>${fullPaintString}</code>
                             </span>
                         </td>
                         <td style="color: var(--text-dim); font-size: 0.85rem;">
