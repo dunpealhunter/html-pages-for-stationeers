@@ -586,6 +586,7 @@
             <a href="#section-paintplus" class="nav-btn accent-colors">🎨 Paint+ Elements & Spray Gun</a>
             <a href="#section-favorites" class="nav-btn star">★ Most Used (<span id="favCount">0</span>)</a>
             <a href="#section-atmo" class="nav-btn">💨 Atmospherics</a>
+            <a href="#section-liquid" class="nav-btn">💧 Liquid Systems</a>
             <a href="#section-power" class="nav-btn">⚡ Power & Battery</a>
             <a href="#section-lighting" class="nav-btn">💡 Lighting</a>
             <a href="#section-access" class="nav-btn">🚪 Access & Doors</a>
@@ -946,6 +947,27 @@
                         </tr>
                     </thead>
                     <tbody class="category-body" data-category="atmo"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Liquid Systems & Hydraulics -->
+        <section id="section-liquid">
+            <div class="section-header">
+                <h2>💧 Liquid Systems, Cryogenics & Hydraulics</h2>
+                <span class="tag">Liquid Network & Phase Changes</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Liquid Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="liquid"></tbody>
                 </table>
             </div>
         </section>
@@ -1651,6 +1673,20 @@
             { id: "condenser", cat: "atmo", name: "Condenser", sys: "Atmo", dev: "Condenser", defIndex: "01", fav: false },
             { id: "evaporator", cat: "atmo", name: "Evaporator", sys: "Atmo", dev: "Evaporator", defIndex: "01", fav: false },
 
+            // Liquid Systems & Hydraulics
+            { id: "pipe-analyzer-liquid", cat: "liquid", name: "Liquid Pipe Analyzer", sys: "Liquid", dev: "Analyzer Pipe", defIndex: "01", fav: true },
+            { id: "pump-volume-liquid", cat: "liquid", name: "Liquid Volume Pump", sys: "Liquid", dev: "Pump Volume", defIndex: "01", fav: true },
+            { id: "valve-digital-liquid", cat: "liquid", name: "Liquid Digital Valve", sys: "Liquid", dev: "Valve Digital", defIndex: "01", fav: false },
+            { id: "pressure-reg-liquid", cat: "liquid", name: "Liquid Pressure Regulator", sys: "Liquid", dev: "Regulator", defIndex: "01", fav: false },
+            { id: "back-pressure-liquid", cat: "liquid", name: "Liquid Back Pressure Regulator", sys: "Liquid", dev: "Regulator Back", defIndex: "01", fav: false },
+            { id: "filtration-liquid", cat: "liquid", name: "Liquid Filtration Machine", sys: "Liquid", dev: "Filter", defIndex: "01", fav: true },
+            { id: "drain-liquid", cat: "liquid", name: "Liquid Drain", sys: "Liquid", dev: "Drain", defIndex: "01", fav: false },
+            { id: "radiator-liquid", cat: "liquid", name: "Liquid Radiator", sys: "Liquid", dev: "Radiator", defIndex: "01", fav: false },
+            { id: "bottle-filler-liquid", cat: "liquid", name: "Liquid Bottle Filler", sys: "Liquid", dev: "Filler Bottle", defIndex: "01", fav: false },
+            { id: "tank-liquid-small", cat: "liquid", name: "Small Liquid Tank", sys: "Liquid", dev: "Tank Small", defIndex: "01", fav: false },
+            { id: "tank-liquid-large", cat: "liquid", name: "Large Liquid Tank", sys: "Liquid", dev: "Tank Large", defIndex: "01", fav: false },
+            { id: "connector-liquid", cat: "liquid", name: "Liquid Pipe Connector", sys: "Liquid", dev: "Connector", defIndex: "01", fav: false },
+
             // Power
             { id: "apc", cat: "power", name: "Area Power Control (APC)", sys: "Power", dev: "APC", defIndex: "01", fav: true },
             { id: "battery-small", cat: "power", name: "Station Battery (Small)", sys: "Power", dev: "Battery Small", defIndex: "01", fav: false },
@@ -1790,7 +1826,7 @@
         function renderAll() {
             const room = getRoom();
 
-            const categories = ["atmo", "power", "lighting", "access", "logic", "modular", "prod"];
+            const categories = ["atmo", "liquid", "power", "lighting", "access", "logic", "modular", "prod"];
             categories.forEach(cat => {
                 const tbody = document.querySelector(`.category-body[data-category="${cat}"]`);
                 if (tbody) {
