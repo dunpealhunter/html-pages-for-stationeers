@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ModularConsolesReloaded - Naming Convention</title>
+    <style>
+        :root {
+            --bg-color: #0d1117;
+            --text-color: #c9d1d9;
+            --table-border: #30363d;
+            --table-header-bg: #161b22;
+            --table-row-alt: #0d1117;
+            --table-row-hover: #1f2428;
+            --accent-color: #58a6ff;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px;
+        }
+        h1, h2 {
+            color: var(--accent-color);
+            border-bottom: 1px solid var(--table-border);
+            padding-bottom: 10px;
+        }
+        p { margin-bottom: 20px; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: var(--bg-color);
+            border: 1px solid var(--table-border);
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--table-border);
+        }
+        th {
+            background-color: var(--table-header-bg);
+            font-weight: 600;
+        }
+        tr:nth-child(even) {
+            background-color: var(--table-row-alt);
+        }
+        tr:hover {
+            background-color: var(--table-row-hover);
+        }
+        code {
+            background-color: rgba(110, 118, 129, 0.4);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>ModularConsolesReloaded Naming Convention</h1>
+    <p>Standard format: <code>[Room] [System] [Device] [Index]</code>. Omit the <code>[Index]</code> when setting up batch targeting via IC10 networks.</p>
+
+    <h2>Input & Controls</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Device Mod Name</th>
+                <th>Individual Name (For Network/Labeler)</th>
+                <th>Batch Target Name (For sbn/lbn)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>🕹️ Big Lever</td><td><code>Room System Lever Big 01</code></td><td><code>Room System Lever Big</code></td></tr>
+            <tr><td>🪪 Access Card Reader</td><td><code>Room System Reader Card 01</code></td><td><code>Room System Reader Card</code></td></tr>
+            <tr><td>🔘 Logic Dials</td><td><code>Room System Dial Logic 01</code></td><td><code>Room System Dial Logic</code></td></tr>
+            <tr><td>🚨 Emergency Button</td><td><code>Room System Button Emerg 01</code></td><td><code>Room System Button Emerg</code></td></tr>
+            <tr><td>🛑 Flip Cover Switch</td><td><code>Room System Switch Cover 01</code></td><td><code>Room System Switch Cover</code></td></tr>
+            <tr><td>🔄 Flip Switch</td><td><code>Room System Switch Flip 01</code></td><td><code>Room System Switch Flip</code></td></tr>
+            <tr><td>🔲 Buttons and Switches</td><td><code>Room System Button Vanilla 01</code></td><td><code>Room System Button Vanilla</code></td></tr>
+            <tr><td>🎚️ Logic Slider / Throttle</td><td><code>Room System Slider Logic 01</code></td><td><code>Room System Slider Logic</code></td></tr>
+            <tr><td>🔢 Numpad</td><td><code>Room System Numpad 01</code></td><td><code>Room System Numpad</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Displays & Indicators</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Device Mod Name</th>
+                <th>Individual Name (For Network/Labeler)</th>
+                <th>Batch Target Name (For sbn/lbn)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>🚨 Alarm</td><td><code>Room System Alarm 01</code></td><td><code>Room System Alarm</code></td></tr>
+            <tr><td>📈 Logic Gauges</td><td><code>Room System Gauge Logic 01</code></td><td><code>Room System Gauge Logic</code></td></tr>
+            <tr><td>🔖 Label Diodes</td><td><code>Room System Diode Label 01</code></td><td><code>Room System Diode Label</code></td></tr>
+            <tr><td>🔤 LED Displays</td><td><code>Room System Display LED 01</code></td><td><code>Room System Display LED</code></td></tr>
+            <tr><td>💡 Light Diodes</td><td><code>Room System Diode Light 01</code></td><td><code>Room System Diode Light</code></td></tr>
+            <tr><td>📉 Diode Slides</td><td><code>Room System Slide Diode 01</code></td><td><code>Room System Slide Diode</code></td></tr>
+        </tbody>
+    </table>
+
+    <h2>Terminals & Cosmetics</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Device Mod Name</th>
+                <th>Individual Name (For Network/Labeler)</th>
+                <th>Batch Target Name (For sbn/lbn)</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>🖥️ Console (Device)</td><td><code>Room System Console 01</code></td><td><code>Room System Console</code></td></tr>
+            <tr><td>💻 Computer</td><td><code>Room System Computer 01</code></td><td><code>Room System Computer</code></td></tr>
+            <tr><td>🔖 Label Plates</td><td><code>Room System Plate Label 01</code></td><td><code>Room System Plate Label</code></td></tr>
+            <tr><td>🔖 Diagram Lines</td><td><code>Room System Line Diagram 01</code></td><td><code>Room System Line Diagram</code></td></tr>
+        </tbody>
+    </table>
+
+</body>
+</html>
