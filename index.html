@@ -3,124 +3,309 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ModularConsolesReloaded - Naming Convention</title>
+    <title>Stationeers IC10 Engineering Hub & Documentation</title>
     <style>
         :root {
-            --bg-color: #0d1117;
-            --text-color: #c9d1d9;
-            --table-border: #30363d;
-            --table-header-bg: #161b22;
-            --table-row-alt: #0d1117;
-            --table-row-hover: #1f2428;
-            --accent-color: #58a6ff;
+            --bg-base: #0d1117;
+            --bg-surface: #161b22;
+            --bg-card: #21262d;
+            --border-subtle: #30363d;
+            --text-main: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --text-dim: #8b949e;
+            --accent-cyan: #58a6ff;
+            --accent-orange: #f0883e;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --card-hover-border: #58a6ff;
         }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            line-height: 1.6;
+
+        * {
+            box-sizing: border-box;
             margin: 0;
-            padding: 40px;
+            padding: 0;
         }
-        h1, h2 {
-            color: var(--accent-color);
-            border-bottom: 1px solid var(--table-border);
-            padding-bottom: 10px;
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 40px 20px;
         }
-        p { margin-bottom: 20px; }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 30px;
-            background-color: var(--bg-color);
-            border: 1px solid var(--table-border);
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
         }
-        th, td {
-            padding: 12px 15px;
-            text-align: left;
-            border-bottom: 1px solid var(--table-border);
+
+        header.hub-header {
+            text-align: center;
+            padding-bottom: 40px;
+            border-bottom: 1px solid var(--border-subtle);
+            margin-bottom: 40px;
         }
-        th {
-            background-color: var(--table-header-bg);
+
+        .hub-tag {
+            background: rgba(88, 166, 255, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(88, 166, 255, 0.3);
+            font-size: 0.78rem;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: inline-block;
+            margin-bottom: 14px;
+        }
+
+        h1 {
+            color: var(--text-heading);
+            font-size: 2.3rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 12px;
+        }
+
+        .hub-lead {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        /* Rules summary grid */
+        .system-rules {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 40px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .rule-item h3 {
+            font-size: 0.95rem;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-item p {
+            font-size: 0.86rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        /* Card Directory */
+        .directory-title {
+            color: var(--text-heading);
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            font-weight: 700;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 50px;
+        }
+
+        .hub-card {
+            background-color: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+        }
+
+        .hub-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--card-hover-border);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 12px;
+            display: inline-block;
+        }
+
+        .card-title {
+            color: var(--text-heading);
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .card-desc {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .card-features {
+            list-style: none;
+            margin-bottom: 24px;
+            font-size: 0.85rem;
+            color: var(--text-main);
+        }
+
+        .card-features li {
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card-features li::before {
+            content: "▹";
+            color: var(--accent-cyan);
+            font-weight: bold;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--accent-cyan);
+            text-decoration: none;
             font-weight: 600;
+            font-size: 0.9rem;
+            padding: 10px 18px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            text-align: center;
         }
-        tr:nth-child(even) {
-            background-color: var(--table-row-alt);
+
+        .card-link:hover {
+            background-color: var(--accent-cyan);
+            color: #0d1117;
+            border-color: var(--accent-cyan);
         }
-        tr:hover {
-            background-color: var(--table-row-hover);
-        }
-        code {
-            background-color: rgba(110, 118, 129, 0.4);
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 0.9em;
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            font-size: 0.85rem;
         }
     </style>
 </head>
 <body>
 
-    <h1>ModularConsolesReloaded Naming Convention</h1>
-    <p>Standard format: <code>[Room] [System] [Device] [Index]</code>. Omit the <code>[Index]</code> when setting up batch targeting via IC10 networks.</p>
+    <div class="container">
+        <!-- Main Hub Header -->
+        <header class="hub-header">
+            <span class="hub-tag">GitHub Pages Documentation Index</span>
+            <h1>Stationeers IC10 Engineering Hub</h1>
+            <p class="hub-lead">
+                Centralized access to IC10 MIPS architecture conventions, interactive network labelers, 
+                and automation tools designed for Stationeers base management.
+            </p>
+        </header>
 
-    <h2>Input & Controls</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Device Mod Name</th>
-                <th>Individual Name (For Network/Labeler)</th>
-                <th>Batch Target Name (For sbn/lbn)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>🕹️ Big Lever</td><td><code>Room System Lever Big 01</code></td><td><code>Room System Lever Big</code></td></tr>
-            <tr><td>🪪 Access Card Reader</td><td><code>Room System Reader Card 01</code></td><td><code>Room System Reader Card</code></td></tr>
-            <tr><td>🔘 Logic Dials</td><td><code>Room System Dial Logic 01</code></td><td><code>Room System Dial Logic</code></td></tr>
-            <tr><td>🚨 Emergency Button</td><td><code>Room System Button Emerg 01</code></td><td><code>Room System Button Emerg</code></td></tr>
-            <tr><td>🛑 Flip Cover Switch</td><td><code>Room System Switch Cover 01</code></td><td><code>Room System Switch Cover</code></td></tr>
-            <tr><td>🔄 Flip Switch</td><td><code>Room System Switch Flip 01</code></td><td><code>Room System Switch Flip</code></td></tr>
-            <tr><td>🔲 Buttons and Switches</td><td><code>Room System Button Vanilla 01</code></td><td><code>Room System Button Vanilla</code></td></tr>
-            <tr><td>🎚️ Logic Slider / Throttle</td><td><code>Room System Slider Logic 01</code></td><td><code>Room System Slider Logic</code></td></tr>
-            <tr><td>🔢 Numpad</td><td><code>Room System Numpad 01</code></td><td><code>Room System Numpad</code></td></tr>
-        </tbody>
-    </table>
+        <!-- Technical Specification Standards -->
+        <div class="system-rules">
+            <div class="rule-item">
+                <h3>⚡ Tick Synchronized</h3>
+                <p>All routines adhere to 0.5s game ticks using <code>yield</code> to guarantee execution timing and prevent CPU halts.</p>
+            </div>
+            <div class="rule-item">
+                <h3>🏷️ Batch Hash Architecture</h3>
+                <p>Dual identification combining <code>deviceHash</code> and <code>nameHash</code> for pin-independent batching via <code>sbn/lbn</code>.</p>
+            </div>
+            <div class="rule-item">
+                <h3>📏 Hardware Boundaries</h3>
+                <p>Strict enforcement of 128 code lines (0–127), 16 registers (r0–r15), and 6 hardware pin channels (d0–d5).</p>
+            </div>
+            <div class="rule-item">
+                <h3>🌡️ SI Unit Rigor</h3>
+                <p>Consistent atmospheric math utilizing Kelvin (K = °C + 273.15) and standard pressure in kilopascals (kPa).</p>
+            </div>
+        </div>
 
-    <h2>Displays & Indicators</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Device Mod Name</th>
-                <th>Individual Name (For Network/Labeler)</th>
-                <th>Batch Target Name (For sbn/lbn)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>🚨 Alarm</td><td><code>Room System Alarm 01</code></td><td><code>Room System Alarm</code></td></tr>
-            <tr><td>📈 Logic Gauges</td><td><code>Room System Gauge Logic 01</code></td><td><code>Room System Gauge Logic</code></td></tr>
-            <tr><td>🔖 Label Diodes</td><td><code>Room System Diode Label 01</code></td><td><code>Room System Diode Label</code></td></tr>
-            <tr><td>🔤 LED Displays</td><td><code>Room System Display LED 01</code></td><td><code>Room System Display LED</code></td></tr>
-            <tr><td>💡 Light Diodes</td><td><code>Room System Diode Light 01</code></td><td><code>Room System Diode Light</code></td></tr>
-            <tr><td>📉 Diode Slides</td><td><code>Room System Slide Diode 01</code></td><td><code>Room System Slide Diode</code></td></tr>
-        </tbody>
-    </table>
+        <!-- Navigation Directory -->
+        <h2 class="directory-title">Documentation & Interactive Tools</h2>
+        <div class="card-grid">
 
-    <h2>Terminals & Cosmetics</h2>
-    <table>
-        <thead>
-            <tr>
-                <th>Device Mod Name</th>
-                <th>Individual Name (For Network/Labeler)</th>
-                <th>Batch Target Name (For sbn/lbn)</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td>🖥️ Console (Device)</td><td><code>Room System Console 01</code></td><td><code>Room System Console</code></td></tr>
-            <tr><td>💻 Computer</td><td><code>Room System Computer 01</code></td><td><code>Room System Computer</code></td></tr>
-            <tr><td>🔖 Label Plates</td><td><code>Room System Plate Label 01</code></td><td><code>Room System Plate Label</code></td></tr>
-            <tr><td>🔖 Diagram Lines</td><td><code>Room System Line Diagram 01</code></td><td><code>Room System Line Diagram</code></td></tr>
-        </tbody>
-    </table>
+            <!-- Card 1: Interactive Device Naming Hub -->
+            <div class="hub-card">
+                <div>
+                    <span class="card-icon">⚡</span>
+                    <h3 class="card-title">Device Naming Hub</h3>
+                    <p class="card-desc">
+                        Dynamic label generator and batch targeting calculator. Updates network naming schemes 
+                        in real-time based on your custom room selection.
+                    </p>
+                    <ul class="card-features">
+                        <li>Sticky navigation with instant room name updates</li>
+                        <li>Quick-copy clipboard tags for game Labelers</li>
+                        <li>Custom ★ "Most Used" favorites system (persisted)</li>
+                        <li>Full coverage: Vanilla + Modular Consoles Reloaded</li>
+                    </ul>
+                </div>
+                <a href="stationeers_device_naming_hub.html" class="card-link">Open Naming Hub &rarr;</a>
+            </div>
+
+            <!-- Card 2: Modular Consoles Reloaded Reference -->
+            <div class="hub-card">
+                <div>
+                    <span class="card-icon">🕹️</span>
+                    <h3 class="card-title">Modular Consoles Spec</h3>
+                    <p class="card-desc">
+                        Dedicated naming index and batch lookup reference table for the <em>Modular Consoles Reloaded</em> workshop modification.
+                    </p>
+                    <ul class="card-features">
+                        <li>Complete catalog: Big Levers, Dials, Slides, LEDs</li>
+                        <li>Discrete Individual vs. Batch naming syntax</li>
+                        <li>Dark-mode GitHub ready layout</li>
+                        <li>Preconfigured MIPS hash binding examples</li>
+                    </ul>
+                </div>
+                <a href="modular_consoles_naming.html" class="card-link">Open Modular Reference &rarr;</a>
+            </div>
+
+            <!-- Card 3: IC10 MIPS Instruction Reference -->
+            <div class="hub-card">
+                <div>
+                    <span class="card-icon">🧠</span>
+                    <h3 class="card-title">IC10 Architecture & Syntax</h3>
+                    <p class="card-desc">
+                        Comprehensive manual containing mathematical operations, bitwise manipulation, stack I/O instructions, and flow control tables.
+                    </p>
+                    <ul class="card-features">
+                        <li>Complete opcode definitions: <code>l</code>, <code>sbn</code>, <code>select</code>, <code>bap</code></li>
+                        <li>Batch modes, Reagent hashes, and Slot variables</li>
+                        <li>Logic stack instruction protocols (<code>put/get</code>)</li>
+                        <li>Standard constants: <code>rgas</code>, <code>deg2rad</code>, epsilon</li>
+                    </ul>
+                </div>
+                <a href="https://github.com" class="card-link" id="repoLink">View Markdown Reference &rarr;</a>
+            </div>
+
+        </div>
+
+        <footer>
+            <p>Stationeers IC10 Automated Systems Architecture &bull; Designed for deployment on GitHub Pages</p>
+        </footer>
+    </div>
 
 </body>
 </html>
