@@ -767,72 +767,148 @@
                 <h2>🚨 Ruimtes, Structuren & Dynamische Statusindicatie</h2>
                 <span class="tag">Verlichting, LED Consoles & Compartimentering</span>
             </div>
+            <p style="color: var(--text-dim); margin-bottom: 16px; font-size: 0.9rem;">
+                Standaardafwerkingen voor wandpanelen en dynamische statusverlichting. Klik op een instelling om direct het volledige <strong>Spray Gun formaat</strong> (<code>R G B | Glow | Roughness</code>) te kopiëren voor gebruik in Paint+.
+            </p>
 
-            <div class="rules-grid">
-                <div class="rule-card">
-                    <h3>🏛️ Habitat / Living Quarters</h3>
-                    <p>Wanden: <strong>Dark Slate</strong> (<code>R:112 G:128 B:144</code>). Rustgevend, contrastrijk en neutraal voor langdurig verblijf.</p>
-                </div>
-                <div class="rule-card">
-                    <h3>🌿 Greenhouse & Hydroponics</h3>
-                    <p>Wanden: <strong>Olive / Forest</strong> (<code>R:50 G:160 B:0</code>). Bevordert botanische overzichtelijkheid en botanische status.</p>
-                </div>
-                <div class="rule-card">
-                    <h3>⚡ Power & Machinekamers</h3>
-                    <p>Wanden: <strong>Safety Amber</strong> (<code>R:255 G:140 B:0</code>). Directe herkenning van hoogspanningsgevaar en industriële motoren.</p>
-                </div>
-                <div class="rule-card">
-                    <h3>🚪 Airlocks & Externe Sluizen</h3>
-                    <p>Wanden: <strong>Charcoal Maroon</strong> (<code>R:128 G:0 B:32</code>). Maximale alertheid bij drukovergangen en vacuümsluizen.</p>
-                </div>
-            </div>
-
+            <h3 style="color: var(--text-heading); font-size: 1.05rem; margin-bottom: 10px;">1. Ruimte- & Structuurafwerkingen (Wanden & Frames)</h3>
             <div class="table-wrap">
                 <table>
                     <thead>
                         <tr>
-                            <th style="width: 20%;">Statusniveau</th>
-                            <th style="width: 15%;">Lampkleur</th>
-                            <th style="width: 15%;">IC10 Color ID</th>
-                            <th style="width: 20%;">Spray Gun Swatch</th>
-                            <th style="width: 30%;">Atmosferische Conditie / Trigger</th>
+                            <th style="width: 22%;">Ruimtecompartiment</th>
+                            <th style="width: 18%;">Kleur & Afwerking</th>
+                            <th style="width: 38%;">Paint+ Settings (Click to Copy)</th>
+                            <th style="width: 22%;">Omgeving & Functie</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Habitat / Living Quarters</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #708090;"></span> Dark Slate</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:112 G:128 B:144 | Glow:0.00 | Roughness:0.60')" title="Click to copy format">
+                                    📋 <code>R:112 G:128 B:144 | Glow:0.00 | Roughness:0.60</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Rustgevend neutraal contrast voor woonvertrekken.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Greenhouse & Botanicals</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #32a000;"></span> Forest Olive</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:50 G:160 B:0 | Glow:0.05 | Roughness:0.45')" title="Click to copy format">
+                                    📋 <code>R:50 G:160 B:0 | Glow:0.05 | Roughness:0.45</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Hydroponics en kweekkamers voor botanisch overzicht.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Power / Machinekamers</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #ff8c00;"></span> Safety Amber</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:255 G:140 B:0 | Glow:0.10 | Roughness:0.35')" title="Click to copy format">
+                                    📋 <code>R:255 G:140 B:0 | Glow:0.10 | Roughness:0.35</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Hoogspanningsgeneratoren, accubanken en transformatoren.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Airlocks & Drukcompartimenten</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #800020;"></span> Charcoal Maroon</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:128 G:0 B:32 | Glow:0.05 | Roughness:0.50')" title="Click to copy format">
+                                    📋 <code>R:128 G:0 B:32 | Glow:0.05 | Roughness:0.50</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Hoge alertheid bij vacuümsluizen en buitendeuren.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Workshop & Fabricage</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #828c96;"></span> Industrial Grey</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:130 G:140 B:150 | Glow:0.00 | Roughness:0.40')" title="Click to copy format">
+                                    📋 <code>R:130 G:140 B:150 | Glow:0.00 | Roughness:0.40</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Robuuste afwerking voor printers, autolathes en ovens.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Command & Data Center</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #0e50d2;"></span> Deep Navy</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:14 G:80 B:210 | Glow:0.05 | Roughness:0.25')" title="Click to copy format">
+                                    📋 <code>R:14 G:80 B:210 | Glow:0.05 | Roughness:0.25</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Centrale consolepanelen, serverkasten en IC10-arrays.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: var(--text-heading); font-size: 1.05rem; margin-top: 24px; margin-bottom: 10px;">2. Dynamische Statusindicatie (Verlichting & LED Consoles)</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 18%;">Statusniveau</th>
+                            <th style="width: 14%;">IC10 Color ID</th>
+                            <th style="width: 15%;">Kleur & Swatch</th>
+                            <th style="width: 33%;">Paint+ Settings (Click to Copy)</th>
+                            <th style="width: 20%;">Atmosferische Trigger</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
                             <td><strong>Nominaal / Veilig</strong></td>
-                            <td>Groen</td>
-                            <td><code>Color = 2</code></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #2ea44f;"></span> Groen (R:46 G:164 B:79)</span></td>
-                            <td>Druk 80–120 kPa, temp 15–30 °C (288–303 K), 0% toxisch gas.</td>
+                            <td><code>Color = 2</code> (Groen)</td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #2ea44f;"></span> Signaalgroen</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:46 G:164 B:79 | Glow:0.35 | Roughness:0.20')" title="Click to copy format">
+                                    📋 <code>R:46 G:164 B:79 | Glow:0.35 | Roughness:0.20</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Druk 80–120 kPa, temp 15–30 °C, 0% toxisch gas.</td>
                         </tr>
                         <tr>
                             <td><strong>Waarschuwing / Afwijking</strong></td>
-                            <td>Geel / Amber</td>
-                            <td><code>Color = 5</code></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #d29922;"></span> Amber (R:210 G:153 B:34)</span></td>
-                            <td>Druk 50–80 kPa of 120–150 kPa; lichte thermische afwijking buiten comfortzone.</td>
+                            <td><code>Color = 5</code> (Geel/Amber)</td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #d29922;"></span> Alarm Geel</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:210 G:153 B:34 | Glow:0.45 | Roughness:0.20')" title="Click to copy format">
+                                    📋 <code>R:210 G:153 B:34 | Glow:0.45 | Roughness:0.20</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Druk 50–80 kPa of 120–150 kPa; lichte thermische afwijking.</td>
                         </tr>
                         <tr>
-                            <td><strong>Kritiek Alarm / Noodgeval</strong></td>
-                            <td>Rood</td>
-                            <td><code>Color = 4</code></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #cf222e;"></span> Rood (R:207 G:34 B:46)</span></td>
-                            <td>Vacuüm (&lt;40 kPa), overdruk (&gt;150 kPa), toxisch gas &gt;1% of brandbare mix.</td>
+                            <td><strong>Kritiek Alarm / Gevaar</strong></td>
+                            <td><code>Color = 4</code> (Rood)</td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #cf222e;"></span> Nood Rood</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:207 G:34 B:46 | Glow:0.60 | Roughness:0.15')" title="Click to copy format">
+                                    📋 <code>R:207 G:34 B:46 | Glow:0.60 | Roughness:0.15</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Vacuüm (&lt;40 kPa), overdruk (&gt;150 kPa), toxisch gas &gt;1%.</td>
                         </tr>
                         <tr>
-                            <td><strong>Onderhoud / Vergrendeld</strong></td>
-                            <td>Blauw</td>
-                            <td><code>Color = 0</code></td>
-                            <td><span class="color-chip"><span class="swatch" style="background-color: #0969da;"></span> Blauw (R:9 G:105 B:218)</span></td>
-                            <td>Sluisvergrendeling actief, handmatige override of ontluchting in uitvoering.</td>
+                            <td><strong>Onderhoud / Override</strong></td>
+                            <td><code>Color = 0</code> (Blauw)</td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #0969da;"></span> Service Blauw</span></td>
+                            <td>
+                                <span class="copy-pill" onclick="copyText('R:9 G:105 B:218 | Glow:0.40 | Roughness:0.20')" title="Click to copy format">
+                                    📋 <code>R:9 G:105 B:218 | Glow:0.40 | Roughness:0.20</code>
+                                </span>
+                            </td>
+                            <td style="color: var(--text-dim); font-size: 0.85rem;">Sluiscyclus actief, handmatige override of ontluchting.</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </section>
-
-        <!-- Section: Most Used (Dynamic Favorites) -->
+<!-- Section: Most Used (Dynamic Favorites) -->
         <section id="section-favorites">
             <div class="section-header">
                 <h2>★ Most Used Devices (Custom Quick-Access)</h2>
