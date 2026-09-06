@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stationeers IC10 Engineering Hub & Systems Reference</title>
+    <style>
+        :root {
+            --bg-base: #0d1117;
+            --bg-surface: #161b22;
+            --bg-card: #21262d;
+            --border-subtle: #30363d;
+            --border-muted: #21262d;
+            --text-main: #c9d1d9;
+            --text-heading: #f0f6fc;
+            --text-dim: #8b949e;
+            --accent-cyan: #58a6ff;
+            --accent-orange: #f0883e;
+            --accent-green: #3fb950;
+            --accent-purple: #bc8cff;
+            --accent-red: #f85149;
+            --accent-yellow: #d29922;
+            --code-bg: rgba(110, 118, 129, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-main);
+            line-height: 1.5;
+            padding-top: 140px;
+            scroll-behavior: smooth;
+        }
+
+        /* Fixed Top Control Bar */
+        header.top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(22, 27, 34, 0.96);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-subtle);
+            padding: 12px 24px;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5);
+        }
+
+        .bar-row-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 10px;
+        }
+
+        .brand-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-heading);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .brand-badge {
+            background: var(--accent-cyan);
+            color: #0d1117;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 2px 6px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+
+        .room-controller {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background-color: var(--bg-base);
+            padding: 6px 12px;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+        }
+
+        .room-controller label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--accent-orange);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .room-input {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-heading);
+            padding: 6px 10px;
+            font-size: 0.9rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-family: monospace;
+            width: 140px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .room-input:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 0 2px rgba(88, 166, 255, 0.25);
+        }
+
+        .preset-select {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-main);
+            padding: 6px 8px;
+            font-size: 0.85rem;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+        }
+
+        /* Nav Pills */
+        nav.nav-links {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 2px;
+        }
+
+        nav.nav-links::-webkit-scrollbar {
+            height: 4px;
+        }
+
+        nav.nav-links::-webkit-scrollbar-thumb {
+            background: var(--border-subtle);
+            border-radius: 2px;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            color: var(--text-dim);
+            text-decoration: none;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 5px 12px;
+            border-radius: 20px;
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-heading);
+            border-color: var(--accent-cyan);
+            background: rgba(88, 166, 255, 0.1);
+        }
+
+        .nav-btn.star {
+            color: var(--accent-orange);
+            border-color: rgba(240, 136, 62, 0.4);
+        }
+
+        .nav-btn.accent-colors {
+            color: var(--accent-purple);
+            border-color: rgba(188, 140, 255, 0.4);
+        }
+
+        .nav-btn.accent-standards {
+            color: var(--accent-green);
+            border-color: rgba(63, 185, 80, 0.4);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 24px;
+        }
+
+        /* Hero Banner */
+        .hero-banner {
+            background: linear-gradient(135deg, rgba(88, 166, 255, 0.08), rgba(188, 140, 255, 0.05));
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 32px;
+        }
+
+        .hero-banner h1 {
+            color: var(--text-heading);
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+
+        .hero-banner p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            max-width: 950px;
+        }
+
+        .convention-formula {
+            display: inline-block;
+            margin-top: 10px;
+            background: var(--bg-base);
+            padding: 6px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-subtle);
+            font-family: monospace;
+            color: var(--accent-green);
+            font-size: 0.92rem;
+        }
+
+        /* Section Headings */
+        section {
+            margin-bottom: 48px;
+            scroll-margin-top: 150px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 2px solid var(--border-subtle);
+            padding-bottom: 10px;
+            margin-bottom: 16px;
+        }
+
+        .section-header h2 {
+            color: var(--text-heading);
+            font-size: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-header .tag {
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: var(--border-subtle);
+            color: var(--text-dim);
+        }
+
+        /* Table Layout */
+        .table-wrap {
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            overflow: hidden;
+            background: var(--bg-surface);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.88rem;
+            text-align: left;
+        }
+
+        thead {
+            background-color: #1c2128;
+            color: var(--text-heading);
+            font-weight: 600;
+        }
+
+        th, td {
+            padding: 10px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        tr:hover {
+            background-color: rgba(110, 118, 129, 0.06);
+        }
+
+        .col-device {
+            font-weight: 600;
+            color: var(--text-heading);
+            width: 25%;
+        }
+
+        .col-id-name {
+            width: 35%;
+        }
+
+        .col-batch-name {
+            width: 30%;
+        }
+
+        .col-fav {
+            width: 10%;
+            text-align: center;
+        }
+
+        .badge-system {
+            font-size: 0.75rem;
+            font-family: monospace;
+            padding: 2px 6px;
+            border-radius: 4px;
+            background: rgba(188, 140, 255, 0.15);
+            color: var(--accent-purple);
+            margin-right: 6px;
+        }
+
+        code.name-tag {
+            font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            background-color: var(--code-bg);
+            padding: 3px 7px;
+            border-radius: 4px;
+            color: var(--accent-cyan);
+            border: 1px solid rgba(88, 166, 255, 0.2);
+            cursor: pointer;
+            transition: background 0.15s;
+            user-select: all;
+            display: inline-block;
+        }
+
+        code.name-tag:hover {
+            background-color: rgba(88, 166, 255, 0.25);
+            border-color: var(--accent-cyan);
+        }
+
+        code.batch-tag {
+            color: var(--accent-orange);
+            border-color: rgba(240, 136, 62, 0.2);
+        }
+
+        code.batch-tag:hover {
+            background-color: rgba(240, 136, 62, 0.25);
+            border-color: var(--accent-orange);
+        }
+
+        .btn-fav {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.1rem;
+            color: var(--text-dim);
+            transition: transform 0.15s, color 0.15s;
+        }
+
+        .btn-fav:hover {
+            transform: scale(1.2);
+            color: var(--accent-orange);
+        }
+
+        .btn-fav.active {
+            color: var(--accent-orange);
+        }
+
+        /* Color swatch chips */
+        .color-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .swatch {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            display: inline-block;
+        }
+
+        /* Rules Cards Grid */
+        .rules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .rule-card {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            padding: 16px;
+        }
+
+        .rule-card h3 {
+            font-size: 0.95rem;
+            color: var(--text-heading);
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rule-card p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        /* Toast notification */
+        #toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--accent-cyan);
+            color: #0d1117;
+            font-weight: 700;
+            padding: 8px 16px;
+            border-radius: 6px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.25s ease;
+            pointer-events: none;
+            z-index: 2000;
+        }
+
+        #toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sticky Header & Controls -->
+    <header class="top-bar">
+        <div class="bar-row-top">
+            <div class="brand-title">
+                <span>Stationeers IC10 Engineering Hub</span>
+                <span class="brand-badge">Comprehensive</span>
+            </div>
+            <div class="room-controller">
+                <label for="roomInput">Target Room:</label>
+                <input type="text" id="roomInput" class="room-input" value="Hallway" placeholder="Room Name" autocomplete="off" />
+                <select id="presetSelect" class="preset-select">
+                    <option value="" disabled selected>Presets...</option>
+                    <option value="Hallway">Hallway</option>
+                    <option value="Airlock">Airlock</option>
+                    <option value="Greenhouse">Greenhouse</option>
+                    <option value="Workshop">Workshop</option>
+                    <option value="BatteryBank">BatteryBank</option>
+                    <option value="Filtration">Filtration</option>
+                    <option value="Reactor">Reactor</option>
+                    <option value="Command">Command</option>
+                    <option value="Furnace">Furnace</option>
+                    <option value="Habitat">Habitat</option>
+                </select>
+            </div>
+        </div>
+        <nav class="nav-links">
+            <a href="#section-standards" class="nav-btn accent-standards">📐 IC10 Standards & Units</a>
+            <a href="#section-colorcode" class="nav-btn accent-colors">🎨 Paint+ Color Standards</a>
+            <a href="#section-favorites" class="nav-btn star">★ Most Used (<span id="favCount">0</span>)</a>
+            <a href="#section-atmo" class="nav-btn">💨 Atmospherics</a>
+            <a href="#section-power" class="nav-btn">⚡ Power & Battery</a>
+            <a href="#section-lighting" class="nav-btn">💡 Lighting</a>
+            <a href="#section-access" class="nav-btn">🚪 Access & Doors</a>
+            <a href="#section-logic" class="nav-btn">🧠 IC10 Logic & Sensors</a>
+            <a href="#section-modular" class="nav-btn">🕹️ Modular Consoles Mod</a>
+            <a href="#section-prod" class="nav-btn">🏭 Production & Logistics</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <!-- Hero Guideline -->
+        <div class="hero-banner">
+            <h1>Unified IC10 Systems Reference & Device Naming Hub</h1>
+            <p>
+                Comprehensive reference integrating official IC10 MIPS execution standards, <strong>Paint+</strong> color conventions for piping and room environments, dynamic device network labelers, and direct batch-targeting hashes.
+            </p>
+            <div class="convention-formula">
+                Format: <strong>[Room] [System] [Device] [Index]</strong> &nbsp;|&nbsp; Batch Target: <strong>[Room] [System] [Device]</strong>
+            </div>
+        </div>
+
+        <!-- Section: IC10 Standards & Units -->
+        <section id="section-standards">
+            <div class="section-header">
+                <h2>📐 IC10 Technical Architecture & Hardware Limits</h2>
+                <span class="tag">MIPS Rules & Best Practices</span>
+            </div>
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <h3>⚡ 0.5s Gametick Loop</h3>
+                    <p>Always include <code>yield</code> or <code>sleep X</code> in your main execution loop to prevent CPU halts and maintain tick synchronization.</p>
+                </div>
+                <div class="rule-card">
+                    <h3>📏 Hardware Boundaries</h3>
+                    <p>Strict limit of <strong>128 code lines</strong> (0–127), <strong>16 registers</strong> (<code>r0</code>–<code>r15</code>), and <strong>6 device pins</strong> (<code>d0</code>–<code>d5</code> plus <code>db</code>).</p>
+                </div>
+                <div class="rule-card">
+                    <h3>🏷️ Hashing & Batch Control</h3>
+                    <p>Utilize <code>sbn</code> and <code>lbn</code> with dual <code>deviceHash</code> and <code>nameHash</code> targeting to operate multiple devices without dedicating screw pins.</p>
+                </div>
+                <div class="rule-card">
+                    <h3>🌡️ Standard SI Units</h3>
+                    <p>Temperature is measured strictly in <strong>Kelvin</strong> (K = °C + 273.15). Pressure is measured in <strong>kilopascals</strong> (kPa).</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section: Paint+ Color Standards -->
+        <section id="section-colorcode">
+            <div class="section-header">
+                <h2>🎨 Paint+ & Environmental Color Conventions</h2>
+                <span class="tag">Piping, Rooms & Dynamic Telemetry</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 25%;">Subsystem / Domain</th>
+                            <th style="width: 25%;">Paint+ Swatch</th>
+                            <th style="width: 15%;">Logic Color ID</th>
+                            <th style="width: 35%;">Functional Application & Environment</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Oxygen (O₂)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #008080;"></span> Teal / Ice Blue</span></td>
+                            <td><code>Color = 10</code></td>
+                            <td>Breathable atmosphere supply; life support manifolds.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nitrogen (N₂)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #708090;"></span> Slate / Dark Grey</span></td>
+                            <td><code>Color = 7</code></td>
+                            <td>Inert buffer carrier gas; pressure equalization lines.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Carbon Dioxide (CO₂)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #800000;"></span> Maroon / Charcoal</span></td>
+                            <td><code>Color = 9</code></td>
+                            <td>Greenhouse botanical feed; waste gas return loops.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Volatiles / Fuel (H₂ / Mix)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #ffbf00;"></span> Amber / Safety Orange</span></td>
+                            <td><code>Color = 5</code></td>
+                            <td>Combustion fuel lines, furnace mixing, explosive hazard.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Pollutant (Toxic / X)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #32cd32;"></span> Lime / Olive</span></td>
+                            <td><code>Color = 8</code></td>
+                            <td>Filtration exhaust, toxic scrubbing lines, hazardous waste.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Nitrous Oxide (N₂O)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #8a2be2;"></span> Violet / Purple</span></td>
+                            <td><code>Color = 6</code></td>
+                            <td>High-temp propellant and advanced oxidizer lines.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Water (Liquid H₂O / Steam)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #000080;"></span> Navy (Liquid) / Cyan (Steam)</span></td>
+                            <td><code>Color = 0</code></td>
+                            <td>Hydration piping, hydroponic loops, cooling radiators.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Safe Telemetry Status</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #2ea44f;"></span> Green</span></td>
+                            <td><code>Color = 2</code></td>
+                            <td>Nominal pressure (80–120 kPa) and temperature (15–30 °C).</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Warning Telemetry Status</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #d29922;"></span> Yellow / Amber</span></td>
+                            <td><code>Color = 5</code></td>
+                            <td>Moderate pressure/thermal excursion outside nominal comfort.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Danger Telemetry Status</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #cf222e;"></span> Red</span></td>
+                            <td><code>Color = 4</code></td>
+                            <td>Vacuum, overpressure, fire hazard, or toxic pollutant present.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Most Used (Dynamic Favorites) -->
+        <section id="section-favorites">
+            <div class="section-header">
+                <h2>★ Most Used Devices (Custom Quick-Access)</h2>
+                <span class="tag">Interactive Quick List</span>
+            </div>
+            <div class="table-wrap">
+                <table id="favoritesTable">
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device Name</th>
+                            <th class="col-id-name">Individual Name (Labeler / Screw Pin)</th>
+                            <th class="col-batch-name">Batch Name (for <code>sbn / lbn</code>)</th>
+                            <th class="col-fav">Star</th>
+                        </tr>
+                    </thead>
+                    <tbody id="favoritesBody"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Atmospherics -->
+        <section id="section-atmo">
+            <div class="section-header">
+                <h2>💨 Atmospherics & Gas Handling</h2>
+                <span class="tag">Life Support & HVAC</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="atmo"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Power & Energy -->
+        <section id="section-power">
+            <div class="section-header">
+                <h2>⚡ Power & Energy Distribution</h2>
+                <span class="tag">Grid Management</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="power"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Lighting -->
+        <section id="section-lighting">
+            <div class="section-header">
+                <h2>💡 Lighting & Visual Indicators</h2>
+                <span class="tag">Illumination & Alarms</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="lighting"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Access & Doors -->
+        <section id="section-access">
+            <div class="section-header">
+                <h2>🚪 Access Control & Airlocks</h2>
+                <span class="tag">Pressurization & Security</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="access"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Logic & Sensors -->
+        <section id="section-logic">
+            <div class="section-header">
+                <h2>🧠 IC10 Logic, Controllers & Sensors</h2>
+                <span class="tag">Automation & Telemetry</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="logic"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Modular Consoles Mod -->
+        <section id="section-modular">
+            <div class="section-header">
+                <h2>🕹️ Modular Consoles Reloaded (Mod)</h2>
+                <span class="tag">System Controls & Panels</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Mod Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="modular"></tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Production & Logistics -->
+        <section id="section-prod">
+            <div class="section-header">
+                <h2>🏭 Production, Furnaces & Logistics</h2>
+                <span class="tag">Manufacturing & Material Handling</span>
+            </div>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-device">Device</th>
+                            <th class="col-id-name">Individual Name</th>
+                            <th class="col-batch-name">Batch Name</th>
+                            <th class="col-fav">Pin / Fav</th>
+                        </tr>
+                    </thead>
+                    <tbody class="category-body" data-category="prod"></tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+    <div id="toast">Copied to clipboard!</div>
+
+    <script>
+        const deviceDatabase = [
+            // Atmospherics
+            { id: "vent-active", cat: "atmo", name: "Active Vent", sys: "Atmo", dev: "Vent Active", defIndex: "01", fav: true },
+            { id: "vent-passive", cat: "atmo", name: "Passive Vent", sys: "Atmo", dev: "Vent Passive", defIndex: "01", fav: false },
+            { id: "sensor-gas", cat: "atmo", name: "Gas Sensor", sys: "Atmo", dev: "Sensor Gas", defIndex: "01", fav: true },
+            { id: "pipe-analyzer", cat: "atmo", name: "Pipe Analyzer", sys: "Atmo", dev: "Analyzer Pipe", defIndex: "01", fav: true },
+            { id: "heater", cat: "atmo", name: "Wall Heater", sys: "Atmo", dev: "Heater", defIndex: "01", fav: true },
+            { id: "cooler", cat: "atmo", name: "Wall Cooler", sys: "Atmo", dev: "Cooler", defIndex: "01", fav: false },
+            { id: "filtration", cat: "atmo", name: "Filtration Unit", sys: "Atmo", dev: "Filter", defIndex: "01", fav: false },
+            { id: "volume-pump", cat: "atmo", name: "Volume Pump", sys: "Atmo", dev: "Pump Volume", defIndex: "01", fav: true },
+            { id: "pressure-reg", cat: "atmo", name: "Pressure Regulator", sys: "Atmo", dev: "Regulator", defIndex: "01", fav: false },
+            { id: "back-pressure", cat: "atmo", name: "Back Pressure Regulator", sys: "Atmo", dev: "Regulator Back", defIndex: "01", fav: false },
+            { id: "evaporator", cat: "atmo", name: "Air Conditioner (Evaporator)", sys: "Atmo", dev: "AC Evap", defIndex: "01", fav: false },
+            { id: "condenser", cat: "atmo", name: "Air Conditioner (Condenser)", sys: "Atmo", dev: "AC Cond", defIndex: "01", fav: false },
+
+            // Power
+            { id: "apc", cat: "power", name: "Area Power Control (APC)", sys: "Power", dev: "APC", defIndex: "01", fav: true },
+            { id: "battery-small", cat: "power", name: "Station Battery (Small)", sys: "Power", dev: "Battery Small", defIndex: "01", fav: false },
+            { id: "battery-large", cat: "power", name: "Station Battery (Large)", sys: "Power", dev: "Battery Large", defIndex: "01", fav: true },
+            { id: "transformer-small", cat: "power", name: "Small Transformer", sys: "Power", dev: "Transformer Small", defIndex: "01", fav: false },
+            { id: "transformer-med", cat: "power", name: "Medium Transformer", sys: "Power", dev: "Transformer Med", defIndex: "01", fav: false },
+            { id: "solar-panel", cat: "power", name: "Solar Panel (Dual Axis)", sys: "Power", dev: "Solar", defIndex: "01", fav: true },
+            { id: "rtg", cat: "power", name: "RTG Generator", sys: "Power", dev: "RTG", defIndex: "01", fav: false },
+            { id: "solid-gen", cat: "power", name: "Solid Fuel Generator", sys: "Power", dev: "Gen Solid", defIndex: "01", fav: false },
+
+            // Lighting
+            { id: "light-wall", cat: "lighting", name: "Wall Light", sys: "Light", dev: "Wall", defIndex: "01", fav: true },
+            { id: "light-tube", cat: "lighting", name: "Tube Light", sys: "Light", dev: "Tube", defIndex: "01", fav: false },
+            { id: "light-flashing", cat: "lighting", name: "Flashing Emergency Light", sys: "Light", dev: "Flashing", defIndex: "01", fav: false },
+            { id: "light-flood", cat: "lighting", name: "Outdoor Flood Light", sys: "Light", dev: "Flood", defIndex: "01", fav: false },
+
+            // Access
+            { id: "door-comp", cat: "access", name: "Composite Door", sys: "Access", dev: "Door Comp", defIndex: "01", fav: true },
+            { id: "door-blast", cat: "access", name: "Blast Door", sys: "Access", dev: "Door Blast", defIndex: "01", fav: false },
+            { id: "door-airlock", cat: "access", name: "Powered Airlock", sys: "Access", dev: "Door Airlock", defIndex: "01", fav: false },
+            { id: "door-glass", cat: "access", name: "Glass Door", sys: "Access", dev: "Door Glass", defIndex: "01", fav: false },
+            { id: "chute-inlet", cat: "access", name: "Chute Inlet / Bin", sys: "Access", dev: "Chute Inlet", defIndex: "01", fav: false },
+
+            // Logic & Sensors
+            { id: "ic-housing", cat: "logic", name: "IC10 Housing", sys: "Logic", dev: "IC", defIndex: "01", fav: true },
+            { id: "sensor-motion", cat: "logic", name: "Motion Sensor", sys: "Logic", dev: "Sensor Motion", defIndex: "01", fav: true },
+            { id: "sensor-daylight", cat: "logic", name: "Daylight Sensor", sys: "Logic", dev: "Sensor Sun", defIndex: "01", fav: true },
+            { id: "switch-button", cat: "logic", name: "Wall Button / Switch", sys: "Logic", dev: "Switch", defIndex: "01", fav: false },
+            { id: "logic-dial", cat: "logic", name: "Logic Dial (Vanilla)", sys: "Logic", dev: "Dial", defIndex: "01", fav: false },
+            { id: "console-unit", cat: "logic", name: "Standard Console", sys: "Logic", dev: "Console", defIndex: "01", fav: false },
+            { id: "led-display", cat: "logic", name: "LED Display (Small/Med)", sys: "Logic", dev: "Display LED", defIndex: "01", fav: false },
+
+            // Modular Consoles Mod (Using 'System')
+            { id: "mod-lever", cat: "modular", name: "🕹️ Big Lever", sys: "System", dev: "Lever Big", defIndex: "01", fav: true },
+            { id: "mod-card-reader", cat: "modular", name: "🪪 Access Card Reader", sys: "System", dev: "Reader Card", defIndex: "01", fav: false },
+            { id: "mod-console-dev", cat: "modular", name: "🖥️ Console (Panel)", sys: "System", dev: "Console", defIndex: "01", fav: false },
+            { id: "mod-computer", cat: "modular", name: "💻 Computer (Panel)", sys: "System", dev: "Computer", defIndex: "01", fav: false },
+            { id: "mod-dials", cat: "modular", name: "🔘 Logic Dials", sys: "System", dev: "Dial Logic", defIndex: "01", fav: true },
+            { id: "mod-emerg-btn", cat: "modular", name: "🚨 Emergency Button", sys: "System", dev: "Button Emerg", defIndex: "01", fav: false },
+            { id: "mod-alarm", cat: "modular", name: "🚨 Alarm Module", sys: "System", dev: "Alarm", defIndex: "01", fav: false },
+            { id: "mod-flip-cover", cat: "modular", name: "🛑 Flip Cover Switch", sys: "System", dev: "Switch Cover", defIndex: "01", fav: true },
+            { id: "mod-flip-switch", cat: "modular", name: "🔄 Flip Switch", sys: "System", dev: "Switch Flip", defIndex: "01", fav: false },
+            { id: "mod-gauges", cat: "modular", name: "📈 Logic Gauges", sys: "System", dev: "Gauge Logic", defIndex: "01", fav: true },
+            { id: "mod-plates", cat: "modular", name: "🔖 Label Plates", sys: "System", dev: "Plate Label", defIndex: "01", fav: false },
+            { id: "mod-label-diodes", cat: "modular", name: "🔖 Label Diodes", sys: "System", dev: "Diode Label", defIndex: "01", fav: false },
+            { id: "mod-lines", cat: "modular", name: "🔖 Diagram Lines", sys: "System", dev: "Line Diagram", defIndex: "01", fav: false },
+            { id: "mod-led", cat: "modular", name: "🔤 LED Displays", sys: "System", dev: "Display LED", defIndex: "01", fav: false },
+            { id: "mod-light-diodes", cat: "modular", name: "💡 Light Diodes", sys: "System", dev: "Diode Light", defIndex: "01", fav: false },
+            { id: "mod-numpad", cat: "modular", name: "🔢 Numpad", sys: "System", dev: "Numpad", defIndex: "01", fav: false },
+            { id: "mod-slider", cat: "modular", name: "🎚️ Logic Slider / Throttle", sys: "System", dev: "Slider Logic", defIndex: "01", fav: false },
+            { id: "mod-diode-slides", cat: "modular", name: "📉 Diode Slides", sys: "System", dev: "Slide Diode", defIndex: "01", fav: false },
+
+            // Production & Logistics
+            { id: "autolathe", cat: "prod", name: "Autolathe", sys: "Prod", dev: "Autolathe", defIndex: "01", fav: false },
+            { id: "elec-printer", cat: "prod", name: "Electronics Printer", sys: "Prod", dev: "Printer Elec", defIndex: "01", fav: false },
+            { id: "tool-mfg", cat: "prod", name: "Tool Manufactory", sys: "Prod", dev: "ToolMfg", defIndex: "01", fav: false },
+            { id: "adv-furnace", cat: "prod", name: "Advanced Furnace", sys: "Prod", dev: "Furnace Adv", defIndex: "01", fav: true },
+            { id: "arc-furnace", cat: "prod", name: "Arc Furnace", sys: "Prod", dev: "Furnace Arc", defIndex: "01", fav: false },
+            { id: "sorter", cat: "prod", name: "Chute Sorter", sys: "Prod", dev: "Sorter", defIndex: "01", fav: false },
+            { id: "harvester", cat: "prod", name: "Automated Harvester", sys: "Prod", dev: "Harvester", defIndex: "01", fav: false },
+            { id: "hydroponic-tray", cat: "prod", name: "Hydroponics Automata", sys: "Prod", dev: "Hydro Tray", defIndex: "01", fav: false }
+        ];
+
+        const savedFavs = JSON.parse(localStorage.getItem("stationeers_hub_favs") || "null");
+        if (savedFavs) {
+            deviceDatabase.forEach(d => {
+                if (savedFavs[d.id] !== undefined) {
+                    d.fav = savedFavs[d.id];
+                }
+            });
+        }
+
+        const roomInput = document.getElementById("roomInput");
+        const presetSelect = document.getElementById("presetSelect");
+        const toast = document.getElementById("toast");
+
+        function sanitizeRoom(val) {
+            return val.replace(/[^a-zA-Z0-9_-]/g, "");
+        }
+
+        function getRoom() {
+            const raw = roomInput.value.trim();
+            return raw ? sanitizeRoom(raw) : "Room";
+        }
+
+        function showToast(text) {
+            toast.textContent = text;
+            toast.classList.add("show");
+            setTimeout(() => toast.classList.remove("show"), 1600);
+        }
+
+        function copyText(str) {
+            navigator.clipboard.writeText(str).then(() => {
+                showToast(`Copied: "${str}"`);
+            }).catch(() => {
+                showToast(`Failed to copy`);
+            });
+        }
+
+        function toggleFavorite(id) {
+            const item = deviceDatabase.find(d => d.id === id);
+            if (item) {
+                item.fav = !item.fav;
+                const favMap = {};
+                deviceDatabase.forEach(d => favMap[d.id] = d.fav);
+                localStorage.setItem("stationeers_hub_favs", JSON.stringify(favMap));
+                renderAll();
+            }
+        }
+
+        function renderRow(device, room) {
+            const indName = `${room} ${device.sys} ${device.dev} ${device.defIndex}`;
+            const batchName = `${room} ${device.sys} ${device.dev}`;
+            const starClass = device.fav ? "btn-fav active" : "btn-fav";
+
+            return `
+                <tr>
+                    <td class="col-device">
+                        <span class="badge-system">${device.sys}</span>
+                        ${device.name}
+                    </td>
+                    <td class="col-id-name">
+                        <code class="name-tag" onclick="copyText('${indName}')" title="Click to copy individual name">${indName}</code>
+                    </td>
+                    <td class="col-batch-name">
+                        <code class="name-tag batch-tag" onclick="copyText('${batchName}')" title="Click to copy batch name">${batchName}</code>
+                    </td>
+                    <td class="col-fav">
+                        <button class="${starClass}" onclick="toggleFavorite('${device.id}')" title="Toggle Favorite / Most Used">
+                            ★
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+
+        function renderAll() {
+            const room = getRoom();
+
+            const categories = ["atmo", "power", "lighting", "access", "logic", "modular", "prod"];
+            categories.forEach(cat => {
+                const tbody = document.querySelector(`.category-body[data-category="${cat}"]`);
+                if (tbody) {
+                    const items = deviceDatabase.filter(d => d.cat === cat);
+                    tbody.innerHTML = items.map(d => renderRow(d, room)).join("");
+                }
+            });
+
+            const favItems = deviceDatabase.filter(d => d.fav);
+            const favBody = document.getElementById("favoritesBody");
+            const favCount = document.getElementById("favCount");
+            favCount.textContent = favItems.length;
+
+            if (favItems.length === 0) {
+                favBody.innerHTML = `<tr><td colspan="4" style="text-align:center; color: var(--text-dim); padding: 20px;">No devices marked as most used. Click the ★ icon next to any device below to pin it here.</td></tr>`;
+            } else {
+                favBody.innerHTML = favItems.map(d => renderRow(d, room)).join("");
+            }
+        }
+
+        roomInput.addEventListener("input", () => renderAll());
+        presetSelect.addEventListener("change", (e) => {
+            roomInput.value = e.target.value;
+            renderAll();
+        });
+
+        renderAll();
+    </script>
+</body>
+</html>
