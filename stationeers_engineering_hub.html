@@ -582,7 +582,6 @@
         <nav class="nav-links">
             <a href="#section-standards" class="nav-btn accent-standards">📐 IC10 Standards & Units</a>
             <a href="#section-paintplus" class="nav-btn accent-colors">🎨 Paint+ Elements & Spray Gun</a>
-            <a href="#section-blueprints" class="nav-btn accent-scripts">📜 IC10 Script Library</a>
             <a href="#section-favorites" class="nav-btn star">★ Most Used (<span id="favCount">0</span>)</a>
             <a href="#section-atmo" class="nav-btn">💨 Atmospherics</a>
             <a href="#section-power" class="nav-btn">⚡ Power & Battery</a>
@@ -643,10 +642,10 @@
             </p>
             
             <div class="filter-bar">
-                <button class="btn-filter active" onclick="filterPaint('all', this)">All Elements (30)</button>
+                <button class="btn-filter active" onclick="filterPaint('all', this)">All Phase Elements (21)</button>
                 <button class="btn-filter" onclick="filterPaint('Gas', this)">Gases (7)</button>
                 <button class="btn-filter" onclick="filterPaint('Liquid', this)">Liquids (7)</button>
-                <button class="btn-filter" onclick="filterPaint('Solid', this)">Solids & Alloys (16)</button>
+                <button class="btn-filter" onclick="filterPaint('Solid', this)">Solids / Ices (7)</button>
             </div>
 
             <div class="table-wrap">
@@ -667,226 +666,7 @@
             </div>
         </section>
 
-        <!-- Section: Verified IC10 Automation Blueprints -->
-        <section id="section-blueprints">
-            <div class="section-header">
-                <h2>📜 Verified IC10 Script Library & Blueprints</h2>
-                <span class="tag">Complete MIPS Automation</span>
-            </div>
-
-            <!-- Blueprint 1: Habitat Atmospheric & Dual Telemetry -->
-            <div class="script-blueprint">
-                <div class="blueprint-header">
-                    <span class="blueprint-title">1. Habitat Atmosphere & Dual Modular Gauge Telemetry</span>
-                    <span class="tag">Life Support</span>
-                </div>
-                <h4 style="color: var(--text-heading); margin-bottom: 8px;">1. Pentoewijzing (Pin Configuration)</h4>
-                <div class="table-wrap" style="margin-bottom: 14px;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pin</th>
-                                <th>Apparaat</th>
-                                <th>Verwachte Naam / Functie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><code>d0</code></td><td>Gas Sensor</td><td><code>[Room] Atmo Sensor Gas 01</code> (Meet druk in kPa en temperatuur in K)</td></tr>
-                            <tr><td><code>d1</code></td><td>Modular Gauge 1</td><td><code>[Room] System Gauge Logic 01</code> (Realtime weergave luchtdruk)</td></tr>
-                            <tr><td><code>d2</code></td><td>Modular Gauge 2</td><td><code>[Room] System Gauge Logic 02</code> (Realtime weergave temperatuur)</td></tr>
-                            <tr><td><code>d3</code> - <code>d5</code></td><td>Niet toegewezen</td><td>Vrij voor lokale actuatoren of noodafsluiters</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h4 style="color: var(--text-heading); margin-bottom: 8px;">2. De Code</h4>
-                <div class="code-wrap">
-                    <button class="btn-copy-code" onclick="copyBlueprintCode('code1')">Copy Code</button>
-                    <pre><code id="code1"># ========================================================
-# Stationeers IC10: Habitat Atmosphere & Telemetry Link
-# ========================================================
-
-# Aliases voor hardware pennen
-alias Sensor d0
-alias DisplayPres d1
-alias DisplayTemp d2
-
-# Aliases voor registers
-alias Pres r0
-alias Temp r1
-alias Pollutant r2
-alias StatusColor r3
-alias IsDanger r4
-alias IsWarning r5
-
-# Constanten voor comfort- en gevaargrenzen
-define MinPres 80.0       # Ondergrens veilige druk in kPa
-define MaxPres 120.0      # Bovengrens veilige druk in kPa
-define MinTemp 288.15     # Ondergrens temperatuur (15 C in Kelvin)
-define MaxTemp 303.15     # Bovengrens temperatuur (30 C in Kelvin)
-
-# Paint+ en IC10 Color identifiers
-define ColorSafe 2        # Groen (Nominaal)
-define ColorWarning 5     # Geel / Amber (Waarschuwing)
-define ColorDanger 4      # Rood (Kritiek)
-
-# Batch hashes voor zaalverlichting
-define LightType HASH("StructureWallLight")
-define LightName HASH("Hallway Light Wall")
-
-main:
-    # Synchroniseer met de 0.5s gametick cyclus
-    yield
-
-    # 1. Lees omgevingsdata uit via de gassensor
-    l Pres Sensor Pressure
-    l Temp Sensor Temperature
-    l Pollutant Sensor PollutantRatio
-
-    # 2. Update de modulaire displaypanelen
-    s DisplayPres Setting Pres
-    s DisplayTemp Setting Temp
-
-    # 3. Controleer op gevaar: vacuüm (< 40 kPa) of toxisch gas (> 1%)
-    slt IsDanger Pres 40.0
-    bgt Pollutant 0.01 setDanger
-    bnez IsDanger setDanger
-
-    # 4. Controleer op waarschuwing: temperatuur of druk buiten bereik
-    slt IsWarning Pres MinPres
-    bgt Pres MaxPres setWarning
-    slt r6 Temp MinTemp
-    or IsWarning IsWarning r6
-    bgt Temp MaxTemp setWarning
-    bnez IsWarning setWarning
-
-    # 5. Geen afwijkingen gedetecteerd: status is veilig
-    move StatusColor ColorSafe
-    j applyStatus
-
-setDanger:
-    move StatusColor ColorDanger
-    j applyStatus
-
-setWarning:
-    move StatusColor ColorWarning
-
-applyStatus:
-    # 6. Schrijf de berekende kleur weg naar de zaalverlichting via batch-instructie
-    sbn LightType LightName Color StatusColor
-
-    # Herhaal routine
-    j main</code></pre>
-                </div>
-
-                <h4 style="color: var(--text-heading); margin-bottom: 6px;">3. Korte Uitleg & Afstelling</h4>
-                <div class="blueprint-expl">
-                    Dit script leest elke tick van 0.5s de druk, temperatuur en het percentage vervuiling uit via sensor <code>d0</code> en toont dit op meters <code>d1</code> en <code>d2</code>. Bij vacuüm, overdruk of giftige gassen kleurt alle gekoppelde verlichting via <code>sbn</code> direct rood of geel. De drempelwaardes pas je naar wens aan via <code>MinPres</code> (80 kPa), <code>MaxPres</code> (120 kPa), <code>MinTemp</code> (288.15 K) en <code>MaxTemp</code> (303.15 K).
-                </div>
-            </div>
-
-            <!-- Blueprint 2: Pipe Element Telemetry & Flow Control -->
-            <div class="script-blueprint">
-                <div class="blueprint-header">
-                    <span class="blueprint-title">2. Pipe Element Analyzer & Paint+ Status Link</span>
-                    <span class="tag">Atmospherics & Piping</span>
-                </div>
-                <h4 style="color: var(--text-heading); margin-bottom: 8px;">1. Pentoewijzing (Pin Configuration)</h4>
-                <div class="table-wrap" style="margin-bottom: 14px;">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Pin</th>
-                                <th>Apparaat</th>
-                                <th>Verwachte Naam / Functie</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr><td><code>d0</code></td><td>Pipe Analyzer</td><td><code>[Room] Atmo Analyzer Pipe 01</code> (Analysator op het leidingtraject)</td></tr>
-                            <tr><td><code>d1</code></td><td>LED Display</td><td><code>[Room] System Display LED 01</code> (Realtime gastemperatuur in Kelvin)</td></tr>
-                            <tr><td><code>d2</code></td><td>Volume Pump / Valve</td><td><code>[Room] Atmo Pump Volume 01</code> (Optioneel: overdrukbeveiliging)</td></tr>
-                            <tr><td><code>d3</code> - <code>d5</code></td><td>Niet toegewezen</td><td>Vrij voor verdere leidingsegmenten</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-
-                <h4 style="color: var(--text-heading); margin-bottom: 8px;">2. De Code</h4>
-                <div class="code-wrap">
-                    <button class="btn-copy-code" onclick="copyBlueprintCode('code2')">Copy Code</button>
-                    <pre><code id="code2"># ========================================================
-# Stationeers IC10: Pipe Element Identifier & Status Link
-# ========================================================
-
-# Aliases voor hardware pennen
-alias Analyzer d0
-alias Display d1
-
-# Aliases voor registers
-alias Temp r0
-alias TotalMoles r1
-alias Oxygen r2
-alias Volatiles r3
-alias Pollutant r4
-alias TargetColor r5
-
-# Logische kleurcodes conform Stationeers standaard
-define ColorTeal 10     # Zuurstof / Koud
-define ColorOrange 5    # Volatiles / Brandstof
-define ColorGreen 2     # Veilig / Neutraal
-define ColorRed 4       # Gevaar / Toxisch
-
-# Batch targeting voor leiding-statuslampen
-define LightType HASH("StructureWallLight")
-define LightName HASH("Pipe Status Light")
-
-main:
-    # 0.5s tick synchronisatie en CPU-ontlasting
-    yield
-
-    # 1. Lees leidingcondities uit
-    l Temp Analyzer Temperature
-    l TotalMoles Analyzer TotalMoles
-    l Oxygen Analyzer RatioOxygen
-    l Volatiles Analyzer RatioVolatiles
-    l Pollutant Analyzer RatioPollutant
-
-    # 2. Toon leidingtemperatuur direct op het display (in Kelvin)
-    s Display Setting Temp
-
-    # 3. Bepaal dominante inhoud voor netwerk-alarmering
-    bgt Volatiles 0.10 setVolatiles
-    bgt Pollutant 0.05 setPollutant
-    bgt Oxygen 0.50 setOxygen
-
-    # Standaard neutrale veilige status
-    move TargetColor ColorGreen
-    j updateLights
-
-setVolatiles:
-    move TargetColor ColorOrange
-    j updateLights
-
-setPollutant:
-    move TargetColor ColorRed
-    j updateLights
-
-setOxygen:
-    move TargetColor ColorTeal
-
-updateLights:
-    # 4. Update wandindicatielampen in batchmodus via type en naam
-    sbn LightType LightName Color TargetColor
-
-    # Herhaal cyclus
-    j main</code></pre>
-                </div>
-
-                <h4 style="color: var(--text-heading); margin-bottom: 6px;">3. Korte Uitleg & Afstelling</h4>
-                <div class="blueprint-expl">
-                    Dit script monitort de moleculaire compositie van een leiding via de Pipe Analyzer op <code>d0</code> en toont de temperatuur op <code>d1</code>. Bij aanwezigheid van brandbare Volatiles (>10%), toxische stoffen (>5%) of pure zuurstof schakelen de leidingindicatoren direct om naar hun herkenbare Paint+ signaalkleur. Pas de drempelpercentages aan in de <code>bgt</code>-instructies voor fijnmazigere procesregeling.
-                </div>
-            </div>
-        </section>
+        
 
         <!-- Section: Most Used (Dynamic Favorites) -->
         <section id="section-favorites">
@@ -1062,42 +842,259 @@ updateLights:
     <script>
         // Full Paint+ Elements dataset
         const paintElements = [
-            // Gases
-            { type: "Gas", name: "Oxygen (O₂)", rgb: "0, 180, 216", r: 0, g: 180, b: 216, glow: "0.05", rough: "0.30", hex: "#00b4d8", desc: "Breathable life support supply" },
-            { type: "Gas", name: "Nitrogen (N₂)", rgb: "112, 128, 144", r: 112, g: 128, b: 144, glow: "0.00", rough: "0.50", hex: "#708090", desc: "Inert buffer gas; balance" },
-            { type: "Gas", name: "Carbon Dioxide (CO₂)", rgb: "128, 0, 32", r: 128, g: 0, b: 32, glow: "0.00", rough: "0.60", hex: "#800020", desc: "Greenhouse botanical feed" },
-            { type: "Gas", name: "Volatiles (H₂)", rgb: "255, 140, 0", r: 255, g: 140, b: 0, glow: "0.20", rough: "0.25", hex: "#ff8c00", desc: "Combustion fuel; explosive" },
-            { type: "Gas", name: "Pollutant (Toxic / X)", rgb: "124, 252, 0", r: 124, g: 252, b: 0, glow: "0.15", rough: "0.40", hex: "#7cfc00", desc: "Scrubber waste & reject" },
-            { type: "Gas", name: "Nitrous Oxide (N₂O)", rgb: "147, 51, 234", r: 147, g: 51, b: 234, glow: "0.10", rough: "0.30", hex: "#9333ea", desc: "Propellant & oxidizer" },
-            { type: "Gas", name: "Steam (H₂O Vapor)", rgb: "186, 230, 253", r: 186, g: 230, b: 253, glow: "0.05", rough: "0.20", hex: "#bae6fd", desc: "Exhaust & condenser feed" },
-
-            // Liquids
-            { type: "Liquid", name: "Water (Liquid H₂O)", rgb: "14, 80, 210", r: 14, g: 80, b: 210, glow: "0.00", rough: "0.10", hex: "#0e50d2", desc: "Hydration & coolant lines" },
-            { type: "Liquid", name: "Liquid Oxygen (LOX)", rgb: "0, 110, 180", r: 0, g: 110, b: 180, glow: "0.05", rough: "0.10", hex: "#006eb4", desc: "Cryogenic rocket oxidizer" },
-            { type: "Liquid", name: "Liquid Nitrogen (LN₂)", rgb: "70, 85, 105", r: 70, g: 85, b: 105, glow: "0.00", rough: "0.15", hex: "#465569", desc: "Cryo cooling loop circuit" },
-            { type: "Liquid", name: "Liquid CO₂ (LCO₂)", rgb: "80, 0, 20", r: 80, g: 0, b: 20, glow: "0.00", rough: "0.15", hex: "#500014", desc: "High density storage" },
-            { type: "Liquid", name: "Liquid Volatiles (LH₂)", rgb: "220, 90, 0", r: 220, g: 90, b: 0, glow: "0.15", rough: "0.10", hex: "#dc5a00", desc: "Cryo rocket propellant" },
-            { type: "Liquid", name: "Liquid Pollutant (LX)", rgb: "50, 160, 0", r: 50, g: 160, b: 0, glow: "0.10", rough: "0.15", hex: "#32a000", desc: "Corrosive liquid disposal" },
-            { type: "Liquid", name: "Liquid N₂O (LN₂O)", rgb: "90, 20, 160", r: 90, g: 20, b: 160, glow: "0.05", rough: "0.10", hex: "#5a14a0", desc: "Cryogenic dense oxidizer" },
-
-            // Solids & Alloys
-            { type: "Solid", name: "Iron (Fe)", rgb: "168, 118, 92", r: 168, g: 118, b: 92, glow: "0.00", rough: "0.70", hex: "#a8765c", desc: "Primary frame & machinery smelting" },
-            { type: "Solid", name: "Copper (Cu)", rgb: "217, 108, 63", r: 217, g: 108, b: 63, glow: "0.00", rough: "0.35", hex: "#d96c3f", desc: "Electrical cables & electronics" },
-            { type: "Solid", name: "Gold (Au)", rgb: "255, 215, 0", r: 255, g: 215, b: 0, glow: "0.05", rough: "0.15", hex: "#ffd700", desc: "IC10 logic chips & microcircuits" },
-            { type: "Solid", name: "Lead (Pb)", rgb: "75, 85, 99", r: 75, g: 85, b: 99, glow: "0.00", rough: "0.80", hex: "#4b5563", desc: "Radiation shielding & batteries" },
-            { type: "Solid", name: "Silicon (Si)", rgb: "156, 163, 175", r: 156, g: 163, b: 175, glow: "0.00", rough: "0.20", hex: "#9ca3af", desc: "Solar panels & glass sheets" },
-            { type: "Solid", name: "Silver (Ag)", rgb: "240, 244, 248", r: 240, g: 244, b: 248, glow: "0.05", rough: "0.10", hex: "#f0f4f8", desc: "Advanced sensors & precision kits" },
-            { type: "Solid", name: "Nickel (Ni)", rgb: "180, 165, 140", r: 180, g: 165, b: 140, glow: "0.00", rough: "0.45", hex: "#b4a58c", desc: "Invar / Constantan precursor" },
-            { type: "Solid", name: "Cobalt (Co)", rgb: "30, 90, 200", r: 30, g: 90, b: 200, glow: "0.05", rough: "0.30", hex: "#1e5ac8", desc: "Stellite & Waspaloy aerospace alloy" },
-            { type: "Solid", name: "Uranium (U)", rgb: "50, 205, 50", r: 50, g: 205, b: 50, glow: "0.40", rough: "0.50", hex: "#32cd32", desc: "Fission fuel rods & RTGs" },
-            { type: "Solid", name: "Coal (Carbon / C)", rgb: "25, 25, 25", r: 25, g: 25, b: 25, glow: "0.00", rough: "0.95", hex: "#191919", desc: "Steel smelting reagent & fuel" },
-            { type: "Solid", name: "Steel Alloy", rgb: "200, 205, 215", r: 200, g: 205, b: 215, glow: "0.00", rough: "0.25", hex: "#c8cdd7", desc: "Structural airlocks & heavy hulls" },
-            { type: "Solid", name: "Electrum Alloy", rgb: "220, 220, 120", r: 220, g: 220, b: 120, glow: "0.05", rough: "0.20", hex: "#dcdc78", desc: "Logic motherboards & analyzers" },
-            { type: "Solid", name: "Invar Alloy", rgb: "130, 140, 150", r: 130, g: 140, b: 150, glow: "0.00", rough: "0.40", hex: "#828c96", desc: "Thermal expansion resistant pipes" },
-            { type: "Solid", name: "Constantan Alloy", rgb: "200, 130, 80", r: 200, g: 130, b: 80, glow: "0.00", rough: "0.35", hex: "#c88250", desc: "Heating elements & heavy wiring" },
-            { type: "Solid", name: "Solder Alloy", rgb: "190, 195, 200", r: 190, g: 195, b: 200, glow: "0.00", rough: "0.55", hex: "#bec3c8", desc: "Component circuit fabrication" },
-            { type: "Solid", name: "Stellite Superalloy", rgb: "110, 180, 180", r: 110, g: 180, b: 180, glow: "0.10", rough: "0.15", hex: "#6eb4b4", desc: "Turbine blades & rocket engines" }
-        ];
+            {
+                        "type": "Gas",
+                        "name": "Oxygen (O₂)",
+                        "rgb": "0, 180, 216",
+                        "r": 0,
+                        "g": 180,
+                        "b": 216,
+                        "glow": "0.05",
+                        "rough": "0.30",
+                        "hex": "#00b4d8",
+                        "desc": "Breathable life support gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Nitrogen (N₂)",
+                        "rgb": "112, 128, 144",
+                        "r": 112,
+                        "g": 128,
+                        "b": 144,
+                        "glow": "0.00",
+                        "rough": "0.50",
+                        "hex": "#708090",
+                        "desc": "Inert carrier & buffer gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Carbon Dioxide (CO₂)",
+                        "rgb": "128, 0, 32",
+                        "r": 128,
+                        "g": 0,
+                        "b": 32,
+                        "glow": "0.00",
+                        "rough": "0.60",
+                        "hex": "#800020",
+                        "desc": "Greenhouse plant nutrient gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Volatiles (H₂)",
+                        "rgb": "255, 140, 0",
+                        "r": 255,
+                        "g": 140,
+                        "b": 0,
+                        "glow": "0.20",
+                        "rough": "0.25",
+                        "hex": "#ff8c00",
+                        "desc": "Flammable combustion gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Pollutant (X)",
+                        "rgb": "124, 252, 0",
+                        "r": 124,
+                        "g": 252,
+                        "b": 0,
+                        "glow": "0.15",
+                        "rough": "0.40",
+                        "hex": "#7cfc00",
+                        "desc": "Toxic waste & scrubber gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Nitrous Oxide (N₂O)",
+                        "rgb": "147, 51, 234",
+                        "r": 147,
+                        "g": 51,
+                        "b": 234,
+                        "glow": "0.10",
+                        "rough": "0.30",
+                        "hex": "#9333ea",
+                        "desc": "Super-oxidizer & propellant gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Steam (H₂O Vapor)",
+                        "rgb": "186, 230, 253",
+                        "r": 186,
+                        "g": 230,
+                        "b": 253,
+                        "glow": "0.05",
+                        "rough": "0.20",
+                        "hex": "#bae6fd",
+                        "desc": "Gaseous water vapor phase"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Water (H₂O)",
+                        "rgb": "14, 80, 210",
+                        "r": 14,
+                        "g": 80,
+                        "b": 210,
+                        "glow": "0.00",
+                        "rough": "0.10",
+                        "hex": "#0e50d2",
+                        "desc": "Condensed liquid water for hydration & cooling"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Oxygen (LOX)",
+                        "rgb": "0, 110, 180",
+                        "r": 0,
+                        "g": 110,
+                        "b": 180,
+                        "glow": "0.05",
+                        "rough": "0.10",
+                        "hex": "#006eb4",
+                        "desc": "Cryogenic liquid oxidizer"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Nitrogen (LN₂)",
+                        "rgb": "70, 85, 105",
+                        "r": 70,
+                        "g": 85,
+                        "b": 105,
+                        "glow": "0.00",
+                        "rough": "0.15",
+                        "hex": "#465569",
+                        "desc": "Cryogenic inert heat-exchange fluid"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid CO₂ (LCO₂)",
+                        "rgb": "80, 0, 20",
+                        "r": 80,
+                        "g": 0,
+                        "b": 20,
+                        "glow": "0.00",
+                        "rough": "0.15",
+                        "hex": "#500014",
+                        "desc": "High-pressure condensed carbon dioxide"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Volatiles (LH₂)",
+                        "rgb": "220, 90, 0",
+                        "r": 220,
+                        "g": 90,
+                        "b": 0,
+                        "glow": "0.15",
+                        "rough": "0.10",
+                        "hex": "#dc5a00",
+                        "desc": "Cryogenic liquid hydrogen fuel"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Pollutant (LX)",
+                        "rgb": "50, 160, 0",
+                        "r": 50,
+                        "g": 160,
+                        "b": 0,
+                        "glow": "0.10",
+                        "rough": "0.15",
+                        "hex": "#32a000",
+                        "desc": "Corrosive condensed liquid toxin"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Nitrous Oxide (LN₂O)",
+                        "rgb": "90, 20, 160",
+                        "r": 90,
+                        "g": 20,
+                        "b": 160,
+                        "glow": "0.05",
+                        "rough": "0.10",
+                        "hex": "#5a14a0",
+                        "desc": "Cryogenic high-density oxidizer"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Water Ice (Ice H₂O)",
+                        "rgb": "210, 240, 255",
+                        "r": 210,
+                        "g": 240,
+                        "b": 255,
+                        "glow": "0.05",
+                        "rough": "0.15",
+                        "hex": "#d2f0ff",
+                        "desc": "Solid frozen water ice for crushers & melters"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Oxygen Ice (Ice O₂)",
+                        "rgb": "120, 220, 245",
+                        "r": 120,
+                        "g": 220,
+                        "b": 245,
+                        "glow": "0.10",
+                        "rough": "0.20",
+                        "hex": "#78dcf5",
+                        "desc": "Solidified atmospheric oxygen ice"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Nitrogen Ice (Ice N₂)",
+                        "rgb": "165, 180, 195",
+                        "r": 165,
+                        "g": 180,
+                        "b": 195,
+                        "glow": "0.00",
+                        "rough": "0.35",
+                        "hex": "#a5b4c3",
+                        "desc": "Frozen nitrogen ice chunk"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Dry Ice (Ice CO₂)",
+                        "rgb": "160, 60, 80",
+                        "r": 160,
+                        "g": 60,
+                        "b": 80,
+                        "glow": "0.00",
+                        "rough": "0.45",
+                        "hex": "#a03c50",
+                        "desc": "Solid dry ice block for sublimating CO₂"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Volatiles Ice (Ice H₂)",
+                        "rgb": "255, 175, 50",
+                        "r": 255,
+                        "g": 175,
+                        "b": 50,
+                        "glow": "0.25",
+                        "rough": "0.20",
+                        "hex": "#ffaf32",
+                        "desc": "Sub-zero volatile hydrocarbon ice"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Pollutant Ice (Ice X)",
+                        "rgb": "160, 255, 80",
+                        "r": 160,
+                        "g": 255,
+                        "b": 80,
+                        "glow": "0.20",
+                        "rough": "0.30",
+                        "hex": "#a0ff50",
+                        "desc": "Solid toxic pollutant ice mass"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Nitrous Oxide Ice (Ice N₂O)",
+                        "rgb": "180, 100, 250",
+                        "r": 180,
+                        "g": 100,
+                        "b": 250,
+                        "glow": "0.15",
+                        "rough": "0.25",
+                        "hex": "#b464fa",
+                        "desc": "Frozen nitrous oxide crystal deposit"
+            }
+];
 
         let activePaintFilter = "all";
 
@@ -1146,10 +1143,7 @@ updateLights:
             renderPaintTable();
         }
 
-        function copyBlueprintCode(elemId) {
-            const code = document.getElementById(elemId).textContent;
-            copyText(code);
-        }
+        
 
         // Devices dataset for Network Naming
         const deviceDatabase = [
