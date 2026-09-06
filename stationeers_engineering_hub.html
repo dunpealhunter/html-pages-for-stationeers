@@ -580,6 +580,8 @@
             </div>
         </div>
         <nav class="nav-links">
+            <a href="#section-infrastructure" class="nav-btn accent-standards">🔌 Kabels & Leidingen</a>
+            <a href="#section-status" class="nav-btn accent-colors">🚨 Ruimtes & Statusindicatie</a>
             <a href="#section-standards" class="nav-btn accent-standards">📐 IC10 Standards & Units</a>
             <a href="#section-paintplus" class="nav-btn accent-colors">🎨 Paint+ Elements & Spray Gun</a>
             <a href="#section-favorites" class="nav-btn star">★ Most Used (<span id="favCount">0</span>)</a>
@@ -666,6 +668,169 @@
         </section>
 
         
+
+        
+        <!-- Section: Infrastructure Indicators (Cables & Pipes) -->
+        <section id="section-infrastructure">
+            <div class="section-header">
+                <h2>🔌 Compacte Kabel- & Leidingindicatie (Functie & Gevaar)</h2>
+                <span class="tag">Infrastructuur & Veiligheid</span>
+            </div>
+            <p style="color: var(--text-dim); margin-bottom: 16px; font-size: 0.9rem;">
+                Een gestroomlijnd, compact systeem om leidingen en kabels direct visueel te identificeren op <strong>doel</strong> (data, stroom, gas, vloeistof) en <strong>risiconiveau</strong> (hoge druk, extreme temperatuur, explosiegevaar of overlevingskritiek).
+            </p>
+
+            <h3 style="color: var(--text-heading); font-size: 1.05rem; margin-bottom: 10px;">1. Stroomkabels & Datanetwerken (Power & Logic)</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 22%;">Kabelnetwerk / Rol</th>
+                            <th style="width: 20%;">Paint+ Kleur & Glans</th>
+                            <th style="width: 25%;">Spray Gun Instelling</th>
+                            <th style="width: 33%;">Toepassing & Signatuur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hoofdnet / Heavy Power (HV)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #ffd700;"></span> Spiegel Goud / Geel</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:255 G:215 B:0 | Glow:0.05 | Roughness:0.15')">📋 <code>R:255 G:215 B:0 | Glow:0.05 | Roughness:0.15</code></span></td>
+                            <td>Ongezekerde zware stroom (100 kW+); generatoren, transformator-invoer en centrale accubanken.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ruimtekrachtstroom (APC / LV)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #f0883e;"></span> Industrieel Oranje</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:240 G:136 B:62 | Glow:0.00 | Roughness:0.40')">📋 <code>R:240 G:136 B:62 | Glow:0.00 | Roughness:0.40</code></span></td>
+                            <td>Geconditioneerd 5 kW verbruiksnet achter de APC; actieve ventilatie, wandkachels, productiemachines.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Data & IC10 Logica (Bus)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #f0f6fc;"></span> Helderwit / Zilver</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:240 G:246 B:252 | Glow:0.05 | Roughness:0.20')">📋 <code>R:240 G:246 B:252 | Glow:0.05 | Roughness:0.20</code></span></td>
+                            <td>Logische sturingskanalen, sensorbussen, displays, consolepanelen en IC10-behuizingen.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cruciale Levensondersteuning</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #00b4d8;"></span> Helder Cyaan</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:0 G:180 B:216 | Glow:0.10 | Roughness:0.20')">📋 <code>R:0 G:180 B:216 | Glow:0.10 | Roughness:0.20</code></span></td>
+                            <td>Prioritair circuit; mag nooit stroomloos vallen (noodsluizen, O2-drukregelaars, scrubbers).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <h3 style="color: var(--text-heading); font-size: 1.05rem; margin-top: 24px; margin-bottom: 10px;">2. Leidingen: Risiconiveau & Functie (Gas & Liquid Pipes)</h3>
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Gevaarsklasse / Doel</th>
+                            <th style="width: 22%;">Kleur & Afwerking</th>
+                            <th style="width: 25%;">Spray Gun Instelling</th>
+                            <th style="width: 33%;">Risico-indicatie & Veiligheidscriteria</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Brand- & Explosiegevaar</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #ff8c00;"></span> Gloeiend Amber / Rood</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:255 G:140 B:0 | Glow:0.20 | Roughness:0.25')">📋 <code>R:255 G:140 B:0 | Glow:0.20 | Roughness:0.25</code></span></td>
+                            <td>Volatiles (H2), brandstofmengsel, N2O. <em>Extreem risico op detonatie bij vonken of verhitting.</em></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Levensnoodzakelijk (Basis)</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #00b4d8;"></span> Satijnglans Teal</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:0 G:180 B:216 | Glow:0.05 | Roughness:0.30')">📋 <code>R:0 G:180 B:216 | Glow:0.05 | Roughness:0.30</code></span></td>
+                            <td>Zuurstof (O2) en zuiver drinkwater. <em>Uitval of verontreiniging leidt direct tot verstikking.</em></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hoge Druk / Cryo / Extreem Koud</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #78dcf5;"></span> Mat IJswit / IJsblauw</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:120 G:220 B:245 | Glow:0.10 | Roughness:0.75')">📋 <code>R:120 G:220 B:245 | Glow:0.10 | Roughness:0.75</code></span></td>
+                            <td>Vloeibaar stikstof (LN2), vloeibaar zuurstof, stoom (>10 MPa of &lt;100 K). <em>Barstrisico & vrieswonden.</em></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Afval & Toxisch Afvoergas</strong></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #7cfc00;"></span> Mat Limegroen</span></td>
+                            <td><span class="copy-pill" onclick="copyText('R:124 G:252 B:0 | Glow:0.15 | Roughness:0.50')">📋 <code>R:124 G:252 B:0 | Glow:0.15 | Roughness:0.50</code></span></td>
+                            <td>Pollutant (X), CO2-retourafval, filteruitlaat. <em>Verstikkings- en vergiftigingsgevaar bij lekken.</em></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Section: Room Structures & Telemetry Status -->
+        <section id="section-status">
+            <div class="section-header">
+                <h2>🚨 Ruimtes, Structuren & Dynamische Statusindicatie</h2>
+                <span class="tag">Verlichting, LED Consoles & Compartimentering</span>
+            </div>
+
+            <div class="rules-grid">
+                <div class="rule-card">
+                    <h3>🏛️ Habitat / Living Quarters</h3>
+                    <p>Wanden: <strong>Dark Slate</strong> (<code>R:112 G:128 B:144</code>). Rustgevend, contrastrijk en neutraal voor langdurig verblijf.</p>
+                </div>
+                <div class="rule-card">
+                    <h3>🌿 Greenhouse & Hydroponics</h3>
+                    <p>Wanden: <strong>Olive / Forest</strong> (<code>R:50 G:160 B:0</code>). Bevordert botanische overzichtelijkheid en botanische status.</p>
+                </div>
+                <div class="rule-card">
+                    <h3>⚡ Power & Machinekamers</h3>
+                    <p>Wanden: <strong>Safety Amber</strong> (<code>R:255 G:140 B:0</code>). Directe herkenning van hoogspanningsgevaar en industriële motoren.</p>
+                </div>
+                <div class="rule-card">
+                    <h3>🚪 Airlocks & Externe Sluizen</h3>
+                    <p>Wanden: <strong>Charcoal Maroon</strong> (<code>R:128 G:0 B:32</code>). Maximale alertheid bij drukovergangen en vacuümsluizen.</p>
+                </div>
+            </div>
+
+            <div class="table-wrap">
+                <table>
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Statusniveau</th>
+                            <th style="width: 15%;">Lampkleur</th>
+                            <th style="width: 15%;">IC10 Color ID</th>
+                            <th style="width: 20%;">Spray Gun Swatch</th>
+                            <th style="width: 30%;">Atmosferische Conditie / Trigger</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nominaal / Veilig</strong></td>
+                            <td>Groen</td>
+                            <td><code>Color = 2</code></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #2ea44f;"></span> Groen (R:46 G:164 B:79)</span></td>
+                            <td>Druk 80–120 kPa, temp 15–30 °C (288–303 K), 0% toxisch gas.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Waarschuwing / Afwijking</strong></td>
+                            <td>Geel / Amber</td>
+                            <td><code>Color = 5</code></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #d29922;"></span> Amber (R:210 G:153 B:34)</span></td>
+                            <td>Druk 50–80 kPa of 120–150 kPa; lichte thermische afwijking buiten comfortzone.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kritiek Alarm / Noodgeval</strong></td>
+                            <td>Rood</td>
+                            <td><code>Color = 4</code></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #cf222e;"></span> Rood (R:207 G:34 B:46)</span></td>
+                            <td>Vacuüm (&lt;40 kPa), overdruk (&gt;150 kPa), toxisch gas &gt;1% of brandbare mix.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Onderhoud / Vergrendeld</strong></td>
+                            <td>Blauw</td>
+                            <td><code>Color = 0</code></td>
+                            <td><span class="color-chip"><span class="swatch" style="background-color: #0969da;"></span> Blauw (R:9 G:105 B:218)</span></td>
+                            <td>Sluisvergrendeling actief, handmatige override of ontluchting in uitvoering.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
 
         <!-- Section: Most Used (Dynamic Favorites) -->
         <section id="section-favorites">
