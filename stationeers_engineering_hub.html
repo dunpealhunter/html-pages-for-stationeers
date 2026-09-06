@@ -644,10 +644,10 @@
             </p>
             
             <div class="filter-bar">
-                <button class="btn-filter active" onclick="filterPaint('all', this)">All Phase Elements (21)</button>
-                <button class="btn-filter" onclick="filterPaint('Gas', this)">Gases (7)</button>
-                <button class="btn-filter" onclick="filterPaint('Liquid', this)">Liquids (7)</button>
-                <button class="btn-filter" onclick="filterPaint('Solid', this)">Solids / Ices (7)</button>
+                <button class="btn-filter active" onclick="filterPaint('all', this)">All Phase Elements (42)</button>
+                <button class="btn-filter" onclick="filterPaint('Gas', this)">Gases (15)</button>
+                <button class="btn-filter" onclick="filterPaint('Liquid', this)">Liquids (15)</button>
+                <button class="btn-filter" onclick="filterPaint('Solid', this)">Solids / Ices / Salts (12)</button>
             </div>
 
             <div class="table-wrap">
@@ -1040,11 +1040,11 @@
                         "glow": "0.00",
                         "rough": "0.60",
                         "hex": "#800020",
-                        "desc": "Greenhouse plant nutrient gas"
+                        "desc": "Botanical feed for greenhouses"
             },
             {
                         "type": "Gas",
-                        "name": "Volatiles (H₂)",
+                        "name": "Methane (CH₄ / Volatiles)",
                         "rgb": "255, 140, 0",
                         "r": 255,
                         "g": 140,
@@ -1052,19 +1052,43 @@
                         "glow": "0.20",
                         "rough": "0.25",
                         "hex": "#ff8c00",
-                        "desc": "Flammable combustion gas"
+                        "desc": "Hydrocarbon combustion fuel"
             },
             {
                         "type": "Gas",
-                        "name": "Pollutant (X)",
-                        "rgb": "124, 252, 0",
-                        "r": 124,
-                        "g": 252,
-                        "b": 0,
+                        "name": "Hydrogen (H₂)",
+                        "rgb": "255, 90, 30",
+                        "r": 255,
+                        "g": 90,
+                        "b": 30,
+                        "glow": "0.25",
+                        "rough": "0.15",
+                        "hex": "#ff5a1e",
+                        "desc": "Pure rocket fuel; combusts to water"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Helium (He)",
+                        "rgb": "255, 230, 100",
+                        "r": 255,
+                        "g": 230,
+                        "b": 100,
                         "glow": "0.15",
-                        "rough": "0.40",
-                        "hex": "#7cfc00",
-                        "desc": "Toxic waste & scrubber gas"
+                        "rough": "0.10",
+                        "hex": "#ffe664",
+                        "desc": "Noble gas; does not liquify or freeze"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Ozone (O₃)",
+                        "rgb": "0, 230, 255",
+                        "r": 0,
+                        "g": 230,
+                        "b": 255,
+                        "glow": "0.30",
+                        "rough": "0.10",
+                        "hex": "#00e6ff",
+                        "desc": "Highly energetic super-oxidizer"
             },
             {
                         "type": "Gas",
@@ -1076,7 +1100,67 @@
                         "glow": "0.10",
                         "rough": "0.30",
                         "hex": "#9333ea",
-                        "desc": "Super-oxidizer & propellant gas"
+                        "desc": "Rocket propellant & oxidizer"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Pollutant (X)",
+                        "rgb": "124, 252, 0",
+                        "r": 124,
+                        "g": 252,
+                        "b": 0,
+                        "glow": "0.15",
+                        "rough": "0.40",
+                        "hex": "#7cfc00",
+                        "desc": "Toxic corrosive pollutant waste"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Silanol (SiH₃OH)",
+                        "rgb": "40, 200, 180",
+                        "r": 40,
+                        "g": 200,
+                        "b": 180,
+                        "glow": "0.10",
+                        "rough": "0.35",
+                        "hex": "#28c8b4",
+                        "desc": "Synthetic phase-change thermal gas"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Hydrochloric Acid (HCl)",
+                        "rgb": "200, 240, 40",
+                        "r": 200,
+                        "g": 240,
+                        "b": 40,
+                        "glow": "0.20",
+                        "rough": "0.45",
+                        "hex": "#c8f028",
+                        "desc": "Highly toxic acidic gas (Venus atmos)"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Hydrazine (N₂H₄)",
+                        "rgb": "230, 30, 120",
+                        "r": 230,
+                        "g": 30,
+                        "b": 120,
+                        "glow": "0.20",
+                        "rough": "0.20",
+                        "hex": "#e61e78",
+                        "desc": "Hypergolic monopropellant fuel"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Alcohol Gas (Ethanol)",
+                        "rgb": "240, 170, 80",
+                        "r": 240,
+                        "g": 170,
+                        "b": 80,
+                        "glow": "0.05",
+                        "rough": "0.40",
+                        "hex": "#f0aa50",
+                        "desc": "Fermented botanical vapor; decomp to CH₄"
             },
             {
                         "type": "Gas",
@@ -1088,7 +1172,19 @@
                         "glow": "0.05",
                         "rough": "0.20",
                         "hex": "#bae6fd",
-                        "desc": "Gaseous water vapor phase"
+                        "desc": "High temperature gaseous water"
+            },
+            {
+                        "type": "Gas",
+                        "name": "Sodium Chloride Gas (NaCl)",
+                        "rgb": "245, 235, 220",
+                        "r": 245,
+                        "g": 235,
+                        "b": 220,
+                        "glow": "0.10",
+                        "rough": "0.50",
+                        "hex": "#f5ebdc",
+                        "desc": "Gaseous salt at ultra-high temps"
             },
             {
                         "type": "Liquid",
@@ -1100,7 +1196,19 @@
                         "glow": "0.00",
                         "rough": "0.10",
                         "hex": "#0e50d2",
-                        "desc": "Condensed liquid water for hydration & cooling"
+                        "desc": "Potable hydration & base cooling"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Polluted Water",
+                        "rgb": "40, 95, 60",
+                        "r": 40,
+                        "g": 95,
+                        "b": 60,
+                        "glow": "0.00",
+                        "rough": "0.25",
+                        "hex": "#285f3c",
+                        "desc": "Contaminated graywater / scrubber effluent"
             },
             {
                         "type": "Liquid",
@@ -1124,7 +1232,7 @@
                         "glow": "0.00",
                         "rough": "0.15",
                         "hex": "#465569",
-                        "desc": "Cryogenic inert heat-exchange fluid"
+                        "desc": "Cryogenic heat-exchange coolant"
             },
             {
                         "type": "Liquid",
@@ -1136,11 +1244,11 @@
                         "glow": "0.00",
                         "rough": "0.15",
                         "hex": "#500014",
-                        "desc": "High-pressure condensed carbon dioxide"
+                        "desc": "Condensed high-pressure greenhouse storage"
             },
             {
                         "type": "Liquid",
-                        "name": "Liquid Volatiles (LH₂)",
+                        "name": "Liquid Methane (LCH₄)",
                         "rgb": "220, 90, 0",
                         "r": 220,
                         "g": 90,
@@ -1148,19 +1256,31 @@
                         "glow": "0.15",
                         "rough": "0.10",
                         "hex": "#dc5a00",
-                        "desc": "Cryogenic liquid hydrogen fuel"
+                        "desc": "Cryogenic hydrocarbon fuel"
             },
             {
                         "type": "Liquid",
-                        "name": "Liquid Pollutant (LX)",
-                        "rgb": "50, 160, 0",
-                        "r": 50,
+                        "name": "Liquid Hydrogen (LH₂)",
+                        "rgb": "230, 60, 20",
+                        "r": 230,
+                        "g": 60,
+                        "b": 20,
+                        "glow": "0.20",
+                        "rough": "0.08",
+                        "hex": "#e63c14",
+                        "desc": "Ultra-low temperature rocket propellant"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Ozone (LO₃)",
+                        "rgb": "0, 160, 210",
+                        "r": 0,
                         "g": 160,
-                        "b": 0,
-                        "glow": "0.10",
-                        "rough": "0.15",
-                        "hex": "#32a000",
-                        "desc": "Corrosive condensed liquid toxin"
+                        "b": 210,
+                        "glow": "0.25",
+                        "rough": "0.08",
+                        "hex": "#00a0d2",
+                        "desc": "Cryogenic high-potency oxidizer"
             },
             {
                         "type": "Liquid",
@@ -1172,7 +1292,79 @@
                         "glow": "0.05",
                         "rough": "0.10",
                         "hex": "#5a14a0",
-                        "desc": "Cryogenic high-density oxidizer"
+                        "desc": "Dense cryogenic oxidizer fuel"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Pollutant (LX)",
+                        "rgb": "50, 160, 0",
+                        "r": 50,
+                        "g": 160,
+                        "b": 0,
+                        "glow": "0.10",
+                        "rough": "0.15",
+                        "hex": "#32a000",
+                        "desc": "Condensed toxic pollutant chemical"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Silanol",
+                        "rgb": "20, 150, 140",
+                        "r": 20,
+                        "g": 150,
+                        "b": 140,
+                        "glow": "0.05",
+                        "rough": "0.12",
+                        "hex": "#14968c",
+                        "desc": "Specialized phase-change HVAC fluid"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Hydrochloric Acid",
+                        "rgb": "160, 200, 20",
+                        "r": 160,
+                        "g": 200,
+                        "b": 20,
+                        "glow": "0.15",
+                        "rough": "0.12",
+                        "hex": "#a0c814",
+                        "desc": "Condensed corrosive acidic liquid"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Hydrazine",
+                        "rgb": "190, 20, 95",
+                        "r": 190,
+                        "g": 20,
+                        "b": 95,
+                        "glow": "0.15",
+                        "rough": "0.10",
+                        "hex": "#be145f",
+                        "desc": "Room-temperature storable hypergolic fuel"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Alcohol",
+                        "rgb": "210, 140, 50",
+                        "r": 210,
+                        "g": 140,
+                        "b": 50,
+                        "glow": "0.00",
+                        "rough": "0.20",
+                        "hex": "#d28c32",
+                        "desc": "Room-temp liquid fuel; decomposes into CH₄"
+            },
+            {
+                        "type": "Liquid",
+                        "name": "Liquid Sodium Chloride",
+                        "rgb": "220, 210, 190",
+                        "r": 220,
+                        "g": 210,
+                        "b": 190,
+                        "glow": "0.25",
+                        "rough": "0.10",
+                        "hex": "#dcd2be",
+                        "desc": "Molten salt liquid (300°C+ furnace heat)"
             },
             {
                         "type": "Solid",
@@ -1184,7 +1376,7 @@
                         "glow": "0.05",
                         "rough": "0.15",
                         "hex": "#d2f0ff",
-                        "desc": "Solid frozen water ice for crushers & melters"
+                        "desc": "Pure water ice chunk for crushers & melters"
             },
             {
                         "type": "Solid",
@@ -1196,7 +1388,7 @@
                         "glow": "0.10",
                         "rough": "0.20",
                         "hex": "#78dcf5",
-                        "desc": "Solidified atmospheric oxygen ice"
+                        "desc": "Solidified atmospheric oxygen deposit"
             },
             {
                         "type": "Solid",
@@ -1220,11 +1412,11 @@
                         "glow": "0.00",
                         "rough": "0.45",
                         "hex": "#a03c50",
-                        "desc": "Solid dry ice block for sublimating CO₂"
+                        "desc": "Solid dry ice block for plant atmosphere"
             },
             {
                         "type": "Solid",
-                        "name": "Volatiles Ice (Ice H₂)",
+                        "name": "Volatile Ice Ore (CH₄ / H₂)",
                         "rgb": "255, 175, 50",
                         "r": 255,
                         "g": 175,
@@ -1232,7 +1424,19 @@
                         "glow": "0.25",
                         "rough": "0.20",
                         "hex": "#ffaf32",
-                        "desc": "Sub-zero volatile hydrocarbon ice"
+                        "desc": "Methane & Hydrogen volatile ore deposit"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Nitrous Oxide Ice (Ice N₂O)",
+                        "rgb": "180, 100, 250",
+                        "r": 180,
+                        "g": 100,
+                        "b": 250,
+                        "glow": "0.15",
+                        "rough": "0.25",
+                        "hex": "#b464fa",
+                        "desc": "Frozen nitrous oxide crystal deposit"
             },
             {
                         "type": "Solid",
@@ -1248,15 +1452,63 @@
             },
             {
                         "type": "Solid",
-                        "name": "Nitrous Oxide Ice (Ice N₂O)",
-                        "rgb": "180, 100, 250",
-                        "r": 180,
-                        "g": 100,
-                        "b": 250,
-                        "glow": "0.15",
+                        "name": "Silanol Ice (Ice Silanol)",
+                        "rgb": "80, 220, 205",
+                        "r": 80,
+                        "g": 220,
+                        "b": 205,
+                        "glow": "0.10",
                         "rough": "0.25",
-                        "hex": "#b464fa",
-                        "desc": "Frozen nitrous oxide crystal deposit"
+                        "hex": "#50dccd",
+                        "desc": "Frozen synthetic coolant block"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Hydrochloric Acid Ice (Ice HCl)",
+                        "rgb": "215, 250, 90",
+                        "r": 215,
+                        "g": 250,
+                        "b": 90,
+                        "glow": "0.20",
+                        "rough": "0.35",
+                        "hex": "#d7fa5a",
+                        "desc": "Frozen acidic toxic mineral block"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Alcohol Ice (Ice Alcohol)",
+                        "rgb": "245, 190, 110",
+                        "r": 245,
+                        "g": 190,
+                        "b": 110,
+                        "glow": "0.05",
+                        "rough": "0.30",
+                        "hex": "#f5be6e",
+                        "desc": "Solidified fermented alcohol chunk"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Salt / Sodium Chloride Ore",
+                        "rgb": "240, 235, 230",
+                        "r": 240,
+                        "g": 235,
+                        "b": 230,
+                        "glow": "0.00",
+                        "rough": "0.85",
+                        "hex": "#f0ebe6",
+                        "desc": "Space salt ore; only smelts in heated furnace"
+            },
+            {
+                        "type": "Solid",
+                        "name": "Solid Fuel",
+                        "rgb": "60, 50, 45",
+                        "r": 60,
+                        "g": 50,
+                        "b": 45,
+                        "glow": "0.05",
+                        "rough": "0.90",
+                        "hex": "#3c322d",
+                        "desc": "Compacted solid fuel fabricated with Methane"
             }
 ];
 
