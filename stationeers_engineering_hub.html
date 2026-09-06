@@ -1634,19 +1634,22 @@
 
         // Devices dataset for Network Naming
         const deviceDatabase = [
-            // Atmospherics
-            { id: "vent-active", cat: "atmo", name: "Active Vent", sys: "Atmo", dev: "Vent Active", defIndex: "01", fav: true },
-            { id: "vent-passive", cat: "atmo", name: "Passive Vent", sys: "Atmo", dev: "Vent Passive", defIndex: "01", fav: false },
+                        // Atmospherics
             { id: "sensor-gas", cat: "atmo", name: "Gas Sensor", sys: "Atmo", dev: "Sensor Gas", defIndex: "01", fav: true },
             { id: "pipe-analyzer", cat: "atmo", name: "Pipe Analyzer", sys: "Atmo", dev: "Analyzer Pipe", defIndex: "01", fav: true },
+            { id: "vent-active", cat: "atmo", name: "Active Vent", sys: "Atmo", dev: "Vent Active", defIndex: "01", fav: true },
+            { id: "vent-passive", cat: "atmo", name: "Passive Vent", sys: "Atmo", dev: "Vent Passive", defIndex: "01", fav: false },
             { id: "heater", cat: "atmo", name: "Wall Heater", sys: "Atmo", dev: "Heater", defIndex: "01", fav: true },
             { id: "cooler", cat: "atmo", name: "Wall Cooler", sys: "Atmo", dev: "Cooler", defIndex: "01", fav: false },
-            { id: "filtration", cat: "atmo", name: "Filtration Unit", sys: "Atmo", dev: "Filter", defIndex: "01", fav: false },
+            { id: "heater-pipe", cat: "atmo", name: "Pipe Heater", sys: "Atmo", dev: "Heater Pipe", defIndex: "01", fav: false },
+            { id: "valve-digital", cat: "atmo", name: "Pipe Digital Valve", sys: "Atmo", dev: "Valve Digital", defIndex: "01", fav: false },
             { id: "volume-pump", cat: "atmo", name: "Volume Pump", sys: "Atmo", dev: "Pump Volume", defIndex: "01", fav: true },
             { id: "pressure-reg", cat: "atmo", name: "Pressure Regulator", sys: "Atmo", dev: "Regulator", defIndex: "01", fav: false },
             { id: "back-pressure", cat: "atmo", name: "Back Pressure Regulator", sys: "Atmo", dev: "Regulator Back", defIndex: "01", fav: false },
-            { id: "evaporator", cat: "atmo", name: "Air Conditioner (Evaporator)", sys: "Atmo", dev: "AC Evap", defIndex: "01", fav: false },
-            { id: "condenser", cat: "atmo", name: "Air Conditioner (Condenser)", sys: "Atmo", dev: "AC Cond", defIndex: "01", fav: false },
+            { id: "filtration", cat: "atmo", name: "Filtration Unit", sys: "Atmo", dev: "Filter", defIndex: "01", fav: false },
+            { id: "ac-unit", cat: "atmo", name: "Air Conditioner", sys: "Atmo", dev: "AC", defIndex: "01", fav: false },
+            { id: "condenser", cat: "atmo", name: "Condenser", sys: "Atmo", dev: "Condenser", defIndex: "01", fav: false },
+            { id: "evaporator", cat: "atmo", name: "Evaporator", sys: "Atmo", dev: "Evaporator", defIndex: "01", fav: false },
 
             // Power
             { id: "apc", cat: "power", name: "Area Power Control (APC)", sys: "Power", dev: "APC", defIndex: "01", fav: true },
