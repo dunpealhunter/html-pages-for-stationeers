@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stationeers IC10 - Filtratie & Sluizen Complex Architectuur</title>
+    <style>
+        :root {
+            --bg-main: #0b0f19;
+            --bg-card: #111827;
+            --bg-code: #030712;
+            --border-color: #1f2937;
+            --border-accent: #374151;
+            --text-primary: #f3f4f6;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --accent-cyan: #06b6d4;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --font-sans: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            letter-spacing: -0.025em;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        h1 span {
+            color: var(--accent-cyan);
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-top: 0.5rem;
+        }
+
+        .quick-nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .quick-nav a {
+            background-color: var(--bg-card);
+            color: var(--accent-cyan);
+            text-decoration: none;
+            padding: 0.4rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            border: 1px solid var(--border-color);
+            transition: all 0.2s ease;
+        }
+
+        .quick-nav a:hover {
+            border-color: var(--accent-cyan);
+            background-color: #162032;
+        }
+
+        .blueprint-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .blueprint-card h2 {
+            font-size: 1.3rem;
+            color: var(--accent-amber);
+            margin-bottom: 1rem;
+        }
+
+        pre.ascii-map {
+            background-color: var(--bg-code);
+            color: #38bdf8;
+            padding: 1.25rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            border: 1px solid var(--border-accent);
+        }
+
+        .script-section {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .script-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 1rem;
+        }
+
+        .script-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 9999px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .badge-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); border: 1px solid var(--accent-cyan); }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid var(--accent-amber); }
+        .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid var(--accent-emerald); }
+        .badge-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); border: 1px solid var(--accent-rose); }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        table th, table td {
+            padding: 0.75rem 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table th {
+            background-color: #172033;
+            color: var(--text-secondary);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.05em;
+        }
+
+        table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .pin-tag {
+            font-family: var(--font-mono);
+            font-weight: 700;
+            color: var(--accent-cyan);
+            background: #030712;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            border: 1px solid var(--border-accent);
+        }
+
+        .code-container {
+            position: relative;
+            margin: 1.25rem 0;
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 0.75rem;
+            right: 0.75rem;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-accent);
+            color: var(--text-secondary);
+            padding: 0.35rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .copy-btn:hover {
+            color: #ffffff;
+            border-color: var(--accent-cyan);
+        }
+
+        pre.code-block {
+            background-color: var(--bg-code);
+            padding: 1.25rem;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: #e5e7eb;
+            overflow-x: auto;
+            border: 1px solid var(--border-accent);
+            max-height: 500px;
+        }
+
+        .explanation {
+            background-color: #0d1527;
+            border-left: 4px solid var(--accent-cyan);
+            padding: 1rem 1.25rem;
+            border-radius: 0 6px 6px 0;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-top: 1rem;
+        }
+
+        .explanation strong {
+            color: var(--text-primary);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-top: 4rem;
+            border-top: 1px solid var(--border-color);
+            padding-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><span>Stationeers IC10</span> Complex Architectuur</h1>
+        <p class="subtitle">Complete MIPS suite voor een autonoom filtratiecomplex: 6-kamer routing, Blast Doors, HVAC en Modular Consoles integratie.</p>
+        
+        <nav class="quick-nav">
+            <a href="#map">Systeem Plattegrond</a>
+            <a href="#script1">1. Accu & Vermogen</a>
+            <a href="#script2">2. Filtratie & Leidingen</a>
+            <a href="#script3">3. Filtratiekamer HVAC</a>
+            <a href="#script4">4. Sluis 2 Containment</a>
+            <a href="#script5">5. Sluis 1 Hallway</a>
+            <a href="#script6">6. Sluis 3 Dataruimte</a>
+            <a href="#script7">7. Universele HVAC</a>
+        </nav>
+    </header>
+
+    <!-- BLUEPRINT PLATTEGROND -->
+    <section id="map" class="blueprint-card">
+        <h2>Complex Plattegrond & Sensor Routering</h2>
+        <pre class="ascii-map">
+====================================================================================================
+                                      CENTRALE HALLWAY
+                  [8x IC10 Hallway Slots] [Modular Consoles] [CCTV Monitors]
+=============================================++====================================================
+                                             ||
+                                      [ BLAST DOOR 1A ]
+                                             ||
+                                  +----------------------+
+                                  |     SLUIS 1 (1x1)    |
+                                  | (G) Gas Sensor       |
+                                  | (O) Occupancy Sensor |
+                                  +----------------------+
+                                             ||
+                                     [ AIRLOCK DOOR 1B ]
+                                             ||
+=============================================++====================================================
+                                         TUSSENGANG
+                         (G) Gas Sensor   |   (O) Occupancy Sensor
+======================++====================================================++=====================
+                      ||                                                    ||
+              [ AIRLOCK DOOR 3A ]                                   [ AIRLOCK DOOR 2A ]
+                      ||                                                    ||
+           +----------------------+                              +----------------------+
+           |    SLUIS 3 (1x1)     |                              |                      |
+           | (G) Gas Sensor       |                              |     SLUIS 2 (2x1)    |
+           | (O) Occupancy Sensor |                              | 2 Blokken Decontam.  |
+           +----------------------+                              | (G) Gas Sensor       |
+                      ||                                         | (O) Occupancy Sensor |
+              [ AIRLOCK DOOR 3B ]                                |                      |
+                      ||                                         +----------------------+
++=====================++=====================+                              ||
+|                 DATARUIMTE                 |                       [ BLAST DOOR 2B ]
+|              (2x2 Open Ruimte)             |                              ||
+|                                            | +============================++====================+
+| [Wand 1: 4x IC10 / 6x Mem]  [Wand 2: ...]  | |                  FILTRATIEKAMER                  |
+|                                            | |                                                  |
+| (G) Gas Sensor       (O) Occupancy Sensor  | | [CCTV Camera]                (G) Gas Sensor      |
+|                                            | | [Status LED / Siren]         (O) Occupancy Sensor|
+| [Wand 5: Intern]     [Wand 3: ...]         | |                                                  |
+|                                            | |  === INVOER ===> [Pipe Analyzer In]              |
+|              [Wand 4: ...]                 | |                         |                        |
++============================================+ |                  [FILTRATION UNIT]               |
+                                               |                         |                        |
++--------------------------------------------+ |                  [Pipe Analyzer Out]             |
+|        AUTONOOM BATTERIJCOMPARTIMENT       | |                         |                        |
+|  [Dedicated Battery Bank] -> [Power Subnet]| |  === BUFFER ===> [GROTE GASTANK (Storage)]       |
++--------------------------------------------+ +==================================================+
+        </pre>
+    </section>
+
+    <!-- SCRIPT 1 -->
+    <article id="script1" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">1. Batterij- & Energiebeheer</h3>
+                <span class="badge badge-amber">Dataruimte - Wand 4</span>
+            </div>
+            <span class="badge badge-cyan">44 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>MemTotalCharge</td><td>Logic Memory</td><td>Totaal opgeslagen lading in Joules.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>MemDeltaWatt</td><td>Logic Memory</td><td>Actueel netto vermogen in Watt (Delta/sec).</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>MemAvgWatt</td><td>Logic Memory</td><td>Exponentieel rollend gemiddelde (Watt).</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>-</td><td>-</td><td>Vrij voor uitbreiding (bijv. SoC %).</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>-</td><td>-</td><td>Vrij voor uitbreiding.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>-</td><td>-</td><td>Vrij voor uitbreiding.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code1', this)">Kopieer Code</button>
+            <pre class="code-block" id="code1"># ========================================================
+# IC10 - POWER MONITOR VOOR MODULAR CONSOLES
+# Batch-uitlezing van accubank, watt-berekening en EMA
+# ========================================================
+
+# Pin Toewijzingen
+alias MemTotalCharge d0
+alias MemDeltaWatt   d1
+alias MemAvgWatt     d2
+
+# Constanten &amp; Hash
+define BATTERY_HASH     HASH("StructureBatteryLarge")
+define TICK_DELTA_SEC   0.5     # Duur van 1 Stationeers tick (sec)
+define ALPHA            0.1     # Dempingsfactor rollend gemiddelde
+
+# Register Aliases
+alias CurrentCharge  r0
+alias PrevCharge     r1
+alias DeltaJoules    r2
+alias InstantWatt    r3
+alias AvgWatt        r4
+alias Initialized    r5
+alias TempReg        r6
+
+main:
+    yield
+
+    # 1. Lees totale opgeslagen energie van alle batterijen via batch
+    lb CurrentCharge BATTERY_HASH Charge 1
+
+    # 2. Eerste tick initialiseren om pieken te voorkomen
+    bnez Initialized calc_power
+    move PrevCharge CurrentCharge
+    move AvgWatt 0
+    move Initialized 1
+    j store_data
+
+calc_power:
+    # 3. Bereken actuele wattages (Watt = Delta Joules / Delta Tijd)
+    sub DeltaJoules CurrentCharge PrevCharge
+    div InstantWatt DeltaJoules TICK_DELTA_SEC
+
+    # 4. Rollend exponentieel gemiddelde (EMA) bijwerken
+    sub TempReg InstantWatt AvgWatt
+    mul TempReg TempReg ALPHA
+    add AvgWatt AvgWatt TempReg
+
+    # Werk PrevCharge bij voor de volgende cyclus
+    move PrevCharge CurrentCharge
+
+store_data:
+    # 5. Waardes wegschrijven naar Logic Memories voor consoles
+    s MemTotalCharge Setting CurrentCharge
+    s MemDeltaWatt Setting InstantWatt
+    s MemAvgWatt Setting AvgWatt
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Dit script leest via batching (<code style="color:var(--accent-cyan);">lb</code>) de totale lading van alle grote batterijen tegelijk uit en berekent het netto laad- of ontlaadvermogen per seconde. Met de parameter <strong>ALPHA</strong> (standaard <code style="color:var(--accent-cyan);">0.1</code>) pas je de reactiesnelheid van het gemiddelde aan; verlaag naar <code style="color:var(--accent-cyan);">0.05</code> voor een vlakkere curve op de Modular Consoles schermen.
+        </div>
+    </article>
+
+    <!-- SCRIPT 2 -->
+    <article id="script2" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">2. Filtratie &amp; Leiding Telemetrie</h3>
+                <span class="badge badge-emerald">Filtratiekamer / Wand 3</span>
+            </div>
+            <span class="badge badge-cyan">58 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>Filtration</td><td>Filtration Unit</td><td>De actieve gasfiltratie-eenheid.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>StorageTank</td><td>Gas Tank</td><td>Grote opslagtank voor het gefilterde element.</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>PipeIn</td><td>Pipe Analyzer</td><td>Analyseert de vuile toevoerleiding.</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>PipeOut</td><td>Pipe Analyzer</td><td>Analyseert de leiding tussen filtratie en tank.</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>MemTank</td><td>Logic Memory</td><td>Exporteert actuele tankdruk (kPa) naar consoles.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemFilter</td><td>Logic Memory</td><td>Exporteert minimale filterconditie (%) naar consoles.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code2', this)">Kopieer Code</button>
+            <pre class="code-block" id="code2"># ========================================================
+# IC10 - FILTRATIE &amp; LEIDING TELEMETRIE CONTROLLER
+# Procesregeling, filterbewaking en batch-alarmering
+# ========================================================
+
+# Pin Toewijzingen
+alias Filtration    d0
+alias StorageTank   d1
+alias PipeIn        d2
+alias PipeOut       d3
+alias MemTank       d4
+alias MemFilter     d5
+
+# Grenswaarden &amp; Hash
+define MIN_IN_PRESS       20.0    # kPa: Minimum toevoerdruk voor inschakelen
+define MAX_PIPE_PRESS     50000.0 # kPa: Maximale veilige leidingdruk (50 MPa)
+define MAX_TANK_PRESS     55000.0 # kPa: Maximale tankdoeldruk (55 MPa)
+define MIN_SAFE_TEMP      200.0   # Kelvin: Ondergrens leidingtemperatuur
+define MAX_SAFE_TEMP      350.0   # Kelvin: Bovengrens leidingtemperatuur (~77 C)
+define MIN_FILTER_PCT     1.0     # %: Minimum filterstatus voor noodstop
+define ALARM_LIGHT_HASH   HASH("StructureFlashingLight")
+
+# Register Aliases
+alias InPress       r0
+alias OutPress      r1
+alias TankPress     r2
+alias OutTemp       r3
+alias Filter0       r4
+alias Filter1       r5
+alias MinFilter     r6
+alias FaultFlag     r7
+alias RunState      r8
+
+main:
+    yield
+
+    # 1. Uitlezen sensordata en tankdruk
+    l InPress   PipeIn Pressure
+    l OutPress  PipeOut Pressure
+    l TankPress StorageTank Pressure
+    l OutTemp   PipeOut Temperature
+
+    # 2. Slijtage van beide filters uitlezen (Slot 0 en 1)
+    ls Filter0 Filtration 0 Quantity
+    ls Filter1 Filtration 1 Quantity
+    min MinFilter Filter0 Filter1
+
+    # 3. Integriteit van leidingen en tank controleren
+    sgt r9 OutPress MAX_PIPE_PRESS
+    sgt r10 TankPress MAX_TANK_PRESS
+    or FaultFlag r9 r10
+
+    slt r9 OutTemp MIN_SAFE_TEMP
+    sgt r10 OutTemp MAX_SAFE_TEMP
+    or r9 r9 r10
+    or FaultFlag FaultFlag r9
+
+    # 4. Filterprocescondities bepalen
+    sgt r9 InPress MIN_IN_PRESS
+    slt r10 TankPress MAX_TANK_PRESS
+    and RunState r9 r10
+
+    sgt r9 MinFilter MIN_FILTER_PCT
+    and RunState RunState r9
+
+    # Direct uitschakelen bij leidingfout of overdruk
+    select RunState FaultFlag 0 RunState
+    s Filtration On RunState
+
+    # 5. Visueel alarm triggeren via batch
+    sb ALARM_LIGHT_HASH On FaultFlag
+
+    # 6. Schrijf data weg naar Logic Memories
+    s MemTank Setting TankPress
+    s MemFilter Setting MinFilter
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Schakelt de filtratie-unit automatisch uit als de tank vol is of zodra een van de interne filters onder <code style="color:var(--accent-cyan);">1%</code> zakt via <code style="color:var(--accent-cyan);">ls Quantity</code>. Pas <strong>MAX_PIPE_PRESS</strong> aan naar <code style="color:var(--accent-cyan);">60000</code> bij Heavy-Duty leidingen en stel <strong>MIN_SAFE_TEMP</strong> af op het kookpunt van het specifieke gas om condensatie in de leidingen te weren.
+        </div>
+    </article>
+
+    <!-- SCRIPT 3 -->
+    <article id="script3" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">3. Filtratiekamer HVAC (4x Powered Vent Large)</h3>
+                <span class="badge badge-emerald">Filtratiekamer</span>
+            </div>
+            <span class="badge badge-cyan">58 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>VentExt1</td><td>Powered Vent Large</td><td>Extractieventilator 1 (Mode 0: Inward / naar buis).</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>VentExt2</td><td>Powered Vent Large</td><td>Extractieventilator 2 (Mode 0: Inward / naar buis).</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>VentSup1</td><td>Powered Vent Large</td><td>Toevoerventilator 1 (Mode 1: Outward / schone lucht).</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>VentSup2</td><td>Powered Vent Large</td><td>Toevoerventilator 2 (Mode 1: Outward / schone lucht).</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>SensorFilt</td><td>Gas Sensor</td><td>Atmosfeersensor in de Filtratiekamer.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemHazard</td><td>Logic Memory</td><td>Shared gevarenbus (1 = Alarm, 0 = Normaal).</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code3', this)">Kopieer Code</button>
+            <pre class="code-block" id="code3"># ========================================================
+# IC10 - FILTRATIEKAMER HVAC &amp; NOODAFZUIGING
+# Bestuurt 4x Powered Vent Large (2 extractie, 2 toevoer)
+# Drukbalans en geforceerde noodontluchting bij calamiteiten
+# ========================================================
+
+# Pin Toewijzingen
+alias VentExt1     d0
+alias VentExt2     d1
+alias VentSup1     d2
+alias VentSup2     d3
+alias SensorFilt   d4
+alias MemHazard    d5
+
+# Grenswaarden &amp; Constanten
+define PRESS_MIN        100.0   # kPa: Minimale kamerdoeldruk
+define PRESS_MAX        102.0   # kPa: Maximale kamerdoeldruk
+define MAX_SAFE_T       323.15  # Kelvin: Max veilige temperatuur (50 C)
+define MAX_TOXIC_RATIO  0.001   # Ratio: Max 0.1% toxisch gas (CH4, X, N2O, H2O)
+define MODE_INWARD      0       # Mode 0: Afzuigen naar leidingsysteem
+define MODE_OUTWARD     1       # Mode 1: Blazen in de kamer
+
+# Register Aliases
+alias FiltPress    r0
+alias FiltTemp     r1
+alias ToxicSum     r2
+alias HazardActive r3
+alias SupOn        r4
+alias ExtOn        r5
+alias TempReg      r6
+
+main:
+    yield
+
+    # 1. Atmosfeer en master gevarenbus inlezen
+    l FiltPress   SensorFilt Pressure
+    l FiltTemp    SensorFilt Temperature
+    l HazardActive MemHazard Setting
+
+    # 2. Multi-gas toxiciteit optellen (Methane, Pollutant, N2O, Water)
+    l ToxicSum  SensorFilt RatioPollutant
+    l TempReg   SensorFilt RatioNitrousOxide
+    add ToxicSum ToxicSum TempReg
+    l TempReg   SensorFilt RatioMethane
+    add ToxicSum ToxicSum TempReg
+    l TempReg   SensorFilt RatioWater
+    add ToxicSum ToxicSum TempReg
+
+    # 3. Lokale gevarencontrole (temperatuur of toxisch lek)
+    sgt TempReg ToxicSum MAX_TOXIC_RATIO
+    or HazardActive HazardActive TempReg
+    sgt TempReg FiltTemp MAX_SAFE_T
+    or HazardActive HazardActive TempReg
+
+    # 4. Bepaal status van ventilatoren
+    beqz HazardActive normal_hvac
+
+    # ALARM: Toevoer per direct afsluiten, maximale extractie aan
+    move SupOn 0
+    move ExtOn 1
+    j apply_hvac
+
+normal_hvac:
+    # NORMALE REGELING: Handhaaf druk tussen PRESS_MIN en PRESS_MAX
+    slt SupOn FiltPress PRESS_MIN
+    sgt ExtOn FiltPress PRESS_MAX
+
+apply_hvac:
+    # 5. Extractieventilatoren instellen en schakelen
+    s VentExt1 Mode MODE_INWARD
+    s VentExt2 Mode MODE_INWARD
+    s VentExt1 On ExtOn
+    s VentExt2 On ExtOn
+
+    # 6. Toevoerventilatoren instellen en schakelen
+    s VentSup1 Mode MODE_OUTWARD
+    s VentSup2 Mode MODE_OUTWARD
+    s VentSup1 On SupOn
+    s VentSup2 On SupOn
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Balanceert de kamerdruk strak tussen <code style="color:var(--accent-cyan);">100</code> en <code style="color:var(--accent-cyan);">102 kPa</code> met de 4 grote ventilatoren. Bij detectie van brandbare of giftige gassen (Methane, X, N2O, stoom) of hitte slaat de toevoer onmiddellijk dicht en zuigen beide extractieventilatoren de ruimte op maximale capaciteit vacuüm.
+        </div>
+    </article>
+
+    <!-- SCRIPT 4 -->
+    <article id="script4" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">4. Sluis 2 &amp; Filtratie Containment</h3>
+                <span class="badge badge-rose">Hallway Slot 1</span>
+            </div>
+            <span class="badge badge-cyan">68 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>Door2A</td><td>Airlock Door</td><td>Toegangsdeur tussen Tussengang en Sluis 2.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>Door2B</td><td>Blast Door</td><td>Zware pantserwanddeur naar de Filtratiekamer.</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>SensorFilt</td><td>Gas Sensor</td><td>Atmosfeersensor in de Filtratiekamer.</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>SensorAir2</td><td>Gas Sensor</td><td>Atmosfeersensor in de 2-blokken ruimte van Sluis 2.</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>OccFilt</td><td>Occupancy Sensor</td><td>Aanwezigheidsdetectie in de Filtratiekamer.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemHazard</td><td>Logic Memory</td><td>Shared gevarenbus (1 = Alarm, 0 = Normaal).</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code4', this)">Kopieer Code</button>
+            <pre class="code-block" id="code4"># ========================================================
+# IC10 - SLUIS 2 &amp; FILTRATIE CONTAINMENT CONTROLLER
+# Stuurt Airlock Door 2A &amp; Blast Door 2B aan
+# Bevat noodevacuatie via de Occupancy Sensor &amp; MemHazard bus
+# ========================================================
+
+# Pin Toewijzingen
+alias Door2A       d0
+alias Door2B       d1
+alias SensorFilt   d2
+alias SensorAir2   d3
+alias OccFilt      d4
+alias MemHazard    d5
+
+# Grenswaarden Filtratiekamer &amp; Veiligheid
+define MIN_SAFE_P       80.0     # kPa: Minimale veilige kamerdruk
+define MAX_SAFE_P       125.0    # kPa: Maximale veilige kamerdruk
+define MAX_SAFE_T       323.15   # Kelvin: Maximale veilige temperatuur (50 C)
+define MAX_TOXIC_RATIO  0.001    # Ratio: Max 0.1% toxisch (CH4, X, N2O, H2O)
+define MAX_CO2_RATIO    0.02     # Ratio: Max 2.0% CO2
+
+# Register Aliases
+alias FiltPress    r0
+alias FiltTemp     r1
+alias ToxicSum     r2
+alias HazardFlag   r3
+alias D2AOpen      r4
+alias D2BOpen      r5
+alias PlayerInFilt r6
+alias TempReg      r7
+
+main:
+    yield
+
+    # 1. Sensordata en bezetting in de filtratiekamer uitlezen
+    l FiltPress    SensorFilt Pressure
+    l FiltTemp     SensorFilt Temperature
+    l PlayerInFilt OccFilt Quantity
+
+    # 2. Multi-gas toxiciteit optellen (Methane, Pollutant, N2O, Water)
+    l ToxicSum SensorFilt RatioPollutant
+    l TempReg  SensorFilt RatioNitrousOxide
+    add ToxicSum ToxicSum TempReg
+    l TempReg  SensorFilt RatioMethane
+    add ToxicSum ToxicSum TempReg
+    l TempReg  SensorFilt RatioWater
+    add ToxicSum ToxicSum TempReg
+
+    # 3. Integrale gevarendiagnose stellen
+    slt HazardFlag FiltPress MIN_SAFE_P
+    sgt TempReg FiltPress MAX_SAFE_P
+    or HazardFlag HazardFlag TempReg
+
+    sgt TempReg FiltTemp MAX_SAFE_T
+    or HazardFlag HazardFlag TempReg
+
+    sgt TempReg ToxicSum MAX_TOXIC_RATIO
+    or HazardFlag HazardFlag TempReg
+
+    l TempReg SensorFilt RatioCarbonDioxide
+    sgt TempReg TempReg MAX_CO2_RATIO
+    or HazardFlag HazardFlag TempReg
+
+    # Controleer of Sluis 2 zelf besmet is
+    l TempReg SensorAir2 RatioPollutant
+    sgt TempReg TempReg MAX_TOXIC_RATIO
+    or HazardFlag HazardFlag TempReg
+
+    # Deurstatussen inlezen (0 = Dicht, 1 = Open)
+    l D2AOpen Door2A Open
+    l D2BOpen Door2B Open
+
+    # 4. Deurbeveiliging &amp; Interlock
+    beqz HazardFlag normal_ops
+
+    # ALARM: Controleer of er een speler geëvacueerd moet worden
+    bgtz PlayerInFilt evacuate_player
+
+    # Geen speler binnen: Vergrendel beide deuren hermetisch
+    s Door2B Lock 1
+    s Door2B Open 0
+    s Door2A Lock 1
+    s Door2A Open 0
+    j update_hazard_bus
+
+evacuate_player:
+    # Ontgrendel Blast Door 2B voor vluchtroute, buitendeur potdicht houden
+    s Door2A Lock 1
+    s Door2A Open 0
+    s Door2B Lock 0
+    j update_hazard_bus
+
+normal_ops:
+    # Standaard interlock over de 2-blokken buffer
+    s Door2A Lock D2BOpen
+    s Door2B Lock D2AOpen
+
+update_hazard_bus:
+    # 5. Schrijf status weg naar shared gevarenbus
+    s MemHazard Setting HazardFlag
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Bewaakt de 2-blokken decontaminatiezone en de binnenste Blast Door 2B. Als er giftige gassen ontsnappen terwijl er een technicus in de filtratieruimte staat (<code style="color:var(--accent-cyan);">OccFilt &gt; 0</code>), blijft Blast Door 2B ontgrendeld voor evacuatie naar de sluis, terwijl Deur 2A potdicht gaat om de basis te beschermen.
+        </div>
+    </article>
+
+    <!-- SCRIPT 5 -->
+    <article id="script5" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">5. Sluis 1 Hallway Access</h3>
+                <span class="badge badge-rose">Hallway Slot 2</span>
+            </div>
+            <span class="badge badge-cyan">52 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>Door1A</td><td>Blast Door</td><td>Zware pantserwanddeur aan centrale gangzijde.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>Door1B</td><td>Airlock Door</td><td>Binnendeur naar de Tussengang.</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>SensorAir1</td><td>Gas Sensor</td><td>Atmosfeersensor in het 1-blok sluiscompartiment.</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>OccAir1</td><td>Occupancy Sensor</td><td>Aanwezigheidsdetectie in Sluis 1.</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>MemHazard</td><td>Logic Memory</td><td>Leest de master gevarenbus uit van Script 4.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemStatus1</td><td>Logic Memory</td><td>Exporteert statuscode (-1 t/m 3) naar consoles.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code5', this)">Kopieer Code</button>
+            <pre class="code-block" id="code5"># ========================================================
+# IC10 - SLUIS 1 HALLWAY ACCESS CONTROLLER
+# Stuurt Hallway Blast Door 1A &amp; Airlock Door 1B aan
+# Sluit de centrale gang hermetisch af bij calamiteiten
+# ========================================================
+
+# Pin Toewijzingen
+alias Door1A       d0
+alias Door1B       d1
+alias SensorAir1   d2
+alias OccAir1      d3
+alias MemHazard    d4
+alias MemStatus1   d5
+
+# Grenswaarden
+define MAX_TOXIC_RATIO  0.001    # Maximaal toelaatbare toxische fractie
+
+# Register Aliases
+alias HazardActive r0
+alias D1AOpen      r1
+alias D1BOpen      r2
+alias InTransit    r3
+alias ToxicCheck   r4
+alias StatusVal    r5
+alias TempReg      r6
+
+main:
+    yield
+
+    # 1. Lees gevarenbus en sensorwaarden in
+    l HazardActive MemHazard Setting
+    l InTransit    OccAir1 Quantity
+    l D1AOpen      Door1A Open
+    l D1BOpen      Door1B Open
+
+    # 2. Controleer op binnengedragen gifgassen
+    l ToxicCheck SensorAir1 RatioPollutant
+    l TempReg    SensorAir1 RatioMethane
+    add ToxicCheck ToxicCheck TempReg
+
+    # 3. Beveiligingsafhandeling
+    beqz HazardActive check_transit
+
+    # BIJ GEVAAR IN HET COMPLEX:
+    # Vergrendel Door 1B om de centrale hallway te beschermen
+    s Door1B Lock 1
+    s Door1B Open 0
+    s Door1A Lock D1BOpen
+    move StatusVal -1
+    j write_status
+
+check_transit:
+    # 4. Normale sluisinterlock met bezettingsbewaking
+    s Door1A Lock D1BOpen
+    s Door1B Lock D1AOpen
+
+    # Statuscode bepalen (-1: Alarm, 0: Standby, 1: 1A Open, 2: 1B Open, 3: Bezet)
+    move StatusVal 0
+    select StatusVal D1AOpen 1 StatusVal
+    select StatusVal D1BOpen 2 StatusVal
+    bgtz InTransit mark_occupied
+    j write_status
+
+mark_occupied:
+    move StatusVal 3
+
+write_status:
+    # 5. Status exporteren naar Logic Memory
+    s MemStatus1 Setting StatusVal
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Bestuurt de primaire toegang vanaf de basis via Blast Door 1A. Zodra de gevarenbus <code style="color:var(--accent-cyan);">MemHazard</code> actief wordt, gaat binnendeur 1B onmiddellijk op slot, waardoor besmetting vanuit de tussengang nooit de centrale hallway kan bereiken.
+        </div>
+    </article>
+
+    <!-- SCRIPT 6 -->
+    <article id="script6" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">6. Sluis 3 Dataruimte Quarantaine</h3>
+                <span class="badge badge-cyan">Hallway Slot 3 / Wand 1</span>
+            </div>
+            <span class="badge badge-cyan">52 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>Door3A</td><td>Airlock Door</td><td>Buitendeur aan de Tussengang-zijde.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>Door3B</td><td>Airlock Door</td><td>Binnendeur naar de 2x2 Dataruimte.</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>SensorAir3</td><td>Gas Sensor</td><td>Atmosfeersensor in het 1-blok sluiscompartiment.</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>OccAir3</td><td>Occupancy Sensor</td><td>Aanwezigheidsdetectie in Sluis 3.</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>MemHazard</td><td>Logic Memory</td><td>Leest master gevarenbus uit van Script 4.</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemStatus3</td><td>Logic Memory</td><td>Exporteert statuscode (-1 t/m 3) naar consoles.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code6', this)">Kopieer Code</button>
+            <pre class="code-block" id="code6"># ========================================================
+# IC10 - SLUIS 3 DATARUIMTE QUARANTAINE CONTROLLER
+# Bestuurt Airlock Deuren 3A en 3B naar de chipruimte
+# Isoleert de 2x2 dataruimte hermetisch bij calamiteiten
+# ========================================================
+
+# Pin Toewijzingen
+alias Door3A       d0
+alias Door3B       d1
+alias SensorAir3   d2
+alias OccAir3      d3
+alias MemHazard    d4
+alias MemStatus3   d5
+
+# Grenswaarden
+define MAX_TOXIC_RATIO  0.0005   # Strenge limiet voor gevoelige chipruimte
+
+# Register Aliases
+alias HazardActive r0
+alias D3AOpen      r1
+alias D3BOpen      r2
+alias InTransit    r3
+alias ToxicCheck   r4
+alias StatusVal    r5
+alias TempReg      r6
+
+main:
+    yield
+
+    # 1. Inlezen van sensoren en master alarmbus
+    l HazardActive MemHazard Setting
+    l InTransit    OccAir3 Quantity
+    l D3AOpen      Door3A Open
+    l D3BOpen      Door3B Open
+
+    # 2. Controleer sluiscompartiment op toxische insijpeling
+    l ToxicCheck SensorAir3 RatioPollutant
+    l TempReg    SensorAir3 RatioMethane
+    add ToxicCheck ToxicCheck TempReg
+
+    # 3. Quarantaineafhandeling
+    beqz HazardActive normal_access
+
+    # BIJ ALARM IN HET COMPLEX:
+    # Vergrendel buitendeur 3A om de dataruimte te beschermen
+    s Door3A Lock 1
+    s Door3A Open 0
+    # Binnendeur blijft ontgrendeld voor personeel dat binnen zit
+    s Door3B Lock 0
+    move StatusVal -1
+    j write_status
+
+normal_access:
+    # 4. Standaard Airlock interlock over 1 blok
+    s Door3A Lock D3BOpen
+    s Door3B Lock D3AOpen
+
+    # Bepaal doorloopstatus voor consoles
+    move StatusVal 0
+    select StatusVal D3AOpen 1 StatusVal
+    select StatusVal D3BOpen 2 StatusVal
+    bgtz InTransit mark_occupied
+    j write_status
+
+mark_occupied:
+    move StatusVal 3
+
+write_status:
+    # 5. Update status naar Logic Memory
+    s MemStatus3 Setting StatusVal
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Isoleert de 2x2 chip- en geheugenruimte direct bij een gaslek door de buitenste Airlock Door 3A te vergrendelen. Deur 3B blijft altijd ontgrendeld (<code style="color:var(--accent-cyan);">Lock 0</code>), zodat personeel in de dataruimte nooit opgesloten kan raken.
+        </div>
+    </article>
+
+    <!-- SCRIPT 7 -->
+    <article id="script7" class="script-section">
+        <div class="script-header">
+            <div>
+                <h3 class="script-title">7. Universele Compartiment Ventilatie</h3>
+                <span class="badge badge-emerald">Toepasbaar op Sluis 1, 2, 3, Gang &amp; Data</span>
+            </div>
+            <span class="badge badge-cyan">58 Regels | &lt; 128 Max</span>
+        </div>
+
+        <h4>Pentoewijzing (Pin Configuration)</h4>
+        <table>
+            <thead>
+                <tr><th>Pin</th><th>Apparaat</th><th>In-game Type</th><th>Functie</th></tr>
+            </thead>
+            <tbody>
+                <tr><td><span class="pin-tag">d0</span></td><td>SensorRoom</td><td>Gas Sensor</td><td>Atmosfeersensor van het specifieke compartiment.</td></tr>
+                <tr><td><span class="pin-tag">d1</span></td><td>VentExtract</td><td>Active Vent</td><td>Afzuigventilator (Mode 0: Inward / naar buis).</td></tr>
+                <tr><td><span class="pin-tag">d2</span></td><td>VentSupply</td><td>Active Vent</td><td>Schone lucht toevoerventilator (Mode 1: Outward).</td></tr>
+                <tr><td><span class="pin-tag">d3</span></td><td>OccSensor</td><td>Occupancy Sensor</td><td>Aanwezigheidsdetectie in de ruimte.</td></tr>
+                <tr><td><span class="pin-tag">d4</span></td><td>MemHazard</td><td>Logic Memory</td><td>Shared gevarenbus (1 = Alarm, 0 = Normaal).</td></tr>
+                <tr><td><span class="pin-tag">d5</span></td><td>MemPressure</td><td>Logic Memory</td><td>Exporteert actuele druk (kPa) naar consoles.</td></tr>
+            </tbody>
+        </table>
+
+        <div class="code-container">
+            <button class="copy-btn" onclick="copyCode('code7', this)">Kopieer Code</button>
+            <pre class="code-block" id="code7"># ========================================================
+# IC10 - UNIVERSELE COMPARTIMENT VENTILATIE CONTROLLER
+# Handhaaft 100-102 kPa en schakelt noodpurging in bij lek
+# Toepasbaar op Sluis 1, 2, 3, Tussengang en Dataruimte
+# ========================================================
+
+# Pin Toewijzingen
+alias SensorRoom   d0
+alias VentExtract  d1
+alias VentSupply   d2
+alias OccSensor    d3
+alias MemHazard    d4
+alias MemPressure  d5
+
+# Grenswaarden &amp; Modi
+define PRESS_MIN        100.0   # kPa: Ondergrens kamerdruk
+define PRESS_MAX        102.0   # kPa: Bovengrens kamerdruk
+define MAX_TOXIC_RATIO  0.001   # Ratio: Max 0.1% toxisch gas
+define MODE_INWARD      0       # Mode 0: Opzuigen naar buis
+define MODE_OUTWARD     1       # Mode 1: Blazen in kamer
+
+# Register Aliases
+alias RoomPress    r0
+alias RoomTemp     r1
+alias ToxicSum     r2
+alias HazardActive r3
+alias SupOn        r4
+alias ExtOn        r5
+alias TempReg      r6
+
+main:
+    yield
+
+    # 1. Inlezen van kamerdruk, temperatuur en alarmbus
+    l RoomPress    SensorRoom Pressure
+    l RoomTemp     SensorRoom Temperature
+    l HazardActive MemHazard Setting
+
+    # 2. Multi-gas toxiciteit optellen (Methane, Pollutant, N2O, Water)
+    l ToxicSum  SensorRoom RatioPollutant
+    l TempReg   SensorRoom RatioNitrousOxide
+    add ToxicSum ToxicSum TempReg
+    l TempReg   SensorRoom RatioMethane
+    add ToxicSum ToxicSum TempReg
+    l TempReg   SensorRoom RatioWater
+    add ToxicSum ToxicSum TempReg
+
+    # 3. Lokale gevarencontrole
+    sgt TempReg ToxicSum MAX_TOXIC_RATIO
+    or HazardActive HazardActive TempReg
+
+    # 4. Ventilatiestatus bepalen
+    beqz HazardActive normal_balance
+
+    # ALARM: Toevoer stoppen, compartiment actief purgen
+    move SupOn 0
+    move ExtOn 1
+    j apply_room_vents
+
+normal_balance:
+    # NORMALE DRUKREGELING: Schakelen op basis van bandbreedte
+    slt SupOn RoomPress PRESS_MIN
+    sgt ExtOn RoomPress PRESS_MAX
+
+apply_room_vents:
+    # 5. Aansturing Active Vents
+    s VentExtract Mode MODE_INWARD
+    s VentExtract On ExtOn
+
+    s VentSupply Mode MODE_OUTWARD
+    s VentSupply On SupOn
+
+    # 6. Exporteer lokale druk naar Logic Memory voor consoles
+    s MemPressure Setting RoomPress
+
+    j main</pre>
+        </div>
+
+        <div class="explanation">
+            <strong>Uitleg &amp; Afstelling:</strong> Kan op elke behuizing geladen worden om een compartiment via 2 Active Vents strak op druk te houden en live data naar Modular Consoles te sturen. In een sluisruimte waar je liever een lagere overgangsdruk aanhoudt, stel je <strong>PRESS_MIN</strong> en <strong>PRESS_MAX</strong> in op bijvoorbeeld <code style="color:var(--accent-cyan);">50.0</code> en <code style="color:var(--accent-cyan);">52.0</code>.
+        </div>
+    </article>
+
+    <footer>
+        <p>Stationeers IC10 MIPS Documentatie &bull; Geoptimaliseerd voor Patch-wijzigingen (Methane / Pollutant / N2O) &bull; Standalone Battery Subnet Ready</p>
+    </footer>
+</div>
+
+<script>
+function copyCode(elementId, btn) {
+    const codeElement = document.getElementById(elementId);
+    const codeText = codeElement.innerText;
+    
+    navigator.clipboard.writeText(codeText).then(() => {
+        const originalText = btn.innerText;
+        btn.innerText = "Gekopieerd!";
+        btn.style.borderColor = "var(--accent-emerald)";
+        btn.style.color = "var(--accent-emerald)";
+        
+        setTimeout(() => {
+            btn.innerText = originalText;
+            btn.style.borderColor = "var(--border-accent)";
+            btn.style.color = "var(--text-secondary)";
+        }, 2000);
+    }).catch(err => {
+        console.error("Kopiëren mislukt: ", err);
+    });
+}
+</script>
+
+</body>
+</html>
