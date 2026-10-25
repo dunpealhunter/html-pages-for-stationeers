@@ -1857,5 +1857,59 @@
         renderPaintTable();
         renderAll();
     </script>
+    <script>
+(function convertAllPaintPlusFormats() {
+    // Hulpfunctie: zet R, G, B (0-255) om naar #RRGGBB
+    function rgbToHex(r, g, b) {
+        return '#' + [r, g, b].map(x => {
+            const hex = parseInt(x, 10).toString(16).toUpperCase();
+            return hex.length === 1 ? '0' + hex : hex;
+        }).join('');
+    }
+
+    // Regex die zoekt naar: R:240 G:136 B:62 | Glow:0.00 | Roughness:0.40
+    const pattern = /R:\s*(\d+)\s+G:\s*(\d+)\s+B:\s*(\d+)\s*\|\s*Glow:\s*([\d.]+)\s*\|\s*Roughness:\s*([\d.]+)/gi;
+
+    function replaceFormat(str) {
+        return str.replace(pattern, (match, r, g, b, glow, rough) => {
+            const hex = rgbToHex(r, g, b);
+            return `RGB ${hex} E ${glow} R ${rough}`;
+        });
+    }
+
+    function runConversion() {
+        // 1. Vervang alle zichtbare tekst in <code> en <span> elementen
+        document.querySelectorAll('code, span, td').forEach(el => {
+            if (el.children.length === 0 && pattern.test(el.textContent)) {
+                el.textContent = replaceFormat(el.textContent);
+            }
+        });
+
+        // 2. Vervang eventuele onclick- of data-copy attributen (zodat kopiëren het nieuwe formaat pakt)
+        document.querySelectorAll('[onclick], [data-copy], [title]').forEach(el => {
+            ['onclick', 'data-copy', 'title'].forEach(attr => {
+                if (el.hasAttribute(attr)) {
+                    const val = el.getAttribute(attr);
+                    if (pattern.test(val)) {
+                        el.setAttribute(attr, replaceFormat(val));
+                    }
+                }
+            });
+        });
+    }
+
+    // Voer direct uit na laden en observeer dynamische tabellen (zoals de Element-zoekbalk)
+    window.addEventListener('DOMContentLoaded', () => {
+        runConversion();
+        const observer = new MutationObserver(() => runConversion());
+        observer.observe(document.body, { childList: true, subtree: true });
+    });
+    
+    // Voor het geval DOMContentLoaded al geweest is:
+    if (document.readyState !== 'loading') {
+        runConversion();
+    }
+})();
+</script>
 </body>
 </html>
